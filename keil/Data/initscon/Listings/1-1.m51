@@ -1,0 +1,126 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        11/03/2021  00:39:17  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+C:\PROGRAM FILES\KEIL_V5\C51\BIN\BL51.EXE .\Objects\1-1.obj TO .\Objects\1-1 PRINT (.\Listings\1-1.m51)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\Objects\1-1.obj (1_1)
+  C:\PROGRAM FILES\KEIL_V5\C51\LIB\C51S.LIB (?C_STARTUP)
+
+
+LINK MAP OF MODULE:  .\Objects\1-1 (1_1)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0002H     UNIT         ?DT?1_1
+            IDATA   000AH     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+                    0003H     0020H                  *** GAP ***
+            CODE    0023H     0003H     ABSOLUTE     
+                    0026H     07DAH                  *** GAP ***
+            CODE    0800H     0013H     UNIT         ?PR?INITSCON?1_1
+            CODE    0813H     0010H     UNIT         ?PR?MAIN?1_1
+            CODE    0823H     000CH     UNIT         ?C_C51STARTUP
+            CODE    082FH     0009H     UNIT         ?PR?SENDDATA?1_1
+            CODE    0838H     0009H     UNIT         ?PR?SCONISER?1_1
+
+
+
+OVERLAY MAP OF MODULE:   .\Objects\1-1 (1_1)
+
+
+SEGMENT
+  +--> CALLED SEGMENT
+---------------------
+?C_C51STARTUP
+  +--> ?PR?MAIN?1_1
+
+?PR?MAIN?1_1
+  +--> ?PR?INITSCON?1_1
+  +--> ?PR?SENDDATA?1_1
+
+
+
+SYMBOL TABLE OF MODULE:  .\Objects\1-1 (1_1)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        1_1
+  C:0000H         SYMBOL        _ICE_DUMMY_
+BL51 BANKED LINKER/LOCATER V6.22                                                      11/03/2021  00:39:17  PAGE 2
+
+
+  B:00A8H.7       PUBLIC        EA
+  B:00A8H.4       PUBLIC        ES
+  B:0098H.0       PUBLIC        RI
+  D:0008H         PUBLIC        flag
+  B:0098H.1       PUBLIC        TI
+  C:0813H         PUBLIC        main
+  C:082FH         PUBLIC        sendData
+  D:0099H         PUBLIC        SBUF
+  D:0098H         PUBLIC        SCON
+  D:0089H         PUBLIC        TMOD
+  C:0838H         PUBLIC        sconIser
+  D:008DH         PUBLIC        TH1
+  D:008BH         PUBLIC        TL1
+  B:0088H.6       PUBLIC        TR1
+  C:0800H         PUBLIC        initscon
+  D:0009H         PUBLIC        receveData
+  -------         PROC          INITSCON
+  C:0800H         LINE#         5
+  C:0800H         LINE#         6
+  C:0803H         LINE#         7
+  C:0806H         LINE#         8
+  C:0809H         LINE#         9
+  C:080CH         LINE#         10
+  C:080EH         LINE#         11
+  C:0810H         LINE#         12
+  C:0812H         LINE#         13
+  -------         ENDPROC       INITSCON
+  -------         PROC          SENDDATA
+  C:082FH         LINE#         15
+  C:082FH         LINE#         17
+  C:0832H         LINE#         18
+  C:0835H         LINE#         20
+  C:0837H         LINE#         21
+  -------         ENDPROC       SENDDATA
+  -------         PROC          MAIN
+  C:0813H         LINE#         23
+  C:0813H         LINE#         24
+  C:0816H         LINE#         25
+  C:0816H         LINE#         26
+  C:081BH         LINE#         27
+  C:081EH         LINE#         29
+  C:0821H         LINE#         30
+  C:0821H         LINE#         31
+  -------         ENDPROC       MAIN
+  -------         PROC          SCONISER
+  C:0838H         LINE#         36
+  C:0838H         LINE#         38
+  C:083BH         LINE#         39
+  C:083DH         LINE#         40
+  C:0840H         LINE#         41
+  -------         ENDPROC       SCONISER
+  -------         ENDMOD        1_1
+
+******************************************************************************
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 0038H BYTE ( 2%) *
+******************************************************************************
+
+BL51 BANKED LINKER/LOCATER V6.22                                                      11/03/2021  00:39:17  PAGE 3
+
+
+Program Size: data=11.0 xdata=0 code=71
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

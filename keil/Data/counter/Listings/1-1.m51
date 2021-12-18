@@ -1,0 +1,119 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        11/02/2021  01:01:58  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+C:\PROGRAM FILES\KEIL_V5\C51\BIN\BL51.EXE .\Objects\1-1.obj TO .\Objects\1-1 PRINT (.\Listings\1-1.m51)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\Objects\1-1.obj (1_1)
+  C:\PROGRAM FILES\KEIL_V5\C51\LIB\C51S.LIB (?C_STARTUP)
+  C:\PROGRAM FILES\KEIL_V5\C51\LIB\C51S.LIB (?C_INIT)
+
+
+LINK MAP OF MODULE:  .\Objects\1-1 (1_1)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0018H     UNIT         ?DT?1_1
+            IDATA   0020H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+                    0003H     0008H                  *** GAP ***
+            CODE    000BH     0003H     ABSOLUTE     
+                    000EH     07F2H                  *** GAP ***
+            CODE    0800H     008CH     UNIT         ?C_C51STARTUP
+            CODE    088CH     0018H     UNIT         ?PR?SEG?1_1
+            CODE    08A4H     0017H     UNIT         ?C_INITSEG
+            CODE    08BBH     0010H     UNIT         ?PR?INITCOUNTER?1_1
+            CODE    08CBH     000DH     UNIT         ?PR?COUNTISER?1_1
+            CODE    08D8H     0008H     UNIT         ?PR?MAIN?1_1
+
+
+
+OVERLAY MAP OF MODULE:   .\Objects\1-1 (1_1)
+
+
+SEGMENT
+  +--> CALLED SEGMENT
+---------------------
+?C_C51STARTUP
+  +--> ?PR?MAIN?1_1
+  +--> ?C_INITSEG
+
+?PR?MAIN?1_1
+  +--> ?PR?INITCOUNTER?1_1
+  +--> ?PR?SEG?1_1
+
+
+
+SYMBOL TABLE OF MODULE:  .\Objects\1-1 (1_1)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+BL51 BANKED LINKER/LOCATER V6.22                                                      11/02/2021  01:01:58  PAGE 2
+
+
+
+  -------         MODULE        1_1
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:00A0H         PUBLIC        P2
+  B:00A8H.7       PUBLIC        EA
+  C:08BBH         PUBLIC        initCounter
+  C:08D8H         PUBLIC        main
+  D:0008H         PUBLIC        count
+  D:0089H         PUBLIC        TMOD
+  C:088CH         PUBLIC        seg
+  C:08CBH         PUBLIC        countIser
+  B:00A8H.1       PUBLIC        ET0
+  D:008CH         PUBLIC        TH0
+  D:008AH         PUBLIC        TL0
+  D:000AH         PUBLIC        num
+  B:0088H.4       PUBLIC        TR0
+  D:000CH         PUBLIC        segArr
+  -------         PROC          INITCOUNTER
+  C:08BBH         LINE#         8
+  C:08BBH         LINE#         11
+  C:08BEH         LINE#         12
+  C:08C1H         LINE#         13
+  C:08C4H         LINE#         14
+  C:08C6H         LINE#         15
+  C:08C8H         LINE#         16
+  C:08CAH         LINE#         18
+  -------         ENDPROC       INITCOUNTER
+  -------         PROC          SEG
+  C:088CH         LINE#         20
+  C:088CH         LINE#         21
+  C:0897H         LINE#         22
+  C:089FH         LINE#         23
+  C:08A3H         LINE#         24
+  C:08A3H         LINE#         25
+  -------         ENDPROC       SEG
+  -------         PROC          MAIN
+  C:08D8H         LINE#         28
+  C:08D8H         LINE#         29
+  C:08DBH         LINE#         30
+  C:08DBH         LINE#         31
+  C:08DEH         LINE#         32
+  -------         ENDPROC       MAIN
+  -------         PROC          COUNTISER
+  C:08CBH         LINE#         37
+  C:08CDH         LINE#         38
+  C:08D5H         LINE#         39
+  -------         ENDPROC       COUNTISER
+  -------         ENDMOD        1_1
+
+******************************************************************************
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 0056H BYTE ( 4%) *
+******************************************************************************
+
+Program Size: data=33.0 xdata=0 code=230
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

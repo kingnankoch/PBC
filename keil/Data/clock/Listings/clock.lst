@@ -1,0 +1,192 @@
+C51 COMPILER V9.54   CLOCK                                                                 12/01/2021 23:18:17 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE CLOCK
+OBJECT MODULE PLACED IN .\Objects\clock.obj
+COMPILER INVOKED BY: C:\Program Files\Keil_v5\C51\BIN\C51.EXE clock.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(
+                    -.\Listings\clock.lst) TABS(2) OBJECT(.\Objects\clock.obj)
+
+line level    source
+
+   1          #include "reg51.h"
+   2          
+   3          sbit RS = P3^0;
+   4          sbit RW = P3^1;
+   5          sbit E = P3^2;
+   6          // unsigned char str[] = {"hello world"};
+   7          
+   8          unsigned char count = 0;
+   9          unsigned int hour = 23, min = 59, sec = 50;
+  10          unsigned char strNum[] = {"0123456789"};
+  11          
+  12          // 延时函数
+  13          void delay (unsigned int n)
+  14          {
+  15   1        unsigned int i=0,j=0;
+  16   1        for (i = 0; i < n; i++)
+  17   1        {
+  18   2          for(j=0;j<120;j++);
+  19   2        }
+  20   1      }
+  21          
+  22          // 写命令
+  23          void wireCommand(unsigned char com) {
+  24   1          RS = 0; // 低电平开始写命令   高电平写数据
+  25   1          RW = 0; // 低电平为 写， 高电平为读 
+  26   1          E = 0;  // 使能 端 下降沿有效；  根据时序图  初始低电平，然后拉高电平 前 �
+             -�入 数据
+  27   1          P2 = com; // 通过 P2存入数据
+  28   1          delay(5);
+  29   1          E = 1; // 拉高电平 开始写入数据， 然后  数据传输完成 拉低
+  30   1          E = 0; // 拉低电平 数据写入完成，
+  31   1      }
+  32          
+  33          // 写数据
+  34          void wireData(unsigned char dat){
+  35   1          RS = 1; // 低电平开始写命令   高电平写数据
+  36   1          RW = 0; // 低电平为 写， 高电平为读 
+  37   1          E = 0;  // 使能 端 下降沿有效；  根据时序图  初始低电平，然后拉高电平 前 �
+             -�入 数据
+  38   1          P2 = dat;// 通过 P2存入数据
+  39   1          delay(5);
+  40   1          E = 1; // 拉高电平 开始写入数据， 然后  数据传输完成 拉低
+  41   1          E = 0; // 拉低电平 数据写入完成，
+  42   1      }
+  43          
+  44          void initLcd(){
+  45   1          // 写入命令 
+  46   1          // 00111000  设置16 * 2显示， 5*7点阵， 8位数据接口
+  47   1          wireCommand(0x38);
+  48   1          // 0x0C  00001100 设置开显示， 不显示光标
+  49   1          wireCommand(0x0C);
+  50   1          // 写一个字符后地址指针 加一
+  51   1          wireCommand(0x06);
+  52   1          // 显示清零 数据指针清零
+C51 COMPILER V9.54   CLOCK                                                                 12/01/2021 23:18:17 PAGE 2   
+
+  53   1          wireCommand(0x01);
+  54   1      
+  55   1      }
+  56          
+  57          
+  58          void display(){
+  59   1          // wireCommand(0x80);
+  60   1          // delay(5);
+  61   1          // wireData('K');
+  62   1          // delay(5);
+  63   1          // wireData('i');
+  64   1          // delay(5);
+  65   1          // // 通过 ask 码 显示数据
+  66   1          // wireData(0x31);
+  67   1          // delay(5);
+  68   1          // // wireData(0111000); 错误的方式
+  69   1          // // wireCommand(0x80 + 2);
+  70   1          // wireCommand(0x80 + 2 + 0x40);
+  71   1          // // "\0" 表示结束符
+  72   1          // while (str[j]!='\0')
+  73   1          // {
+  74   1          //     /* code */
+  75   1          //     wireData(str[j]);
+  76   1          //     delay(5);
+  77   1          //     j++; 
+  78   1          // }
+  79   1          unsigned char temp0 = 0, temp1 = 0, temp2 = 0, temp3 = 0, temp4 = 0, temp5 = 0;
+  80   1          temp0 = hour/10;
+  81   1          temp1 = hour%10;
+  82   1      
+  83   1          temp2 = min/10;
+  84   1          temp3 = min%10;
+  85   1      
+  86   1          temp4 = sec/10;
+  87   1          temp5 = sec%10;
+  88   1      
+  89   1      
+  90   1      
+  91   1          wireCommand(0x80);
+  92   1          delay(5);
+  93   1          wireData(strNum[temp0]);
+  94   1          delay(5);
+  95   1          wireData(strNum[temp1]);
+  96   1          delay(5);
+  97   1          wireData(':');
+  98   1          delay(5);
+  99   1          wireData(strNum[temp2]);
+ 100   1          delay(5);
+ 101   1          wireData(strNum[temp3]);
+ 102   1          delay(5);
+ 103   1          wireData(':');
+ 104   1          delay(5);
+ 105   1          wireData(strNum[temp4]);
+ 106   1          delay(5);
+ 107   1          wireData(strNum[temp5]);
+ 108   1          
+ 109   1      }
+ 110          
+ 111          void initTime(){
+ 112   1          
+ 113   1          TMOD = 0x01; // 0000 0001 定时器0 16位定时器
+ 114   1          TH0 = (65536 - 50000)/256; // 20ms = 50000us;  256 = 2 ^ 8;  初值>> 8  
+C51 COMPILER V9.54   CLOCK                                                                 12/01/2021 23:18:17 PAGE 3   
+
+ 115   1          TL0 = (65536 - 50000)%256;
+ 116   1          // printf("TH0: %d TH0: %d \n", TH0, TL0);
+ 117   1          ET0 = 1; //定时器0 开启终中断
+ 118   1          EA = 1; // 开启总中断
+ 119   1          TR0 = 1; //启动定时器 0
+ 120   1      
+ 121   1      }
+ 122          
+ 123          // 创建
+ 124          
+ 125          int main()
+ 126          {
+ 127   1          // 初始化LCD
+ 128   1          initLcd();
+ 129   1          // 初始化定时器
+ 130   1          initTime();
+ 131   1          /* code */
+ 132   1          while (1)
+ 133   1          {
+ 134   2              /* 显示数值 */
+ 135   2              display();
+ 136   2          }
+ 137   1          
+ 138   1      }
+ 139          
+ 140          
+ 141          // 外部中断0: 0 ; 定时器中断1: 1; 外部中断1: 2; 定时器中1:3; 串口中断: 4;
+ 142          void timeIser() interrupt 1{
+ 143   1          TH0 = (65536 - 50000)/256;  
+ 144   1          TL0 = (65536 - 50000)%256;
+ 145   1          count++;
+ 146   1          if(count == 20) {
+ 147   2              sec = sec + 1;
+ 148   2              count = 0;
+ 149   2          }
+ 150   1          if(sec == 60) {
+ 151   2              min = min + 1;
+ 152   2              sec =0;
+ 153   2          }
+ 154   1          if(min == 60) {
+ 155   2              hour = hour + 1;
+ 156   2              min =0;
+ 157   2          }
+ 158   1          if(hour == 24) {
+ 159   2              hour =0;
+ 160   2          }
+ 161   1      }
+ 162          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    371    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     18       5
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

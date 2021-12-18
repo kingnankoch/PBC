@@ -1,0 +1,118 @@
+C51 COMPILER V9.54   LCD                                                                   11/30/2021 23:51:35 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE LCD
+OBJECT MODULE PLACED IN .\Objects\lcd.obj
+COMPILER INVOKED BY: C:\Program Files\Keil_v5\C51\BIN\C51.EXE lcd.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\
+                    -Listings\lcd.lst) TABS(2) OBJECT(.\Objects\lcd.obj)
+
+line level    source
+
+   1          #include "reg51.h"
+   2          
+   3          sbit RS = P3^0;
+   4          sbit RW = P3^1;
+   5          sbit E = P3^2;
+   6          unsigned char str[] = {"hello world"};
+   7          unsigned int j = 0;
+   8          
+   9          // 延时函数
+  10          void delay (unsigned int n)
+  11          {
+  12   1        unsigned int i=0,j=0;
+  13   1        for (i = 0; i < n; i++)
+  14   1        {
+  15   2          for(j=0;j<120;j++);
+  16   2        }
+  17   1      }
+  18          
+  19          // 写命令
+  20          void wireCommand(unsigned char com) {
+  21   1          RS = 0; // 低电平开始写命令   高电平写数据
+  22   1          RW = 0; // 低电平为 写， 高电平为读 
+  23   1          E = 0;  // 使能 端 下降沿有效；  根据时序图  初始低电平，然后拉高电平 前 �
+             -�入 数据
+  24   1          P2 = com; // 通过 P2存入数据
+  25   1          delay(5);
+  26   1          E = 1; // 拉高电平 开始写入数据， 然后  数据传输完成 拉低
+  27   1          E = 0; // 拉低电平 数据写入完成，
+  28   1      }
+  29          
+  30          // 写数据
+  31          void wireData(unsigned char dat){
+  32   1          RS = 1; // 低电平开始写命令   高电平写数据
+  33   1          RW = 0; // 低电平为 写， 高电平为读 
+  34   1          E = 0;  // 使能 端 下降沿有效；  根据时序图  初始低电平，然后拉高电平 前 �
+             -�入 数据
+  35   1          P2 = dat;// 通过 P2存入数据
+  36   1          delay(5);
+  37   1          E = 1; // 拉高电平 开始写入数据， 然后  数据传输完成 拉低
+  38   1          E = 0; // 拉低电平 数据写入完成，
+  39   1      }
+  40          
+  41          void initLcd(){
+  42   1          // 写入命令 
+  43   1          // 00111000  设置16 * 2显示， 5*7点阵， 8位数据接口
+  44   1          wireCommand(0x38);
+  45   1          // 0x0C  00001100 设置开显示， 不显示光标
+  46   1          wireCommand(0x0C);
+  47   1          // 写一个字符后地址指针 加一
+  48   1          wireCommand(0x06);
+  49   1          // 显示清零 数据指针清零
+  50   1          wireCommand(0x01);
+  51   1      
+  52   1      }
+C51 COMPILER V9.54   LCD                                                                   11/30/2021 23:51:35 PAGE 2   
+
+  53          
+  54          
+  55          void display(){
+  56   1          wireCommand(0x80);
+  57   1          delay(5);
+  58   1          wireData('K');
+  59   1          delay(5);
+  60   1          wireData('i');
+  61   1          delay(5);
+  62   1          // 通过 ask 码 显示数据
+  63   1          wireData(0x31);
+  64   1          delay(5);
+  65   1          // wireData(0111000); 错误的方式
+  66   1          // wireCommand(0x80 + 2);
+  67   1          wireCommand(0x80 + 2 + 0x40);
+  68   1          // "\0" 表示结束符
+  69   1          while (str[j]!='\0')
+  70   1          {
+  71   2              /* code */
+  72   2              wireData(str[j]);
+  73   2              delay(5);
+  74   2              j++; 
+  75   2          }
+  76   1          
+  77   1      }
+  78          
+  79          int main()
+  80          {
+  81   1          // 初始化LCD
+  82   1          initLcd();
+  83   1          /* code */
+  84   1          while (1)
+  85   1          {
+  86   2              /* 显示数值 */
+  87   2              display();
+  88   2          }
+  89   1          
+  90   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    150    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     14    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

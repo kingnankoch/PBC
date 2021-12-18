@@ -1,0 +1,128 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        11/02/2021  00:39:08  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+C:\PROGRAM FILES\KEIL_V5\C51\BIN\BL51.EXE .\Objects\1-1.obj TO .\Objects\1-1 PRINT (.\Listings\1-1.m51)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\Objects\1-1.obj (1_1)
+  C:\PROGRAM FILES\KEIL_V5\C51\LIB\C51S.LIB (?C_STARTUP)
+  C:\PROGRAM FILES\KEIL_V5\C51\LIB\C51S.LIB (?C_INIT)
+
+
+LINK MAP OF MODULE:  .\Objects\1-1 (1_1)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0018H     UNIT         ?DT?1_1
+            IDATA   0020H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+                    0003H     0008H                  *** GAP ***
+            CODE    000BH     0003H     ABSOLUTE     
+                    000EH     07F2H                  *** GAP ***
+            CODE    0800H     008CH     UNIT         ?C_C51STARTUP
+            CODE    088CH     0027H     UNIT         ?PR?TIMEISER?1_1
+            CODE    08B3H     0018H     UNIT         ?PR?SEG?1_1
+            CODE    08CBH     0017H     UNIT         ?C_INITSEG
+            CODE    08E2H     0010H     UNIT         ?PR?INITTIME?1_1
+            CODE    08F2H     0008H     UNIT         ?PR?MAIN?1_1
+
+
+
+OVERLAY MAP OF MODULE:   .\Objects\1-1 (1_1)
+
+
+SEGMENT
+  +--> CALLED SEGMENT
+---------------------
+?C_C51STARTUP
+  +--> ?PR?MAIN?1_1
+  +--> ?C_INITSEG
+
+?PR?MAIN?1_1
+  +--> ?PR?INITTIME?1_1
+  +--> ?PR?SEG?1_1
+
+
+
+SYMBOL TABLE OF MODULE:  .\Objects\1-1 (1_1)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+BL51 BANKED LINKER/LOCATER V6.22                                                      11/02/2021  00:39:08  PAGE 2
+
+
+
+  -------         MODULE        1_1
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:00A0H         PUBLIC        P2
+  B:00A8H.7       PUBLIC        EA
+  C:08F2H         PUBLIC        main
+  D:0008H         PUBLIC        count
+  D:0089H         PUBLIC        TMOD
+  C:08B3H         PUBLIC        seg
+  C:088CH         PUBLIC        timeIser
+  C:08E2H         PUBLIC        initTime
+  B:00A8H.1       PUBLIC        ET0
+  D:008CH         PUBLIC        TH0
+  D:008AH         PUBLIC        TL0
+  D:000AH         PUBLIC        num
+  B:0088H.4       PUBLIC        TR0
+  D:000CH         PUBLIC        segArr
+  -------         PROC          INITTIME
+  C:08E2H         LINE#         8
+  C:08E2H         LINE#         11
+  C:08E5H         LINE#         12
+  C:08E8H         LINE#         13
+  C:08EBH         LINE#         15
+  C:08EDH         LINE#         16
+  C:08EFH         LINE#         17
+  C:08F1H         LINE#         19
+  -------         ENDPROC       INITTIME
+  -------         PROC          SEG
+  C:08B3H         LINE#         21
+  C:08B3H         LINE#         22
+  C:08BEH         LINE#         23
+  C:08C6H         LINE#         24
+  C:08CAH         LINE#         25
+  C:08CAH         LINE#         26
+  -------         ENDPROC       SEG
+  -------         PROC          MAIN
+  C:08F2H         LINE#         29
+  C:08F2H         LINE#         30
+  C:08F5H         LINE#         31
+  C:08F5H         LINE#         32
+  C:08F8H         LINE#         33
+  -------         ENDPROC       MAIN
+  -------         PROC          TIMEISER
+  C:088CH         LINE#         38
+  C:088EH         LINE#         39
+  C:0891H         LINE#         40
+  C:0894H         LINE#         41
+  C:089CH         LINE#         42
+  C:08A2H         LINE#         43
+  C:08AAH         LINE#         44
+  C:08B0H         LINE#         45
+  C:08B0H         LINE#         47
+  -------         ENDPROC       TIMEISER
+  -------         ENDMOD        1_1
+
+******************************************************************************
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 0070H BYTE ( 5%) *
+BL51 BANKED LINKER/LOCATER V6.22                                                      11/02/2021  00:39:08  PAGE 3
+
+
+******************************************************************************
+
+Program Size: data=33.0 xdata=0 code=256
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

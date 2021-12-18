@@ -1,0 +1,146 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        11/21/2021  15:00:29  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+C:\PROGRAM FILES\KEIL_V5\C51\BIN\BL51.EXE .\Objects\1-1.obj TO .\Objects\1-1 PRINT (.\Listings\1-1.m51)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\Objects\1-1.obj (1_1)
+  C:\PROGRAM FILES\KEIL_V5\C51\LIB\C51S.LIB (?C_STARTUP)
+
+
+LINK MAP OF MODULE:  .\Objects\1-1 (1_1)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0002H     UNIT         _DATA_GROUP_
+            IDATA   000AH     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+                    0003H     07FDH                  *** GAP ***
+            CODE    0800H     0100H     UNIT         ?CO?1_1
+            CODE    0900H     0034H     UNIT         ?PR?SINWAVE?1_1
+            CODE    0934H     0020H     UNIT         ?PR?_DELAY?1_1
+            CODE    0954H     001FH     UNIT         ?PR?STAIR?1_1
+            CODE    0973H     0011H     UNIT         ?PR?PWN?1_1
+            CODE    0984H     000CH     UNIT         ?C_C51STARTUP
+            CODE    0990H     0005H     UNIT         ?PR?MAIN?1_1
+
+
+
+OVERLAY MAP OF MODULE:   .\Objects\1-1 (1_1)
+
+
+SEGMENT                          DATA_GROUP 
+  +--> CALLED SEGMENT          START    LENGTH
+----------------------------------------------
+?C_C51STARTUP                  -----    -----
+  +--> ?PR?MAIN?1_1
+
+?PR?MAIN?1_1                   -----    -----
+  +--> ?PR?SINWAVE?1_1
+
+?PR?SINWAVE?1_1                0008H    0002H
+  +--> ?CO?1_1
+  +--> ?PR?_DELAY?1_1
+
+
+
+SYMBOL TABLE OF MODULE:  .\Objects\1-1 (1_1)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+BL51 BANKED LINKER/LOCATER V6.22                                                      11/21/2021  15:00:29  PAGE 2
+
+
+
+  -------         MODULE        1_1
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  C:0900H         PUBLIC        sinwave
+  D:00A0H         PUBLIC        P2
+  C:0934H         PUBLIC        _delay
+  C:0954H         PUBLIC        stair
+  C:0990H         PUBLIC        main
+  C:0800H         PUBLIC        sin
+  C:0973H         PUBLIC        PWN
+  -------         PROC          _DELAY
+  D:0006H         SYMBOL        n
+  -------         DO            
+  D:0004H         SYMBOL        i
+  D:0002H         SYMBOL        j
+  -------         ENDDO         
+  C:0934H         LINE#         32
+  C:0934H         LINE#         33
+  C:0934H         LINE#         34
+  C:0937H         LINE#         35
+  C:093EH         LINE#         36
+  C:093EH         LINE#         37
+  C:094CH         LINE#         38
+  C:0953H         LINE#         39
+  -------         ENDPROC       _DELAY
+  -------         PROC          PWN
+  C:0973H         LINE#         42
+  C:0973H         LINE#         43
+  C:0976H         LINE#         44
+  C:097CH         LINE#         45
+  C:097FH         LINE#         46
+  -------         ENDPROC       PWN
+  -------         PROC          STAIR
+  -------         DO            
+  D:0006H         SYMBOL        i
+  -------         ENDDO         
+  C:0954H         LINE#         49
+  C:0954H         LINE#         50
+  C:0957H         LINE#         51
+  C:0957H         LINE#         52
+  C:0959H         LINE#         53
+  C:0963H         LINE#         55
+  C:0967H         LINE#         56
+  C:0969H         LINE#         57
+  C:0972H         LINE#         58
+  -------         ENDPROC       STAIR
+  -------         PROC          SINWAVE
+  -------         DO            
+  D:0008H         SYMBOL        i
+  -------         ENDDO         
+  C:0900H         LINE#         60
+  C:0900H         LINE#         61
+  C:0905H         LINE#         62
+  C:0909H         LINE#         63
+  C:0919H         LINE#         64
+  C:0920H         LINE#         65
+  C:0933H         LINE#         70
+BL51 BANKED LINKER/LOCATER V6.22                                                      11/21/2021  15:00:29  PAGE 3
+
+
+  -------         ENDPROC       SINWAVE
+  -------         PROC          MAIN
+  C:0990H         LINE#         72
+  C:0990H         LINE#         73
+  C:0990H         LINE#         74
+  C:0990H         LINE#         77
+  C:0993H         LINE#         78
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        1_1
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?PWN?1_1
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?STAIR?1_1
+
+******************************************************************************
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 0189H BYTE (19%) *
+******************************************************************************
+
+Program Size: data=11.0 xdata=0 code=408
+LINK/LOCATE RUN COMPLETE.  2 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,70 @@
+C51 COMPILER V9.54   1_1                                                                   11/03/2021 00:39:14 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE 1_1
+OBJECT MODULE PLACED IN .\Objects\1-1.obj
+COMPILER INVOKED BY: C:\Program Files\Keil_v5\C51\BIN\C51.EXE 1-1.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\
+                    -Listings\1-1.lst) TABS(2) OBJECT(.\Objects\1-1.obj)
+
+line level    source
+
+   1          #include "reg51.h"
+   2          
+   3          unsigned char receveData, flag;
+   4          
+   5          void initscon() {
+   6   1          SCON = 0x50; // 0101 0000  设置方式1  8位异步通信方式  串口寄存器 波特率可变 
+   7   1          TMOD = 0x20; // 0010 0000 使用定时器1 
+   8   1          TH1 = (256 - 3);
+   9   1          TL1 = (256 - 3);
+  10   1          ES = 1; // 串口中断
+  11   1          EA = 1; // 开启总中断
+  12   1          TR1 = 1; //开启定时器1
+  13   1      }
+  14          
+  15          sendData() {
+  16   1        // 发送的数据是接受的  数据
+  17   1        SBUF = receveData;
+  18   1        while(!TI); //  循环检测是否发送完成 如果发送完成 TI 会被置为1， 需要再次发送 需要手动置为 0；
+  19   1        // 发送完成之后 设置 TI = 0 这样第二次就可以发送
+  20   1        TI = 0;
+  21   1      }
+  22          
+  23          void main() {
+  24   1        initscon();
+  25   1        while(1){
+  26   2          if (flag == 1){
+  27   3            sendData();
+  28   3            // 发送完之后 flag 清零
+  29   3            flag = 0;
+  30   3          }
+  31   2        }
+  32   1      
+  33   1      }
+  34          
+  35          // 外部中断0: 0 ; 定时器中断1: 1; 外部中断1: 2; 定时器中1:3; 串口中断: 4;
+  36          void sconIser() interrupt 4{
+  37   1        // SBUF 是接收器 发送器  共同使用的   存放器  
+  38   1        receveData = SBUF; 
+  39   1        RI = 0; // 数据接收完成 把 RI 手动置为 0 ；要不然第二次不会自动接收的
+  40   1        flag = 1; // 标志位 表示数据接受结束
+  41   1      }
+  42          
+  43          
+*** WARNING C290 IN LINE 21 OF 1-1.c: missing return value
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     53    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      2    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+C51 COMPILER V9.54   1_1                                                                   11/03/2021 00:39:14 PAGE 2   
+
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  1 WARNING(S),  0 ERROR(S)
