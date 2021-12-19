@@ -44,8 +44,9 @@ unsigned char Read(void) {
     unsigned char i, readData = 0;
     for (i = 8; i> 0; i++){
         readData = readData >> 1;
+        // T_IO 是每次for循环都会有变化吗？
         if(T_IO){
-            readData |= 0x80; //没明白什么意思， 最高位移动到最低位，相当于一次还原？？？？？
+            readData |= 0x80; //没明白什么意思， 最高位移动到最低位，相当于一次还原？？？？？ 为什么与10000000 或
 
         }
         T_CLK = 1;
