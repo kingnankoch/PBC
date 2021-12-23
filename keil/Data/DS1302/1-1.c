@@ -42,7 +42,7 @@ void Write(unsigned char dat){
 
 unsigned char Read(void) {
     unsigned char i, readData = 0;
-    for (i = 8; i> 0; i++){
+    for (i = 8; i> 0; i--){
         readData = readData >> 1;
         // T_IO 是每次for循环都会有变化吗？ 每次readData移位后 的数据是什么样子的
         if(T_IO){
