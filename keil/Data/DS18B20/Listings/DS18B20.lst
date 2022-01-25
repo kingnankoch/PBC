@@ -1,9 +1,9 @@
-C51 COMPILER V9.54   DS18B20                                                               01/24/2022 23:49:48 PAGE 1   
+C51 COMPILER V9.54   DS18B20                                                               01/26/2022 03:54:05 PAGE 1   
 
 
 C51 COMPILER V9.54, COMPILATION OF MODULE DS18B20
 OBJECT MODULE PLACED IN .\Objects\DS18B20.obj
-COMPILER INVOKED BY: C:\Program Files\Keil_v5\C51\BIN\C51.EXE DS18B20.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRIN
+COMPILER INVOKED BY: D:\Program Files\Keil_v5\C51\BIN\C51.EXE DS18B20.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRIN
                     -T(.\Listings\DS18B20.lst) TABS(2) OBJECT(.\Objects\DS18B20.obj)
 
 line level    source
@@ -11,222 +11,221 @@ line level    source
    1          #include "reg51.h"
    2          // #include "stdio.h"
    3          
-   4          // 温度传感器的
-   5          sbit DQ = P3^3;
-   6          
-   7          
-   8          // ------ lcd  start-----
-   9          sbit RS=P3^0;
-  10          sbit RW=P3^1;
-  11          sbit E=P3^2;
-  12          // sbit DQ=P3^3;
-  13          unsigned int readtemp=0;
-  14          unsigned char str[]={"0123456789"};
-  15          unsigned char s[]={"Temperature:"};
-  16          
+   4          
+   5          
+   6          // ------ lcd  start-----
+   7          sbit RS=P3^0;
+   8          sbit RW=P3^1;
+   9          sbit E=P3^2;
+  10          // sbit DQ=P3^3;
+  11          unsigned int readtemp = 0;
+  12          unsigned char str[]={"0123456789"};
+  13          unsigned char s[]={"Temperature:"};
+  14          
+  15          
+  16          // ------ lcd  end-----
   17          
-  18          // ------ lcd  end-----
-  19          
-  20          // 延时函数 因为 DS18B20函数的 时序 中的 在读的0的模式需要 15ms 在读1 的情况下�
+  18          // 温度传感器的
+  19          sbit DQ = P3^3;
+  20          
+  21          
+  22          
+  23          // 延时函数 因为 DS18B20函数的 时序 中的 在读的0的模式需要 15ms 在读1 的情况下�
              -��要 5ms左右
-  21          void delay_18B20(unsigned int i){
-  22   1          for (; i > 0; i--);
-  23   1      }
-  24          // 初始化 DS18B20
-  25          
-  26          // 精度分为 9、10、11、12 位，默认 12位
-  27          // 在配置过程中 一般跳过ROM 指令码 OCCH
-  28          // 启动温度转换 指令 44H
-  29          // 读暂存器 0BEH 
-  30          // 首先将 数据线下拉持续 时间 480us-960us 后然后释放（拉高电平）DS18B20收到信号
+  24          void delay_18B20(unsigned int i){
+  25   1          for (; i > 0; i--);
+  26   1      }
+  27          // 初始化 DS18B20
+  28          
+  29          // 精度分为 9、10、11、12 位，默认 12位
+  30          // 在配置过程中 一般跳过ROM 指令码 OCCH
+  31          // 启动温度转换 指令 44H
+  32          // 读暂存器 0BEH 
+  33          // 首先将 数据线下拉持续 时间 480us-960us 后然后释放（拉高电平）DS18B20收到信号
              -后等待15-60us左右 初始化成功，会在 12-60us后产生一个低电平，信号会持续 60-240us
-  31          void init_DS18B20(void){
-  32   1          unsigned char x = 0;
-  33   1          DQ = 1; 
-  34   1          delay_18B20(8);//拉低电平前 先保持高电平一段时间
-  35   1          DQ = 0;
-  36   1          delay_18B20(80);//拉低电平保持 480us-960us 后然后释放（
-  37   1          DQ = 1; //拉高，等待 DS18B20反应
-  38   1          delay_18B20(14); // 等待12-60us 后查看数据线的状态
-  39   1          x = DQ;//如果 是初始化成功，那么会产生一个低电平 若X= 0表示成功
-  40   1          delay_18B20(20); //60-240us
-  41   1      
-  42   1      }
-  43          
-  44          
-  45          // 读时序
-  46          // 读时序分为读1和读0，读1两个过程，当要读区DS18B20的数据时，先将总线拉低，
+  34          void init_DS18B20(void){
+  35   1          unsigned char x = 0;
+  36   1          DQ = 1; 
+  37   1          delay_18B20(8);//拉低电平前 先保持高电平一段时间
+  38   1          DQ = 0;
+  39   1          delay_18B20(80);//拉低电平保持 480us-960us 后然后释放（
+  40   1          DQ = 1; //拉高，等待 DS18B20反应
+  41   1          delay_18B20(14); // 等待12-60us 后查看数据线的状态
+  42   1          x = DQ;//如果 是初始化成功，那么会产生一个低电平 若X= 0表示成功
+  43   1          delay_18B20(20); //60-240us
+  44   1      
+  45   1      }
+  46          
+  47          
+  48          // 读时序
+  49          // 读时序分为读1和读0，读1两个过程，当要读区DS18B20的数据时，先将总线拉低，
              -并保持 1us 然后总线拉高，此时应尽快读取，从拉低到读区引脚状态时间不能超过15us
-  47          //读1的情况下，只能将电平拉低1us，读0的情况下可以将电平拉低到15us左右，但�
+  50          //读1的情况下，只能将电平拉低1us，读0的情况下可以将电平拉低到15us左右，但�
              -�能超过 15us
-  48          unsigned char ReadOneChar(void){
-  49   1          unsigned char i = 0;
-  50   1          unsigned char dat = 0;
-C51 COMPILER V9.54   DS18B20                                                               01/24/2022 23:49:48 PAGE 2   
+C51 COMPILER V9.54   DS18B20                                                               01/26/2022 03:54:05 PAGE 2   
 
-  51   1          for(i = 8;i > 0; i--){
-  52   2              DQ = 0; //先拉低总线
-  53   2              // delay_18B20(8);
-  54   2              dat >>= 1; //每次读取1位后，数据向右移位 ；移位处理的时间需要1us以上，�
-             -�以不需要再延时
-  55   2              DQ = 1; //拉高总线
-  56   2              if(DQ){ //如果DQ是1
-  57   3                  dat |= 0x80; //把数据第一位变成高位
-  58   3                  delay_18B20(4); //等待60us
-  59   3              }
-  60   2              return (dat);
-  61   2          }
-  62   1      }
-  63          
-  64          // 写时序
-  65          // 写时序包含写0和1，
-  66          // 写0的过程中要把总线的时间拉低60us 保证  DS18B20能在 15us-45us之间正确采样I/O总
+  51          unsigned char ReadOneChar(void){
+  52   1          unsigned char i = 0;
+  53   1          unsigned char dat = 0;
+  54   1          for(i = 8;i > 0; i--){
+  55   2              DQ = 0; //先拉低总线
+  56   2              // delay_18B20(8);
+  57   2              
+  58   2              DQ = 1; //拉高总线
+  59   2              dat >>= 1; //每次读取1位后，数据向右移位 ；移位处理的时间需要1us以上，所以
+             -不需要再延时
+  60   2              if(DQ){ //如果DQ是1
+  61   3                  dat |= 0x80; //把数据第一位变成高位
+  62   3                  delay_18B20(4); //等待60us
+  63   3              }
+  64   2          }
+  65   1          return (dat);
+  66   1      }
+  67          
+  68          // 写时序
+  69          // 写时序包含写0和1，
+  70          // 写0的过程中要把总线的时间拉低60us 保证  DS18B20能在 15us-45us之间正确采样I/O总
              -线上的 0电平
-  67          // 在写 1的时候要在15us以内拉高电平，
-  68          unsigned char WriteOneChar(unsigned char dat){
-  69   1          unsigned char i=0;
-  70   1          for (i = 8; i > 0; i++) {
-  71   2              DQ = 0;
-  72   2              DQ = dat & 0x01;
-  73   2              if(DQ) {
-  74   3                  delay_18B20(1);
-  75   3                  DQ = 1;
-  76   3              } else {
-  77   3                  delay_18B20(5);
-  78   3                  DQ = 1;
-  79   3              }
-  80   2              // 例如5>>=1,首先将5转换为2进制，结果是0101，右移一位就成了0010，转换回�
+  71          // 在写 1的时候要在15us以内拉高电平，
+  72          void WriteOneChar(unsigned char dat){
+  73   1          unsigned char i=0;
+  74   1          for (i = 8; i > 0; i++) {
+  75   2              DQ = 0;
+  76   2              DQ = dat & 0x01;
+  77   2              if(DQ) {
+  78   3                  delay_18B20(1);
+  79   3                  DQ = 1;
+  80   3              } else {
+  81   3                  delay_18B20(5);
+  82   3                  DQ = 1;
+  83   3              }
+  84   2              // 例如5>>=1,首先将5转换为2进制，结果是0101，右移一位就成了0010，转换回�
              -��进制就成了2了，就这样
-  81   2              dat >> 1;
-*** WARNING C275 IN LINE 81 OF DS18B20.c: expression with possibly no effect
-  82   2          }
-  83   1      }
-*** WARNING C173 IN LINE 83 OF DS18B20.c: missing return-expression
-  84          
-  85          // 读取 温度信息
-  86          unsigned char ReadTemperature(){
-  87   1          unsigned char a = 0,b = 0;
-  88   1          unsigned int temp = 0;
-  89   1          // 初始化
-  90   1          init_DS18B20();
-  91   1          // 写入数据 
-  92   1          WriteOneChar(0xCC); // 跳过读序列号操作
-  93   1          WriteOneChar(0x44); // 启动温度转换
-  94   1          delay_18B20(100); //等待一段时间后再进行初始化 ？？
-  95   1          init_DS18B20();  // 初始化
-  96   1          WriteOneChar(0xCC); //再一次跳过读序列号
-  97   1          WriteOneChar(0xBE); // 读取温度寄存器
-  98   1          delay_18B20(100); // 再次 等待一段时间
-  99   1          a = ReadOneChar(); //读取温度的 低位
- 100   1          b = ReadOneChar(); //读取温度的 高位
- 101   1          //因为读取到的数据是二进制的 
- 102   1          // 采集的温度除16得到实际温度, 因为只采集到12位数据，高四位是没有数据的
- 103   1          temp = ((b * 256 + a) >> 4); 
- 104   1          return (temp);
- 105   1      }
- 106          
- 107          // ------ lcd ------------
-C51 COMPILER V9.54   DS18B20                                                               01/24/2022 23:49:48 PAGE 3   
+  85   2              dat >>= 1;
+  86   2          }
+  87   1      }
+  88          
+  89          // 读取 温度信息
+  90          unsigned char ReadTemperature(){
+  91   1          unsigned char a = 0,b = 0;
+  92   1          unsigned int temp = 0;
+  93   1          // 初始化
+  94   1          init_DS18B20();
+  95   1          // 写入数据 
+  96   1          WriteOneChar(0xCC); // 跳过读序列号操作
+  97   1          WriteOneChar(0x44); // 启动温度转换
+  98   1          delay_18B20(100); //等待一段时间后再进行初始化 ？？
+  99   1          init_DS18B20();  // 初始化
+ 100   1          WriteOneChar(0xCC); //再一次跳过读序列号
+ 101   1          WriteOneChar(0xBE); // 读取温度寄存器
+ 102   1          delay_18B20(100); // 再次 等待一段时间
+ 103   1          a = ReadOneChar(); //读取温度的 低位
+ 104   1          b = ReadOneChar(); //读取温度的 高位
+ 105   1          //因为读取到的数据是二进制的 
+ 106   1          // 采集的温度除16得到实际温度, 因为只采集到12位数据，高四位是没有数据的
+ 107   1          temp = ((b * 256 + a) >> 4); 
+ 108   1          return (temp);
+ 109   1      }
+C51 COMPILER V9.54   DS18B20                                                               01/26/2022 03:54:05 PAGE 3   
 
- 108          
- 109          void delay(unsigned int n)
- 110          {
- 111   1        unsigned int i=0,j=0;
- 112   1        for(i=0;i<n;i++)
- 113   1        {
- 114   2          for(j=0;j<120;j++);
- 115   2        }
- 116   1      }
- 117          
- 118          
- 119          void writedat(unsigned char dat)
- 120          {
- 121   1        RS=1;
- 122   1        RW=0;
- 123   1        E=0;
- 124   1        P1=dat;
- 125   1        delay(5);
- 126   1        E=1;
+ 110          
+ 111          // ------ lcd ------------
+ 112          
+ 113          void delay(unsigned int n)
+ 114          {
+ 115   1        unsigned int i=0,j=0;
+ 116   1        for(i=0;i<n;i++)
+ 117   1        {
+ 118   2          for(j=0;j<120;j++);
+ 119   2        }
+ 120   1      }
+ 121          
+ 122          
+ 123          void writedat(unsigned char dat)
+ 124          {
+ 125   1        RS=1;
+ 126   1        RW=0;
  127   1        E=0;
- 128   1      }
- 129          
- 130          void writecom(unsigned char com)
- 131          {
- 132   1        RS=0;
- 133   1        RW=0;
- 134   1        E=0;
- 135   1        P1=com;
- 136   1        delay(5);
- 137   1        E=1;
+ 128   1        P1=dat;
+ 129   1        delay(5);
+ 130   1        E=1;
+ 131   1        E=0;
+ 132   1      }
+ 133          
+ 134          void writecom(unsigned char com)
+ 135          {
+ 136   1        RS=0;
+ 137   1        RW=0;
  138   1        E=0;
- 139   1      }
- 140          
- 141          void initlcd()
- 142          {
- 143   1        writecom(0x38);
- 144   1        writecom(0x0c);
- 145   1        writecom(0x06);
- 146   1        writecom(0x01);
- 147   1      }
- 148          
- 149          void display()
- 150          {
- 151   1        unsigned char temp0=0,temp1=0,temp2=0,i=0;
- 152   1        temp0=readtemp/100;
- 153   1        temp1=(readtemp%100)/10;
- 154   1        temp2=readtemp%10;
- 155   1        
- 156   1        writecom(0x80);
- 157   1        delay(5);
- 158   1        while(s[i]!='\0')
- 159   1        {
- 160   2          writedat(s[i]);
- 161   2          delay(5);
- 162   2          i++;
- 163   2        }
- 164   1        writecom(0x80+0x40+6);
- 165   1        writedat(str[temp0]);
- 166   1        delay(5);
- 167   1        writedat(str[temp1]);
- 168   1        delay(5);
- 169   1        writedat(str[temp2]);
-C51 COMPILER V9.54   DS18B20                                                               01/24/2022 23:49:48 PAGE 4   
-
+ 139   1        P1=com;
+ 140   1        delay(5);
+ 141   1        E=1;
+ 142   1        E=0;
+ 143   1      }
+ 144          
+ 145          void initlcd()
+ 146          {
+ 147   1        writecom(0x38);
+ 148   1        writecom(0x0c);
+ 149   1        writecom(0x06);
+ 150   1        writecom(0x01);
+ 151   1      }
+ 152          
+ 153          void display()
+ 154          {
+ 155   1        unsigned char temp0=0,temp1=0,temp2=0,i=0;
+ 156   1        temp0=readtemp/100;
+ 157   1        temp1=(readtemp%100)/10;
+ 158   1        temp2=readtemp%10;
+ 159   1        
+ 160   1        writecom(0x80);
+ 161   1        delay(5);
+ 162   1        while(s[i]!='\0')
+ 163   1        {
+ 164   2          writedat(s[i]);
+ 165   2          delay(5);
+ 166   2          i++;
+ 167   2        }
+ 168   1        writecom(0x80+0x40+6);
+ 169   1        writedat(str[temp0]);
  170   1        delay(5);
- 171   1        writedat('C');
+ 171   1        writedat(str[temp1]);
+C51 COMPILER V9.54   DS18B20                                                               01/26/2022 03:54:05 PAGE 4   
+
  172   1        delay(5);
- 173   1      }
- 174          
- 175          
- 176          // ------ lcd  end-----
- 177          
+ 173   1        writedat(str[temp2]);
+ 174   1        delay(5);
+ 175   1        writedat('C');
+ 176   1        delay(5);
+ 177   1      }
  178          
  179          
- 180          int main()
- 181          {
- 182   1          // printf("hellow world");
- 183   1          initlcd();
- 184   1          while (1)
- 185   1          {
- 186   2              /* code */
- 187   2              // readt
- 188   2          readtemp=ReadTemperature();
- 189   2          display();
- 190   2      
- 191   2      
- 192   2          }
- 193   1          
- 194   1          /* code */
- 195   1          // return 0;
- 196   1      }
- 197          
-*** WARNING C294 IN LINE 61 OF DS18B20.c: unreachable code
-*** WARNING C291 IN LINE 62 OF DS18B20.c: not every exit path returns a value
-*** WARNING C290 IN LINE 83 OF DS18B20.c: missing return value
+ 180          // ------ lcd  end-----
+ 181          
+ 182          
+ 183          
+ 184          int main()
+ 185          {
+ 186   1          // printf("hellow world");
+ 187   1          initlcd();
+ 188   1          while (1)
+ 189   1          {
+ 190   2              /* code */
+ 191   2              // readt
+ 192   2            readtemp=ReadTemperature();
+ 193   2            display();
+ 194   2      
+ 195   2      
+ 196   2          }
+ 197   1          
+ 198   1          /* code */
+ 199   1          // return 0;
+ 200   1      }
+ 201          
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    419    ----
+   CODE SIZE        =    418    ----
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
@@ -236,4 +235,4 @@ MODULE INFORMATION:   STATIC OVERLAYABLE
 END OF MODULE INFORMATION.
 
 
-C51 COMPILATION COMPLETE.  5 WARNING(S),  0 ERROR(S)
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

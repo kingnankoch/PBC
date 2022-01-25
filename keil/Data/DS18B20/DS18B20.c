@@ -1,8 +1,6 @@
 #include "reg51.h"
 // #include "stdio.h"
 
-// 温度传感器的
-sbit DQ = P3^3;
 
 
 // ------ lcd  start-----
@@ -10,12 +8,17 @@ sbit RS=P3^0;
 sbit RW=P3^1;
 sbit E=P3^2;
 // sbit DQ=P3^3;
-unsigned int readtemp=0;
+unsigned int readtemp = 0;
 unsigned char str[]={"0123456789"};
 unsigned char s[]={"Temperature:"};
 
 
 // ------ lcd  end-----
+
+// 温度传感器的
+sbit DQ = P3^3;
+
+
 
 // 延时函数 因为 DS18B20函数的 时序 中的 在读的0的模式需要 15ms 在读1 的情况下需要 5ms左右
 void delay_18B20(unsigned int i){
@@ -53,19 +56,20 @@ unsigned char ReadOneChar(void){
         // delay_18B20(8);
         dat >>= 1; //每次读取1位后，数据向右移位 ；移位处理的时间需要1us以上，所以不需要再延时
         DQ = 1; //拉高总线
+
         if(DQ){ //如果DQ是1
             dat |= 0x80; //把数据第一位变成高位
             delay_18B20(4); //等待60us
         }
-        return (dat);
     }
+		return (dat);
 }
 
 // 写时序
 // 写时序包含写0和1，
 // 写0的过程中要把总线的时间拉低60us 保证  DS18B20能在 15us-45us之间正确采样I/O总线上的 0电平
 // 在写 1的时候要在15us以内拉高电平，
-unsigned char WriteOneChar(unsigned char dat){
+void WriteOneChar(unsigned char dat){
     unsigned char i=0;
     for (i = 8; i > 0; i++) {
         DQ = 0;
@@ -78,7 +82,7 @@ unsigned char WriteOneChar(unsigned char dat){
             DQ = 1;
         }
         // 例如5>>=1,首先将5转换为2进制，结果是0101，右移一位就成了0010，转换回十进制就成了2了，就这样
-        dat >> 1;
+        dat >>= 1;
     }
 }
 
@@ -185,8 +189,8 @@ int main()
     {
         /* code */
         // readt
-		readtemp=ReadTemperature();
-		display();
+			readtemp=ReadTemperature();
+			display();
 
 
     }
