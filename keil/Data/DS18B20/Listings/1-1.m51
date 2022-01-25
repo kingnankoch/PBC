@@ -1,4 +1,4 @@
-BL51 BANKED LINKER/LOCATER V6.22                                                        01/26/2022  03:54:06  PAGE 1
+BL51 BANKED LINKER/LOCATER V6.22                                                        01/26/2022  04:59:38  PAGE 1
 
 
 BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
@@ -33,17 +33,17 @@ LINK MAP OF MODULE:  .\Objects\1-1 (DS18B20)
             CODE    0800H     008CH     UNIT         ?C_C51STARTUP
             CODE    088CH     0077H     UNIT         ?PR?DISPLAY?DS18B20
             CODE    0903H     0055H     UNIT         ?C?LIB_CODE
-            CODE    0958H     003CH     UNIT         ?PR?READTEMPERATURE?DS18B20
-            CODE    0994H     002AH     UNIT         ?PR?_DELAY?DS18B20
-            CODE    09BEH     0028H     UNIT         ?PR?INIT_DS18B20?DS18B20
-            CODE    09E6H     0023H     UNIT         ?PR?_WRITEONECHAR?DS18B20
-            CODE    0A09H     0021H     UNIT         ?C_INITSEG
-            CODE    0A2AH     001EH     UNIT         ?PR?READONECHAR?DS18B20
-            CODE    0A48H     0018H     UNIT         ?PR?_DELAY_18B20?DS18B20
-            CODE    0A60H     0014H     UNIT         ?PR?INITLCD?DS18B20
-            CODE    0A74H     0010H     UNIT         ?PR?_WRITEDAT?DS18B20
-            CODE    0A84H     0010H     UNIT         ?PR?_WRITECOM?DS18B20
-            CODE    0A94H     0010H     UNIT         ?PR?MAIN?DS18B20
+            CODE    0958H     003EH     UNIT         ?PR?READTEMPERATURE?DS18B20
+            CODE    0996H     002CH     UNIT         ?PR?READONECHAR?DS18B20
+            CODE    09C2H     002AH     UNIT         ?PR?_DELAY?DS18B20
+            CODE    09ECH     0028H     UNIT         ?PR?INIT_DS18B20?DS18B20
+            CODE    0A14H     0023H     UNIT         ?PR?_WRITEONECHAR?DS18B20
+            CODE    0A37H     0021H     UNIT         ?C_INITSEG
+            CODE    0A58H     0018H     UNIT         ?PR?_DELAY_18B20?DS18B20
+            CODE    0A70H     0014H     UNIT         ?PR?INITLCD?DS18B20
+            CODE    0A84H     0010H     UNIT         ?PR?_WRITEDAT?DS18B20
+            CODE    0A94H     0010H     UNIT         ?PR?_WRITECOM?DS18B20
+            CODE    0AA4H     0010H     UNIT         ?PR?MAIN?DS18B20
 
 
 
@@ -59,7 +59,7 @@ SEGMENT                               DATA_GROUP
 
 ?PR?MAIN?DS18B20                    -----    -----
   +--> ?PR?INITLCD?DS18B20
-BL51 BANKED LINKER/LOCATER V6.22                                                      01/26/2022  03:54:06  PAGE 2
+BL51 BANKED LINKER/LOCATER V6.22                                                      01/26/2022  04:59:38  PAGE 2
 
 
   +--> ?PR?READTEMPERATURE?DS18B20
@@ -103,95 +103,97 @@ SYMBOL TABLE OF MODULE:  .\Objects\1-1 (DS18B20)
 
   -------         MODULE        DS18B20
   C:0000H         SYMBOL        _ICE_DUMMY_
-  C:0A4FH         PUBLIC        _delay_18B20
+  C:0A5FH         PUBLIC        _delay_18B20
   D:0090H         PUBLIC        P1
   D:00B0H         PUBLIC        P3
-  C:099EH         PUBLIC        _delay
+  C:09CCH         PUBLIC        _delay
   C:0958H         PUBLIC        ReadTemperature
   B:00B0H.3       PUBLIC        DQ
-  C:0A2AH         PUBLIC        ReadOneChar
+  C:0996H         PUBLIC        ReadOneChar
   B:00B0H.0       PUBLIC        RS
-  C:0A94H         PUBLIC        main
+  C:0AA4H         PUBLIC        main
   B:00B0H.1       PUBLIC        RW
-  C:09E6H         PUBLIC        _WriteOneChar
-  C:09BEH         PUBLIC        init_DS18B20
+  C:0A14H         PUBLIC        _WriteOneChar
+  C:09ECH         PUBLIC        init_DS18B20
   B:00B0H.2       PUBLIC        E
   D:0008H         PUBLIC        readtemp
   D:000AH         PUBLIC        str
-  C:0A74H         PUBLIC        _writedat
-BL51 BANKED LINKER/LOCATER V6.22                                                      01/26/2022  03:54:06  PAGE 3
+  C:0A84H         PUBLIC        _writedat
+BL51 BANKED LINKER/LOCATER V6.22                                                      01/26/2022  04:59:38  PAGE 3
 
 
-  C:0A60H         PUBLIC        initlcd
-  C:0A84H         PUBLIC        _writecom
+  C:0A70H         PUBLIC        initlcd
+  C:0A94H         PUBLIC        _writecom
   D:0015H         PUBLIC        s
   C:088CH         PUBLIC        display
   -------         PROC          L?0042
   -------         ENDPROC       L?0042
   -------         PROC          _DELAY_18B20
   D:0006H         SYMBOL        i
-  C:0A4FH         LINE#         24
-  C:0A4FH         LINE#         25
-  C:0A5FH         LINE#         26
+  C:0A5FH         LINE#         24
+  C:0A5FH         LINE#         25
+  C:0A6FH         LINE#         26
   -------         ENDPROC       _DELAY_18B20
   -------         PROC          INIT_DS18B20
   -------         DO            
   D:0005H         SYMBOL        x
   -------         ENDDO         
-  C:09BEH         LINE#         34
-  C:09BEH         LINE#         35
-  C:09C0H         LINE#         36
-  C:09C2H         LINE#         37
-  C:09C8H         LINE#         38
-  C:09CAH         LINE#         39
-  C:09D1H         LINE#         40
-  C:09D3H         LINE#         41
-  C:09DAH         LINE#         42
-  C:09DFH         LINE#         43
+  C:09ECH         LINE#         38
+  C:09ECH         LINE#         39
+  C:09EEH         LINE#         40
+  C:09F0H         LINE#         41
+  C:09F6H         LINE#         42
+  C:09F8H         LINE#         43
+  C:09FFH         LINE#         44
+  C:0A01H         LINE#         45
+  C:0A08H         LINE#         46
+  C:0A0DH         LINE#         47
   -------         ENDPROC       INIT_DS18B20
   -------         PROC          READONECHAR
   -------         DO            
   D:0005H         SYMBOL        i
   D:0004H         SYMBOL        dat
   -------         ENDDO         
-  C:0A2AH         LINE#         51
-  C:0A2AH         LINE#         52
-  C:0A2BH         LINE#         53
-  C:0A2CH         LINE#         54
-  C:0A2EH         LINE#         55
-  C:0A30H         LINE#         58
-  C:0A32H         LINE#         59
-  C:0A36H         LINE#         60
-  C:0A39H         LINE#         61
-  C:0A3CH         LINE#         62
-  C:0A43H         LINE#         63
-  C:0A43H         LINE#         64
-  C:0A45H         LINE#         65
-  C:0A47H         LINE#         66
+  C:0996H         LINE#         55
+  C:0996H         LINE#         56
+  C:0997H         LINE#         57
+  C:0998H         LINE#         58
+  C:099AH         LINE#         59
+  C:099CH         LINE#         60
+  C:09A3H         LINE#         61
+  C:09A7H         LINE#         62
+  C:09A9H         LINE#         63
+  C:09B0H         LINE#         64
+  C:09B3H         LINE#         65
+  C:09B6H         LINE#         66
+  C:09BDH         LINE#         67
+  C:09BDH         LINE#         68
+  C:09BFH         LINE#         69
+  C:09C1H         LINE#         70
   -------         ENDPROC       READONECHAR
   -------         PROC          _WRITEONECHAR
   D:0005H         SYMBOL        dat
   -------         DO            
   D:0003H         SYMBOL        i
   -------         ENDDO         
-  C:09E6H         LINE#         72
-  C:09E8H         LINE#         73
-  C:09E8H         LINE#         74
-  C:09EAH         LINE#         75
-  C:09ECH         LINE#         76
-BL51 BANKED LINKER/LOCATER V6.22                                                      01/26/2022  03:54:06  PAGE 4
+  C:0A14H         LINE#         76
+  C:0A16H         LINE#         77
+  C:0A16H         LINE#         78
+BL51 BANKED LINKER/LOCATER V6.22                                                      01/26/2022  04:59:38  PAGE 4
 
 
-  C:09F0H         LINE#         77
-  C:09F3H         LINE#         78
-  C:09F5H         LINE#         79
-  C:09F5H         LINE#         80
-  C:09F7H         LINE#         81
-  C:09FEH         LINE#         82
-  C:0A00H         LINE#         83
-  C:0A00H         LINE#         85
-  C:0A04H         LINE#         86
-  C:0A08H         LINE#         87
+  C:0A18H         LINE#         79
+  C:0A1AH         LINE#         80
+  C:0A1EH         LINE#         81
+  C:0A21H         LINE#         82
+  C:0A23H         LINE#         83
+  C:0A23H         LINE#         84
+  C:0A25H         LINE#         85
+  C:0A2CH         LINE#         86
+  C:0A2EH         LINE#         87
+  C:0A2EH         LINE#         89
+  C:0A32H         LINE#         90
+  C:0A36H         LINE#         91
   -------         ENDPROC       _WRITEONECHAR
   -------         PROC          READTEMPERATURE
   -------         DO            
@@ -199,82 +201,82 @@ SYMBOL TABLE OF MODULE:  .\Objects\1-1 (DS18B20)
   D:0007H         SYMBOL        b
   D:0004H         SYMBOL        temp
   -------         ENDDO         
-  C:0958H         LINE#         90
-  C:0958H         LINE#         91
-  C:095BH         LINE#         92
-  C:095DH         LINE#         94
-  C:0960H         LINE#         96
-  C:0965H         LINE#         97
-  C:0967H         LINE#         98
-  C:096AH         LINE#         99
-  C:096DH         LINE#         100
-  C:0972H         LINE#         101
-  C:0974H         LINE#         102
-  C:0977H         LINE#         103
-  C:097CH         LINE#         104
-  C:097FH         LINE#         107
-  C:0992H         LINE#         108
-  C:0993H         LINE#         109
+  C:0958H         LINE#         94
+  C:0958H         LINE#         95
+  C:095BH         LINE#         96
+  C:095DH         LINE#         98
+  C:0960H         LINE#         100
+  C:0965H         LINE#         101
+  C:0967H         LINE#         102
+  C:096AH         LINE#         103
+  C:096DH         LINE#         104
+  C:0972H         LINE#         105
+  C:0974H         LINE#         106
+  C:0977H         LINE#         107
+  C:097CH         LINE#         108
+  C:097FH         LINE#         111
+  C:0992H         LINE#         112
+  C:0995H         LINE#         113
   -------         ENDPROC       READTEMPERATURE
-  C:0994H         SYMBOL        L?0039
-  C:0997H         SYMBOL        L?0040
-  C:099AH         SYMBOL        L?0041
+  C:09C2H         SYMBOL        L?0039
+  C:09C5H         SYMBOL        L?0040
+  C:09C8H         SYMBOL        L?0041
   -------         PROC          L?0038
   -------         ENDPROC       L?0038
-  C:0994H         SYMBOL        L?0039
-  C:0997H         SYMBOL        L?0040
-  C:099AH         SYMBOL        L?0041
+  C:09C2H         SYMBOL        L?0039
+  C:09C5H         SYMBOL        L?0040
+  C:09C8H         SYMBOL        L?0041
   -------         PROC          _DELAY
   D:0006H         SYMBOL        n
   -------         DO            
   D:0004H         SYMBOL        i
   D:0002H         SYMBOL        j
   -------         ENDDO         
-  C:099EH         LINE#         113
-  C:099EH         LINE#         114
-  C:099EH         LINE#         115
-  C:09A1H         LINE#         116
-  C:09A8H         LINE#         117
-  C:09A8H         LINE#         118
-  C:09B6H         LINE#         119
-  C:09BDH         LINE#         120
+  C:09CCH         LINE#         117
+  C:09CCH         LINE#         118
+  C:09CCH         LINE#         119
+  C:09CFH         LINE#         120
+  C:09D6H         LINE#         121
+  C:09D6H         LINE#         122
+  C:09E4H         LINE#         123
+BL51 BANKED LINKER/LOCATER V6.22                                                      01/26/2022  04:59:38  PAGE 5
+
+
+  C:09EBH         LINE#         124
   -------         ENDPROC       _DELAY
-BL51 BANKED LINKER/LOCATER V6.22                                                      01/26/2022  03:54:06  PAGE 5
-
-
   -------         PROC          _WRITEDAT
   D:0007H         SYMBOL        dat
-  C:0A74H         LINE#         123
-  C:0A74H         LINE#         124
-  C:0A74H         LINE#         125
-  C:0A76H         LINE#         126
-  C:0A78H         LINE#         127
-  C:0A7AH         LINE#         128
-  C:0A7CH         LINE#         129
-  C:0A7FH         LINE#         130
-  C:0A81H         LINE#         131
-  C:0A83H         LINE#         132
+  C:0A84H         LINE#         127
+  C:0A84H         LINE#         128
+  C:0A84H         LINE#         129
+  C:0A86H         LINE#         130
+  C:0A88H         LINE#         131
+  C:0A8AH         LINE#         132
+  C:0A8CH         LINE#         133
+  C:0A8FH         LINE#         134
+  C:0A91H         LINE#         135
+  C:0A93H         LINE#         136
   -------         ENDPROC       _WRITEDAT
   -------         PROC          _WRITECOM
   D:0007H         SYMBOL        com
-  C:0A84H         LINE#         134
-  C:0A84H         LINE#         135
-  C:0A84H         LINE#         136
-  C:0A86H         LINE#         137
-  C:0A88H         LINE#         138
-  C:0A8AH         LINE#         139
-  C:0A8CH         LINE#         140
-  C:0A8FH         LINE#         141
-  C:0A91H         LINE#         142
-  C:0A93H         LINE#         143
+  C:0A94H         LINE#         138
+  C:0A94H         LINE#         139
+  C:0A94H         LINE#         140
+  C:0A96H         LINE#         141
+  C:0A98H         LINE#         142
+  C:0A9AH         LINE#         143
+  C:0A9CH         LINE#         144
+  C:0A9FH         LINE#         145
+  C:0AA1H         LINE#         146
+  C:0AA3H         LINE#         147
   -------         ENDPROC       _WRITECOM
   -------         PROC          INITLCD
-  C:0A60H         LINE#         145
-  C:0A60H         LINE#         146
-  C:0A60H         LINE#         147
-  C:0A65H         LINE#         148
-  C:0A6AH         LINE#         149
-  C:0A6FH         LINE#         150
+  C:0A70H         LINE#         149
+  C:0A70H         LINE#         150
+  C:0A70H         LINE#         151
+  C:0A75H         LINE#         152
+  C:0A7AH         LINE#         153
+  C:0A7FH         LINE#         154
   -------         ENDPROC       INITLCD
   -------         PROC          DISPLAY
   -------         DO            
@@ -283,42 +285,42 @@ SYMBOL TABLE OF MODULE:  .\Objects\1-1 (DS18B20)
   D:0001H         SYMBOL        temp2
   D:0024H         SYMBOL        i
   -------         ENDDO         
-  C:088CH         LINE#         153
-  C:088CH         LINE#         154
-  C:088CH         LINE#         155
-  C:0893H         LINE#         156
-  C:089FH         LINE#         157
-  C:08B9H         LINE#         158
-  C:08C6H         LINE#         160
-  C:08CBH         LINE#         161
-  C:08CEH         LINE#         162
-  C:08D7H         LINE#         163
-  C:08D7H         LINE#         164
-  C:08D7H         LINE#         165
-  C:08DAH         LINE#         166
-  C:08DCH         LINE#         167
-  C:08DEH         LINE#         168
-  C:08E3H         LINE#         169
-BL51 BANKED LINKER/LOCATER V6.22                                                      01/26/2022  03:54:06  PAGE 6
+  C:088CH         LINE#         157
+  C:088CH         LINE#         158
+  C:088CH         LINE#         159
+  C:0893H         LINE#         160
+  C:089FH         LINE#         161
+  C:08B9H         LINE#         162
+  C:08C6H         LINE#         164
+  C:08CBH         LINE#         165
+  C:08CEH         LINE#         166
+  C:08D7H         LINE#         167
+  C:08D7H         LINE#         168
+  C:08D7H         LINE#         169
+  C:08DAH         LINE#         170
+  C:08DCH         LINE#         171
+BL51 BANKED LINKER/LOCATER V6.22                                                      01/26/2022  04:59:38  PAGE 6
 
 
-  C:08E7H         LINE#         170
-  C:08EAH         LINE#         171
-  C:08EEH         LINE#         172
-  C:08F1H         LINE#         173
-  C:08F4H         LINE#         174
-  C:08F7H         LINE#         175
-  C:08FCH         LINE#         176
+  C:08DEH         LINE#         172
+  C:08E3H         LINE#         173
+  C:08E7H         LINE#         174
+  C:08EAH         LINE#         175
+  C:08EEH         LINE#         176
+  C:08F1H         LINE#         177
+  C:08F4H         LINE#         178
+  C:08F7H         LINE#         179
+  C:08FCH         LINE#         180
   -------         ENDPROC       DISPLAY
   -------         PROC          MAIN
-  C:0A94H         LINE#         184
-  C:0A94H         LINE#         185
-  C:0A94H         LINE#         187
-  C:0A97H         LINE#         188
-  C:0A97H         LINE#         189
-  C:0A97H         LINE#         192
-  C:0A9FH         LINE#         193
-  C:0AA2H         LINE#         196
+  C:0AA4H         LINE#         188
+  C:0AA4H         LINE#         189
+  C:0AA4H         LINE#         191
+  C:0AA7H         LINE#         192
+  C:0AA7H         LINE#         193
+  C:0AA7H         LINE#         196
+  C:0AAFH         LINE#         197
+  C:0AB2H         LINE#         200
   -------         ENDPROC       MAIN
   -------         ENDMOD        DS18B20
 
@@ -327,8 +329,8 @@ SYMBOL TABLE OF MODULE:  .\Objects\1-1 (DS18B20)
   -------         ENDMOD        ?C?UIDIV
 
 ******************************************************************************
-* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 01C2H BYTE (21%) *
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 01D2H BYTE (22%) *
 ******************************************************************************
 
-Program Size: data=38.0 xdata=0 code=679
+Program Size: data=38.0 xdata=0 code=695
 LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

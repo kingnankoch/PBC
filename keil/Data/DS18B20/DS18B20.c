@@ -24,6 +24,10 @@ sbit DQ = P3^3;
 void delay_18B20(unsigned int i){
     for (; i > 0; i--);
 }
+
+
+
+
 // 初始化 DS18B20
 
 // 精度分为 9、10、11、12 位，默认 12位
@@ -53,11 +57,11 @@ unsigned char ReadOneChar(void){
     unsigned char dat = 0;
     for(i = 8;i > 0; i--){
         DQ = 0; //先拉低总线
-        // delay_18B20(8);
+        delay_18B20(8);
         dat >>= 1; //每次读取1位后，数据向右移位 ；移位处理的时间需要1us以上，所以不需要再延时
         DQ = 1; //拉高总线
-
-        if(DQ){ //如果DQ是1
+				delay_18B20(8);
+        if(DQ == 1){ //如果DQ是1
             dat |= 0x80; //把数据第一位变成高位
             delay_18B20(4); //等待60us
         }
@@ -105,7 +109,7 @@ unsigned char ReadTemperature(){
     //因为读取到的数据是二进制的 
     // 采集的温度除16得到实际温度, 因为只采集到12位数据，高四位是没有数据的
     temp = ((b * 256 + a) >> 4); 
-    return (temp);
+    return(temp -10);
 }
 
 // ------ lcd ------------
