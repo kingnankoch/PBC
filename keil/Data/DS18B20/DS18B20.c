@@ -1,6 +1,7 @@
 #include "reg51.h"
 // #include "stdio.h"
 
+// 经过多天的寻找bug 最核心的问题是 if(DQ) 这段在程序中不起到任何的作用，但是我误以为是个判断
 
 
 // ------ lcd  start-----
@@ -38,14 +39,13 @@ void delay_18B20(unsigned int i){
 void init_DS18B20(void){
     unsigned char x = 0;
     DQ = 1; 
-    delay_18B20(8);//拉低电平前 先保持高电平一段时间
+    delay_18B20(8); //拉低电平前 先保持高电平一段时间
     DQ = 0;
     delay_18B20(80);//拉低电平保持 480us-960us 后然后释放（
     DQ = 1; //拉高，等待 DS18B20反应
     delay_18B20(14); // 等待12-60us 后查看数据线的状态
-    x = DQ;//如果 是初始化成功，那么会产生一个低电平 若X= 0表示成功
+    x = DQ; //如果 是初始化成功，那么会产生一个低电平 若X= 0表示成功
     delay_18B20(20); //60-240us
-
 }
 
 
@@ -57,16 +57,15 @@ unsigned char ReadOneChar(void){
     unsigned char dat = 0;
     for(i = 8;i > 0; i--){
         DQ = 0; //先拉低总线
-        delay_18B20(8);
+        // delay_18B20(8);
         dat >>= 1; //每次读取1位后，数据向右移位 ；移位处理的时间需要1us以上，所以不需要再延时
         DQ = 1; //拉高总线
-				delay_18B20(8);
-        if(DQ == 1){ //如果DQ是1
-            dat |= 0x80; //把数据第一位变成高位
-            delay_18B20(4); //等待60us
-        }
+        if(DQ)//如果DQ是1 这段程序在 不起到任何的作用
+        dat |= 0x80; //把数据第一位变成高位
+        delay_18B20(4); //等待60us
+        
     }
-		return (dat);
+	return(dat);
 }
 
 // 写时序
@@ -75,7 +74,7 @@ unsigned char ReadOneChar(void){
 // 在写 1的时候要在15us以内拉高电平，
 void WriteOneChar(unsigned char dat){
     unsigned char i=0;
-    for (i = 8; i > 0; i++) {
+    for (i = 8; i > 0; i--) {
         DQ = 0;
         DQ = dat & 0x01;
         if(DQ) {
@@ -109,7 +108,7 @@ unsigned char ReadTemperature(){
     //因为读取到的数据是二进制的 
     // 采集的温度除16得到实际温度, 因为只采集到12位数据，高四位是没有数据的
     temp = ((b * 256 + a) >> 4); 
-    return(temp -10);
+    return(temp);
 }
 
 // ------ lcd ------------
@@ -193,8 +192,8 @@ int main()
     {
         /* code */
         // readt
-			readtemp=ReadTemperature();
-			display();
+        readtemp=ReadTemperature();
+        display();
 
 
     }
