@@ -1,0 +1,185 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        01/29/2022  03:02:35  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+C:\PROGRAM FILES\KEIL_V5\C51\BIN\BL51.EXE .\Objects\DC_motor.obj TO .\Objects\1-1 PRINT (.\Listings\1-1.m51)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\Objects\DC_motor.obj (DC_MOTOR)
+  C:\PROGRAM FILES\KEIL_V5\C51\LIB\C51S.LIB (?C_STARTUP)
+  C:\PROGRAM FILES\KEIL_V5\C51\LIB\C51S.LIB (?C?SLDIV)
+  C:\PROGRAM FILES\KEIL_V5\C51\LIB\C51S.LIB (?C_INIT)
+  C:\PROGRAM FILES\KEIL_V5\C51\LIB\C51S.LIB (?C?ULDIV)
+
+
+LINK MAP OF MODULE:  .\Objects\1-1 (DC_MOTOR)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0004H     UNIT         ?DT?DC_MOTOR
+            IDATA   000CH     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+                    0003H     0008H                  *** GAP ***
+            CODE    000BH     0003H     ABSOLUTE     
+                    000EH     07F2H                  *** GAP ***
+            CODE    0800H     00CEH     UNIT         ?C?LIB_CODE
+            CODE    08CEH     0096H     UNIT         ?PR?TIMER_ISR?DC_MOTOR
+            CODE    0964H     008CH     UNIT         ?C_C51STARTUP
+            CODE    09F0H     0044H     UNIT         ?C?LDIV
+            CODE    0A34H     0020H     UNIT         ?PR?_DELAY?DC_MOTOR
+            CODE    0A54H     0013H     UNIT         ?PR?MOTOR50?DC_MOTOR
+            CODE    0A67H     0012H     UNIT         ?PR?INITTIME?DC_MOTOR
+            CODE    0A79H     0008H     UNIT         ?PR?MAIN?DC_MOTOR
+            CODE    0A81H     0007H     UNIT         ?PR?MOTOR?DC_MOTOR
+            CODE    0A88H     0007H     UNIT         ?C_INITSEG
+            CODE    0A8FH     0005H     UNIT         ?PR?MOTORTIME?DC_MOTOR
+
+
+
+OVERLAY MAP OF MODULE:   .\Objects\1-1 (DC_MOTOR)
+
+
+SEGMENT
+  +--> CALLED SEGMENT
+---------------------
+?C_C51STARTUP
+  +--> ?PR?MAIN?DC_MOTOR
+  +--> ?C_INITSEG
+
+?PR?MAIN?DC_MOTOR
+  +--> ?PR?INITTIME?DC_MOTOR
+  +--> ?PR?MOTORTIME?DC_MOTOR
+BL51 BANKED LINKER/LOCATER V6.22                                                      01/29/2022  03:02:35  PAGE 2
+
+
+
+
+
+SYMBOL TABLE OF MODULE:  .\Objects\1-1 (DC_MOTOR)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        DC_MOTOR
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:00A0H         PUBLIC        P2
+  B:00A8H.7       PUBLIC        EA
+  C:0A34H         PUBLIC        _delay
+  C:0A54H         PUBLIC        motor50
+  D:0008H         PUBLIC        value
+  C:0A79H         PUBLIC        main
+  C:0A81H         PUBLIC        motor
+  D:0089H         PUBLIC        TMOD
+  B:00A0H.2       PUBLIC        E
+  C:0A8FH         PUBLIC        motorTime
+  C:0A67H         PUBLIC        initTime
+  B:00A0H.0       PUBLIC        IN1
+  B:00A0H.1       PUBLIC        IN2
+  B:00A8H.1       PUBLIC        ET0
+  D:008CH         PUBLIC        TH0
+  D:008AH         PUBLIC        TL0
+  C:08CEH         PUBLIC        timer_isr
+  B:0088H.4       PUBLIC        TR0
+  -------         PROC          _DELAY
+  D:0006H         SYMBOL        n
+  -------         DO            
+  D:0004H         SYMBOL        i
+  D:0002H         SYMBOL        j
+  -------         ENDDO         
+  C:0A34H         LINE#         13
+  C:0A34H         LINE#         14
+  C:0A34H         LINE#         15
+  C:0A37H         LINE#         16
+  C:0A3EH         LINE#         17
+  C:0A3EH         LINE#         18
+  C:0A4CH         LINE#         19
+  C:0A53H         LINE#         20
+  -------         ENDPROC       _DELAY
+  -------         PROC          MOTOR
+  C:0A81H         LINE#         24
+  C:0A81H         LINE#         25
+  C:0A83H         LINE#         26
+  C:0A85H         LINE#         27
+  C:0A87H         LINE#         28
+  -------         ENDPROC       MOTOR
+  -------         PROC          MOTOR50
+  C:0A54H         LINE#         31
+  C:0A54H         LINE#         32
+  C:0A56H         LINE#         33
+  C:0A58H         LINE#         34
+  C:0A5FH         LINE#         35
+  C:0A61H         LINE#         36
+BL51 BANKED LINKER/LOCATER V6.22                                                      01/29/2022  03:02:35  PAGE 3
+
+
+  C:0A64H         LINE#         37
+  C:0A66H         LINE#         38
+  -------         ENDPROC       MOTOR50
+  -------         PROC          MOTORTIME
+  C:0A8FH         LINE#         40
+  C:0A8FH         LINE#         42
+  C:0A91H         LINE#         43
+  C:0A93H         LINE#         44
+  -------         ENDPROC       MOTORTIME
+  -------         PROC          INITTIME
+  C:0A67H         LINE#         46
+  C:0A67H         LINE#         47
+  C:0A6AH         LINE#         48
+  C:0A6DH         LINE#         49
+  C:0A70H         LINE#         50
+  C:0A72H         LINE#         51
+  C:0A74H         LINE#         52
+  C:0A76H         LINE#         56
+  C:0A78H         LINE#         59
+  -------         ENDPROC       INITTIME
+  -------         PROC          MAIN
+  C:0A79H         LINE#         62
+  C:0A79H         LINE#         63
+  C:0A79H         LINE#         75
+  C:0A7CH         LINE#         76
+  C:0A7CH         LINE#         77
+  C:0A7CH         LINE#         79
+  C:0A7FH         LINE#         80
+  -------         ENDPROC       MAIN
+  -------         PROC          TIMER_ISR
+  C:08CEH         LINE#         87
+  C:08EBH         LINE#         88
+  C:0918H         LINE#         89
+  C:0947H         LINE#         93
+  C:0949H         LINE#         96
+  -------         ENDPROC       TIMER_ISR
+  -------         ENDMOD        DC_MOTOR
+
+  -------         MODULE        ?C?SLDIV
+  C:09F0H         PUBLIC        ?C?SLDIV
+  -------         ENDMOD        ?C?SLDIV
+
+  -------         MODULE        ?C?ULDIV
+  C:083CH         PUBLIC        ?C?ULDIV
+  -------         ENDMOD        ?C?ULDIV
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?MOTOR?DC_MOTOR
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?MOTOR50?DC_MOTOR
+
+******************************************************************************
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 00F8H BYTE (12%) *
+******************************************************************************
+
+Program Size: data=13.0 xdata=0 code=666
+BL51 BANKED LINKER/LOCATER V6.22                                                      01/29/2022  03:02:35  PAGE 4
+
+
+LINK/LOCATE RUN COMPLETE.  2 WARNING(S),  0 ERROR(S)
