@@ -48,7 +48,7 @@
           <OutputName>1-1</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
-          <CreateHexFile>1</CreateHexFile>
+          <CreateHexFile>0</CreateHexFile>
           <DebugInformation>1</DebugInformation>
           <BrowseInformation>1</BrowseInformation>
           <ListingPath>.\Listings\</ListingPath>
@@ -230,7 +230,7 @@
               <RCB>
                 <Type>0</Type>
                 <StartAddress>0x0</StartAddress>
-                <Size>0x10000</Size>
+                <Size>0x0</Size>
               </RCB>
               <RXB>
                 <Type>0</Type>
@@ -364,9 +364,9 @@
           <GroupName>Source Group 1</GroupName>
           <Files>
             <File>
-              <FileName>DC_motor.c</FileName>
+              <FileName>stepping_motor.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\DC_motor.c</FilePath>
+              <FilePath>.\stepping_motor.c</FilePath>
             </File>
           </Files>
         </Group>
