@@ -1,0 +1,105 @@
+C51 COMPILER V9.54   STEPPING_MOTOR                                                        01/31/2022 00:21:50 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE STEPPING_MOTOR
+OBJECT MODULE PLACED IN .\Objects\stepping_motor.obj
+COMPILER INVOKED BY: C:\Program Files\Keil_v5\C51\BIN\C51.EXE stepping_motor.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTE
+                    -ND PRINT(.\Listings\stepping_motor.lst) TABS(2) OBJECT(.\Objects\stepping_motor.obj)
+
+line level    source
+
+   1          #include"reg51.h"
+   2          // #include "stdio.h"
+   3          unsigned char str[] = {0x09, 0x08, 0x0C, 0x04, 0x06, 0x02, 0x03, 0x01};//1001 1000 1100 0100 0110 0010 001
+             -1 0001
+   4          
+   5          unsigned int count = 0, num = 0;
+   6          // void delay(unsigned int n)
+   7          // {
+   8          //  unsigned int i=0,j=0;
+   9          //  for(i=0;i<n;i++)
+  10          //  {
+  11          //    for(j=0;j<120;j++);
+  12          //  }
+  13          // }
+  14          
+  15          
+  16          
+  17          void stepMotor(){
+  18   1          // int i =  0;
+  19   1          // for ( i = 0; i < 8; i++){
+  20   1          //     P2 = str[i];
+  21   1          //     delay(500);
+  22   1          // }
+  23   1      
+  24   1          P2 = str[num];
+  25   1          
+  26   1      }
+  27          
+  28          void initTimer(){
+  29   1          TMOD = 0x01; //选择 16位模式
+  30   1          TH0 = (65536 - 50000) / 256;
+  31   1          TL0 = (65536 - 50000) % 256;
+  32   1          ET0 = 1; //定时器中断
+  33   1          EA = 1; //开启中断
+  34   1          TR0 = 1; //开启定时器
+  35   1      
+  36   1          //  ----- 步进电机 -----
+  37   1          // P2 = str[count];
+  38   1          // count = 0;
+  39   1      
+  40   1      }
+  41           
+  42          int main()
+  43          {
+  44   1          /* code */
+  45   1          initTimer();
+  46   1          while (1)
+  47   1          {
+  48   2              stepMotor();
+  49   2          }
+  50   1          // stepMotor();
+  51   1          
+  52   1          
+  53   1          // return 0;
+C51 COMPILER V9.54   STEPPING_MOTOR                                                        01/31/2022 00:21:50 PAGE 2   
+
+  54   1      }
+  55          
+  56          // 中断服务程序    定时计数器 : 1
+  57          void timer_isr() interrupt 1 {
+  58   1          TH0 = (65536 - 50000) / 256;
+  59   1          TL0 = (65536 - 50000) % 256;
+  60   1          // ---- 步进电机  ---
+  61   1          // P2 = str[count];
+  62   1          count ++;
+  63   1          
+  64   1          if(count  == 20) {
+  65   2              
+  66   2              // num = num > 8 ? 0 : num;
+  67   2              // P2 = str[num];
+  68   2              num ++;
+  69   2              num = num > 7 ? 0 : num;
+  70   2              count = 0;
+  71   2          }
+  72   1          // count = count > 8 ? 0 : count;
+  73   1          
+  74   1      }
+  75          
+  76           
+  77          
+  78          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    110    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     12    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

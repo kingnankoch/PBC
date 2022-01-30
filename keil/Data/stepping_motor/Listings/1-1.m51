@@ -1,0 +1,128 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        01/31/2022  00:21:50  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+C:\PROGRAM FILES\KEIL_V5\C51\BIN\BL51.EXE .\Objects\stepping_motor.obj TO .\Objects\1-1 PRINT (.\Listings\1-1.m51)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\Objects\stepping_motor.obj (STEPPING_MOTOR)
+  C:\PROGRAM FILES\KEIL_V5\C51\LIB\C51S.LIB (?C_STARTUP)
+  C:\PROGRAM FILES\KEIL_V5\C51\LIB\C51S.LIB (?C_INIT)
+
+
+LINK MAP OF MODULE:  .\Objects\1-1 (STEPPING_MOTOR)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     000CH     UNIT         ?DT?STEPPING_MOTOR
+            IDATA   0014H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+                    0003H     0008H                  *** GAP ***
+            CODE    000BH     0003H     ABSOLUTE     
+                    000EH     07F2H                  *** GAP ***
+            CODE    0800H     008CH     UNIT         ?C_C51STARTUP
+            CODE    088CH     004DH     UNIT         ?PR?TIMER_ISR?STEPPING_MOTOR
+            CODE    08D9H     0013H     UNIT         ?C_INITSEG
+            CODE    08ECH     0010H     UNIT         ?PR?INITTIMER?STEPPING_MOTOR
+            CODE    08FCH     0009H     UNIT         ?PR?STEPMOTOR?STEPPING_MOTOR
+            CODE    0905H     0008H     UNIT         ?PR?MAIN?STEPPING_MOTOR
+
+
+
+OVERLAY MAP OF MODULE:   .\Objects\1-1 (STEPPING_MOTOR)
+
+
+SEGMENT
+  +--> CALLED SEGMENT
+---------------------
+?C_C51STARTUP
+  +--> ?PR?MAIN?STEPPING_MOTOR
+  +--> ?C_INITSEG
+
+?PR?MAIN?STEPPING_MOTOR
+  +--> ?PR?INITTIMER?STEPPING_MOTOR
+  +--> ?PR?STEPMOTOR?STEPPING_MOTOR
+
+
+
+SYMBOL TABLE OF MODULE:  .\Objects\1-1 (STEPPING_MOTOR)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+BL51 BANKED LINKER/LOCATER V6.22                                                      01/31/2022  00:21:50  PAGE 2
+
+
+
+  -------         MODULE        STEPPING_MOTOR
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:00A0H         PUBLIC        P2
+  B:00A8H.7       PUBLIC        EA
+  C:0905H         PUBLIC        main
+  D:0008H         PUBLIC        count
+  D:0089H         PUBLIC        TMOD
+  C:08ECH         PUBLIC        initTimer
+  B:00A8H.1       PUBLIC        ET0
+  D:008CH         PUBLIC        TH0
+  D:008AH         PUBLIC        TL0
+  D:000AH         PUBLIC        num
+  C:08FCH         PUBLIC        stepMotor
+  C:088CH         PUBLIC        timer_isr
+  B:0088H.4       PUBLIC        TR0
+  D:000CH         PUBLIC        str
+  -------         PROC          STEPMOTOR
+  C:08FCH         LINE#         17
+  C:08FCH         LINE#         24
+  C:0904H         LINE#         26
+  -------         ENDPROC       STEPMOTOR
+  -------         PROC          INITTIMER
+  C:08ECH         LINE#         28
+  C:08ECH         LINE#         29
+  C:08EFH         LINE#         30
+  C:08F2H         LINE#         31
+  C:08F5H         LINE#         32
+  C:08F7H         LINE#         33
+  C:08F9H         LINE#         34
+  C:08FBH         LINE#         40
+  -------         ENDPROC       INITTIMER
+  -------         PROC          MAIN
+  C:0905H         LINE#         42
+  C:0905H         LINE#         43
+  C:0905H         LINE#         45
+  C:0908H         LINE#         46
+  C:0908H         LINE#         47
+  C:0908H         LINE#         48
+  C:090BH         LINE#         49
+  -------         ENDPROC       MAIN
+  -------         PROC          TIMER_ISR
+  C:088CH         LINE#         57
+  C:0897H         LINE#         58
+  C:089AH         LINE#         59
+  C:089DH         LINE#         62
+  C:08A5H         LINE#         64
+  C:08ABH         LINE#         68
+  C:08B3H         LINE#         69
+  C:08CAH         LINE#         70
+  C:08D0H         LINE#         71
+  C:08D0H         LINE#         74
+  -------         ENDPROC       TIMER_ISR
+  -------         ENDMOD        STEPPING_MOTOR
+
+******************************************************************************
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 0083H BYTE ( 6%) *
+BL51 BANKED LINKER/LOCATER V6.22                                                      01/31/2022  00:21:50  PAGE 3
+
+
+******************************************************************************
+
+Program Size: data=21.0 xdata=0 code=275
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)
