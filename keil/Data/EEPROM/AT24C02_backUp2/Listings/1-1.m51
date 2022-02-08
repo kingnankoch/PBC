@@ -1,0 +1,309 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        02/09/2022  01:20:05  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+C:\PROGRAM FILES\KEIL_V5\C51\BIN\BL51.EXE .\Objects\AT24C02.obj TO .\Objects\1-1 PRINT (.\Listings\1-1.m51)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\Objects\AT24C02.obj (AT24C02)
+  C:\PROGRAM FILES\KEIL_V5\C51\LIB\C51S.LIB (?C_STARTUP)
+  C:\PROGRAM FILES\KEIL_V5\C51\LIB\C51S.LIB (?C_INIT)
+
+
+LINK MAP OF MODULE:  .\Objects\1-1 (AT24C02)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0012H     UNIT         ?DT?AT24C02
+                    001AH     0006H                  *** GAP ***
+            BIT     0020H.0   0000H.1   UNIT         _BIT_GROUP_
+                    0020H.1   0000H.7                *** GAP ***
+            IDATA   0021H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+                    0003H     07FDH                  *** GAP ***
+            CODE    0800H     008CH     UNIT         ?C_C51STARTUP
+            CODE    088CH     0039H     UNIT         ?PR?AT24C02_READ?AT24C02
+            CODE    08C5H     0029H     UNIT         ?PR?AT24C02_WRITE?AT24C02
+            CODE    08EEH     0021H     UNIT         ?PR?_DELAY?AT24C02
+            CODE    090FH     0021H     UNIT         ?PR?SEG?AT24C02
+            CODE    0930H     001CH     UNIT         ?PR?READBYTE?AT24C02
+            CODE    094CH     0019H     UNIT         ?PR?RECVACK?AT24C02
+            CODE    0965H     0019H     UNIT         ?C_INITSEG
+            CODE    097EH     0016H     UNIT         ?PR?_SENDBYTE?AT24C02
+            CODE    0994H     000FH     UNIT         ?PR?I2C_STOP?AT24C02
+            CODE    09A3H     000BH     UNIT         ?PR?I2C_STAR?AT24C02
+            CODE    09AEH     000AH     UNIT         ?PR?SENDACK?AT24C02
+            CODE    09B8H     0008H     UNIT         ?PR?UNASK?AT24C02
+            CODE    09C0H     0008H     UNIT         ?PR?MAIN?AT24C02
+
+
+
+OVERLAY MAP OF MODULE:   .\Objects\1-1 (AT24C02)
+
+
+SEGMENT                              BIT_GROUP 
+  +--> CALLED SEGMENT             START    LENGTH
+-------------------------------------------------
+?C_C51STARTUP                     -----    -----
+  +--> ?PR?MAIN?AT24C02
+  +--> ?C_INITSEG
+
+?PR?MAIN?AT24C02                  -----    -----
+BL51 BANKED LINKER/LOCATER V6.22                                                      02/09/2022  01:20:05  PAGE 2
+
+
+  +--> ?PR?AT24C02_WRITE?AT24C02
+  +--> ?PR?SEG?AT24C02
+
+?PR?AT24C02_WRITE?AT24C02         0020H.0  0000H.1
+  +--> ?PR?RECVACK?AT24C02
+  +--> ?PR?_SENDBYTE?AT24C02
+  +--> ?PR?I2C_STOP?AT24C02
+
+?PR?RECVACK?AT24C02               -----    -----
+  +--> ?PR?I2C_STAR?AT24C02
+  +--> ?PR?_SENDBYTE?AT24C02
+  +--> ?PR?_DELAY?AT24C02
+
+?PR?I2C_STAR?AT24C02              -----    -----
+  +--> ?PR?_DELAY?AT24C02
+
+?PR?_SENDBYTE?AT24C02             -----    -----
+  +--> ?PR?_DELAY?AT24C02
+
+?PR?I2C_STOP?AT24C02              -----    -----
+  +--> ?PR?_DELAY?AT24C02
+
+?PR?SEG?AT24C02                   -----    -----
+  +--> ?PR?_DELAY?AT24C02
+
+
+
+SYMBOL TABLE OF MODULE:  .\Objects\1-1 (AT24C02)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        AT24C02
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  C:09B8H         PUBLIC        unAsk
+  C:08F6H         PUBLIC        _delay
+  C:088CH         PUBLIC        AT24C02_read
+  C:09C0H         PUBLIC        main
+  C:08C5H         PUBLIC        AT24C02_write
+  C:0930H         PUBLIC        readByte
+  C:09AEH         PUBLIC        sendAck
+  D:0008H         PUBLIC        testData
+  C:090FH         PUBLIC        seg
+  C:097EH         PUBLIC        _sendByte
+  C:0954H         PUBLIC        recvAck
+  B:00B0H.0       PUBLIC        SDA
+  C:09A3H         PUBLIC        I2C_star
+  B:00B0H.1       PUBLIC        SCL
+  C:0994H         PUBLIC        I2C_stop
+  D:000CH         PUBLIC        segArr
+  D:0016H         PUBLIC        bufferData
+  C:08F0H         SYMBOL        L?0039
+  C:08F2H         SYMBOL        L?0040
+  -------         PROC          L?0038
+BL51 BANKED LINKER/LOCATER V6.22                                                      02/09/2022  01:20:05  PAGE 3
+
+
+  -------         ENDPROC       L?0038
+  C:08F0H         SYMBOL        L?0039
+  C:08F2H         SYMBOL        L?0040
+  -------         PROC          _DELAY
+  D:0006H         SYMBOL        num
+  -------         DO            
+  D:0004H         SYMBOL        i
+  -------         ENDDO         
+  C:08F6H         LINE#         53
+  C:08F6H         LINE#         54
+  C:08F9H         LINE#         55
+  C:0906H         LINE#         56
+  C:0906H         LINE#         57
+  C:0907H         LINE#         59
+  C:090EH         LINE#         60
+  -------         ENDPROC       _DELAY
+  -------         PROC          I2C_STAR
+  C:09A3H         LINE#         64
+  C:09A3H         LINE#         65
+  C:09A3H         LINE#         66
+  C:09A3H         LINE#         67
+  C:09A6H         LINE#         68
+  C:09A8H         LINE#         69
+  C:09ABH         LINE#         70
+  C:09ADH         LINE#         72
+  -------         ENDPROC       I2C_STAR
+  -------         PROC          I2C_STOP
+  C:0994H         LINE#         75
+  C:0994H         LINE#         76
+  C:0996H         LINE#         77
+  C:0998H         LINE#         78
+  C:099BH         LINE#         79
+  C:099DH         LINE#         80
+  C:09A0H         LINE#         81
+  C:09A2H         LINE#         82
+  -------         ENDPROC       I2C_STOP
+  -------         PROC          SENDACK
+  C:09AEH         LINE#         85
+  C:09AEH         LINE#         86
+  C:09B0H         LINE#         87
+  C:09B0H         LINE#         88
+  C:09B3H         LINE#         89
+  C:09B5H         LINE#         91
+  C:09B7H         LINE#         92
+  -------         ENDPROC       SENDACK
+  -------         PROC          UNASK
+  C:09B8H         LINE#         104
+  C:09B8H         LINE#         105
+  C:09B8H         LINE#         106
+  C:09B8H         LINE#         107
+  C:09BBH         LINE#         108
+  C:09BDH         LINE#         109
+  C:09BFH         LINE#         110
+  -------         ENDPROC       UNASK
+  -------         PROC          L?0041
+  -------         ENDPROC       L?0041
+  -------         PROC          RECVACK
+BL51 BANKED LINKER/LOCATER V6.22                                                      02/09/2022  01:20:05  PAGE 4
+
+
+  -------         DO            
+  D:0003H         SYMBOL        flat
+  -------         ENDDO         
+  C:0954H         LINE#         114
+  C:0954H         LINE#         116
+  C:0954H         LINE#         117
+  C:0957H         LINE#         119
+  C:095CH         LINE#         120
+  C:095EH         LINE#         121
+  C:0961H         LINE#         122
+  C:0964H         LINE#         123
+  -------         ENDPROC       RECVACK
+  -------         PROC          _SENDBYTE
+  D:0003H         SYMBOL        dat
+  -------         DO            
+  D:0002H         SYMBOL        i
+  -------         ENDDO         
+  C:097EH         LINE#         129
+  C:0980H         LINE#         131
+  C:0982H         LINE#         132
+  C:0982H         LINE#         134
+  C:0986H         LINE#         135
+  C:0986H         LINE#         136
+  C:0989H         LINE#         137
+  C:098BH         LINE#         138
+  C:098FH         LINE#         139
+  C:0993H         LINE#         141
+  -------         ENDPROC       _SENDBYTE
+  -------         PROC          READBYTE
+  -------         DO            
+  D:0002H         SYMBOL        i
+  D:0003H         SYMBOL        bufferData
+  -------         ENDDO         
+  C:0930H         LINE#         143
+  C:0930H         LINE#         146
+  C:0932H         LINE#         147
+  C:0932H         LINE#         148
+  C:0932H         LINE#         149
+  C:0935H         LINE#         150
+  C:093BH         LINE#         151
+  C:093DH         LINE#         152
+  C:0940H         LINE#         153
+  C:0944H         LINE#         154
+  C:0948H         LINE#         155
+  C:094BH         LINE#         157
+  -------         ENDPROC       READBYTE
+  -------         PROC          AT24C02_WRITE
+  -------         DO            
+  D:0001H         SYMBOL        i
+  B:0020H.0       SYMBOL        flat
+  -------         ENDDO         
+  C:08C5H         LINE#         176
+  C:08C5H         LINE#         179
+  C:08C5H         LINE#         180
+  C:08C5H         LINE#         182
+  C:08CAH         LINE#         183
+  C:08CFH         LINE#         184
+BL51 BANKED LINKER/LOCATER V6.22                                                      02/09/2022  01:20:05  PAGE 5
+
+
+  C:08D4H         LINE#         187
+  C:08D6H         LINE#         188
+  C:08D6H         LINE#         189
+  C:08DFH         LINE#         190
+  C:08E4H         LINE#         191
+  C:08E7H         LINE#         192
+  C:08EBH         LINE#         193
+  -------         ENDPROC       AT24C02_WRITE
+  -------         PROC          AT24C02_READ
+  -------         DO            
+  D:0001H         SYMBOL        i
+  D:0001H         SYMBOL        flat
+  -------         ENDDO         
+  C:088CH         LINE#         239
+  C:088CH         LINE#         241
+  C:088CH         LINE#         242
+  C:088CH         LINE#         243
+  C:0892H         LINE#         244
+  C:0897H         LINE#         245
+  C:089DH         LINE#         247
+  C:08A0H         LINE#         248
+  C:08A5H         LINE#         249
+  C:08A7H         LINE#         250
+  C:08A7H         LINE#         252
+  C:08B3H         LINE#         259
+  C:08BEH         LINE#         260
+  C:08C2H         LINE#         262
+  -------         ENDPROC       AT24C02_READ
+  -------         PROC          SEG
+  -------         DO            
+  D:0002H         SYMBOL        i
+  -------         ENDDO         
+  C:090FH         LINE#         266
+  C:090FH         LINE#         268
+  C:0912H         LINE#         269
+  C:091DH         LINE#         270
+  C:0924H         LINE#         271
+  C:092FH         LINE#         273
+  -------         ENDPROC       SEG
+  -------         PROC          MAIN
+  C:09C0H         LINE#         276
+  C:09C0H         LINE#         277
+  C:09C0H         LINE#         280
+  C:09C3H         LINE#         283
+  C:09C3H         LINE#         284
+  C:09C3H         LINE#         286
+  C:09C6H         LINE#         287
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        AT24C02
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SENDACK?AT24C02
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?AT24C02_READ?AT24C02
+
+******************************************************************************
+BL51 BANKED LINKER/LOCATER V6.22                                                      02/09/2022  01:20:05  PAGE 6
+
+
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 013BH BYTE (15%) *
+******************************************************************************
+
+Program Size: data=27.1 xdata=0 code=459
+LINK/LOCATE RUN COMPLETE.  2 WARNING(S),  0 ERROR(S)
