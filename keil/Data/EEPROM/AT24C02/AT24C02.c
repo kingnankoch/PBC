@@ -269,8 +269,13 @@ void AT24C02_write_addr(I2CAddr, addr){
             // 开始写入数据
             for (i = 0; i < 8; i++)
             {
-                int B = rand();
-                sendByte(B % 10);
+                //  ----- 随机数 ---
+                // int B = rand();
+                // sendByte(B % 5);
+                // --- end ---
+
+                sendByte(testData2[i]);
+                
                 flat = recvAck(); //应答
                 if(flat) break;
             }
@@ -396,20 +401,21 @@ int main()
     // printf("hello word \r\n");
     // AT24C02_write();
     // delay(100);
-
+    AT24C02_write_addr(0xa0, 0x00);
+    delay(100);
     AT24C02_write_addr(0xa0, 0x50);
     delay(100);
     AT24C02_write_addr(0xa2, 0x80);
+    delay(1000);
+    AT24C02_read();
     delay(100);
-    // AT24C02_read();
-    // delay(100);
     // return 0;
 
-    // while (1)
-    // {
-    //     /* code */
-    //     seg();
-    // }
+    while (1)
+    {
+        /* code */
+        seg();
+    }
     
 }
 
