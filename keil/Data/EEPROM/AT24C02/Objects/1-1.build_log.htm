@@ -24,16 +24,17 @@ Project File Date:  02/06/2022
 <h2>Output:</h2>
 Build target 'Target 1'
 compiling AT24C02.c...
+AT24C02.c(414): warning C290: missing return value
 linking...
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?SENDACK?AT24C02
+    SEGMENT: ?PR?AT24C02_WRITE?AT24C02
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?UNASK?AT24C02
+    SEGMENT: ?PR?SEG?AT24C02
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?READBYTE?AT24C02
-Program Size: data=13.1 xdata=0 code=320
+    SEGMENT: ?PR?AT24C02_READ?AT24C02
+Program Size: data=54.4 xdata=0 code=858
 creating hex file from ".\Objects\1-1"...
-".\Objects\1-1" - 0 Error(s), 3 Warning(s).
+".\Objects\1-1" - 0 Error(s), 4 Warning(s).
 </pre>
 </body>
 </html>
