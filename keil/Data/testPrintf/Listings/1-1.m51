@@ -1,0 +1,84 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        02/09/2022  16:50:11  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+C:\PROGRAM FILES\KEIL_V5\C51\BIN\BL51.EXE .\Objects\testPrintf.obj TO .\Objects\1-1 PRINT (.\Listings\1-1.m51)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\Objects\testPrintf.obj (TESTPRINTF)
+  C:\PROGRAM FILES\KEIL_V5\C51\LIB\C51S.LIB (?C_STARTUP)
+  C:\PROGRAM FILES\KEIL_V5\C51\LIB\C51S.LIB (?C_INIT)
+
+
+LINK MAP OF MODULE:  .\Objects\1-1 (TESTPRINTF)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+                    0008H     004DH                  *** GAP ***
+            DATA    0055H     0004H     ABSOLUTE     
+            IDATA   0059H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+                    0003H     07FDH                  *** GAP ***
+            CODE    0800H     008CH     UNIT         ?C_C51STARTUP
+            CODE    088CH     0007H     UNIT         ?C_INITSEG
+            CODE    0893H     0004H     UNIT         ?PR?MAIN?TESTPRINTF
+            CODE    0897H     0001H     UNIT         ?PR?TESTGOTO?TESTPRINTF
+
+
+
+OVERLAY MAP OF MODULE:   .\Objects\1-1 (TESTPRINTF)
+
+
+SEGMENT
+  +--> CALLED SEGMENT
+---------------------
+?C_C51STARTUP
+  +--> ?PR?MAIN?TESTPRINTF
+  +--> ?C_INITSEG
+
+
+
+SYMBOL TABLE OF MODULE:  .\Objects\1-1 (TESTPRINTF)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        TESTPRINTF
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  C:0893H         PUBLIC        main
+  C:0897H         PUBLIC        testGoTo
+  D:0055H         PUBLIC        men
+  -------         PROC          TESTGOTO
+BL51 BANKED LINKER/LOCATER V6.22                                                      02/09/2022  16:50:11  PAGE 2
+
+
+  C:0897H         LINE#         33
+  C:0897H         LINE#         35
+  -------         ENDPROC       TESTGOTO
+  -------         PROC          MAIN
+  C:0893H         LINE#         87
+  C:0893H         LINE#         88
+  C:0893H         LINE#         90
+  C:0896H         LINE#         91
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        TESTPRINTF
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?TESTGOTO?TESTPRINTF
+
+******************************************************************************
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 000BH BYTE ( 0%) *
+******************************************************************************
+
+Program Size: data=13.0 xdata=0 code=155
+LINK/LOCATE RUN COMPLETE.  1 WARNING(S),  0 ERROR(S)
