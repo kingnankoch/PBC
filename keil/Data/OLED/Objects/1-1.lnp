@@ -1,0 +1,5 @@
+".\Objects\OLED.obj",
+".\Objects\I2C.obj",
+".\Objects\main.obj" 
+TO ".\Objects\1-1" 
+PRINT(".\Listings\1-1.m51")
