@@ -8,14 +8,13 @@
  * @copyright Copyright (c) 2022
  * 
  */
-
 #include "I2C.h"
 
 
 //延时
 void IIC_delay(void)
 {
-	u8 t=1;
+	unsigned char  t=1;
 	while(t--);
 }
 
@@ -101,9 +100,9 @@ void I2C_WaitAck(void) //测数据信号的电平
     
 // }
 
-void Send_Byte(u8 dat)
+void Send_Byte(unsigned char dat)
 {
-	u8 i;
+	unsigned char i;
 	for(i=0;i<8;i++)
 	{
 		OLED_SCL_Clr();//将时钟信号设置为低电平

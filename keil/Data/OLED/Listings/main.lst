@@ -1,4 +1,4 @@
-C51 COMPILER V9.54   MAIN                                                                  02/13/2022 23:33:56 PAGE 1   
+C51 COMPILER V9.54   MAIN                                                                  02/15/2022 00:09:04 PAGE 1   
 
 
 C51 COMPILER V9.54, COMPILATION OF MODULE MAIN
@@ -37,8 +37,8 @@ line level    source
   27          //All rights reserved
   28          //******************************************************************************/
   29          #include "REG51.h"
-  30          #include "oled.h"
-  31          #include "I2C.h"
+  30          #include "I2C.h"
+  31          #include "oled.h"
   32          #include "bmp.h"
   33          
   34          int main(void)
@@ -62,7 +62,7 @@ line level    source
   52   2          OLED_ShowString(8,2,"ZHONGJINGYUAN",16);
   53   2          OLED_ShowString(20,4,"2014/05/01",16);
   54   2          OLED_ShowString(0,6,"ASCII:",16);  
-C51 COMPILER V9.54   MAIN                                                                  02/13/2022 23:33:56 PAGE 2   
+C51 COMPILER V9.54   MAIN                                                                  02/15/2022 00:09:04 PAGE 2   
 
   55   2          OLED_ShowString(63,6,"CODE:",16);
   56   2          OLED_ShowChar(48,6,t,16);
@@ -79,7 +79,7 @@ line level    source
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    244    ----
+   CODE SIZE        =    247    ----
    CONSTANT SIZE    =   1062    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----

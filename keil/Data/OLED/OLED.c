@@ -30,6 +30,8 @@
 //[5]0 1 2 3 ... 127	
 //[6]0 1 2 3 ... 127	
 //[7]0 1 2 3 ... 127 			   
+
+
 void delay_ms(unsigned int ms)
 {                         
 	unsigned int a;
@@ -45,28 +47,93 @@ void delay_ms(unsigned int ms)
 //反显函数
 void OLED_ColorTurn(u8 i)
 {
-	if(i==0) {
-        OLED_WR_Byte(0xA6,OLED_CMD);//正常显示
-    }
-	if(i==1) {
-        OLED_WR_Byte(0xA7,OLED_CMD);//反色显示
-    }
+	if(i==0)
+		{
+			OLED_WR_Byte(0xA6,OLED_CMD);//正常显示
+		}
+	if(i==1)
+		{
+			OLED_WR_Byte(0xA7,OLED_CMD);//反色显示
+		}
 }
 
 //屏幕旋转180度
 void OLED_DisplayTurn(u8 i)
 {
-	if(i==0) {
-        OLED_WR_Byte(0xC8,OLED_CMD);//正常显示
-        OLED_WR_Byte(0xA1,OLED_CMD);
-    }
-	if(i==1) {
-        OLED_WR_Byte(0xC0,OLED_CMD);//反转显示
-        OLED_WR_Byte(0xA0,OLED_CMD);
-    }
+	if(i==0)
+		{
+			OLED_WR_Byte(0xC8,OLED_CMD);//正常显示
+			OLED_WR_Byte(0xA1,OLED_CMD);
+		}
+	if(i==1)
+		{
+			OLED_WR_Byte(0xC0,OLED_CMD);//反转显示
+			OLED_WR_Byte(0xA0,OLED_CMD);
+		}
 }
 
 
+// //延时
+// void IIC_delay(void)
+// {
+// 	u8 t=1;
+// 	while(t--);
+// }
+
+// //起始信号
+// void I2C_Start(void)
+// {
+// 	OLED_SDA_Set();
+// 	OLED_SCL_Set();
+// 	IIC_delay();
+// 	OLED_SDA_Clr();
+// 	IIC_delay();
+// 	OLED_SCL_Clr();
+	 
+// }
+
+// //结束信号
+// void I2C_Stop(void)
+// {
+// 	OLED_SDA_Clr();
+// 	OLED_SCL_Set();
+// 	IIC_delay();
+// 	OLED_SDA_Set();
+// }
+
+// //等待信号响应
+// void I2C_WaitAck(void) //测数据信号的电平
+// {
+// 	OLED_SDA_Set();
+// 	IIC_delay();
+// 	OLED_SCL_Set();
+// 	IIC_delay();
+// 	OLED_SCL_Clr();
+// 	IIC_delay();
+// }
+
+//写入一个字节
+// void Send_Byte(u8 dat)
+// {
+// 	u8 i;
+// 	for(i=0;i<8;i++)
+// 	{
+// 		OLED_SCL_Clr();//将时钟信号设置为低电平
+// 		if(dat&0x80)//将dat的8位从最高位依次写入
+// 		{
+// 			OLED_SDA_Set();
+//     }
+// 		else
+// 		{
+// 			OLED_SDA_Clr();
+//     }
+// 		IIC_delay();
+// 		OLED_SCL_Set();
+// 		IIC_delay();
+// 		OLED_SCL_Clr();
+// 		dat<<=1;
+//   }
+// }
 
 //发送一个字节
 //向SSD1306写入一个字节。
@@ -77,7 +144,7 @@ void OLED_WR_Byte(u8 dat,u8 mode)
 	Send_Byte(0x78);
 	I2C_WaitAck();
 	if(mode){Send_Byte(0x40);}
-    else{Send_Byte(0x00);}
+  else{Send_Byte(0x00);}
 	I2C_WaitAck();
 	Send_Byte(dat);
 	I2C_WaitAck();
@@ -202,13 +269,13 @@ void OLED_ShowChinese(u8 x,u8 y,u8 no,u8 sizey)
 //BMP：要显示的图片
 void OLED_DrawBMP(u8 x,u8 y,u8 sizex, u8 sizey,u8 BMP[])
 { 	
-    u16 j=0;
-	u8 i, m;
+  u16 j=0;
+	u8 i,m;
 	sizey=sizey/8+((sizey%8)?1:0);
-	for(i=0;i<64;i++)
+	for(i=0;i<sizey;i++)
 	{
 		OLED_Set_Pos(x,i+y);
-        for(m=0;m<sizex;m++)
+    for(m=0;m<sizex;m++)
 		{      
 			OLED_WR_Byte(BMP[j++],OLED_DATA);	    	
 		}
@@ -220,9 +287,9 @@ void OLED_DrawBMP(u8 x,u8 y,u8 sizex, u8 sizey,u8 BMP[])
 //初始化				    
 void OLED_Init(void)
 {
-// 	OLED_RES_Clr();
-//   delay_ms(200);
-// 	OLED_RES_Set();
+	//OLED_RES_Clr();
+  delay_ms(200);
+	//OLED_RES_Set();
 	
 	OLED_WR_Byte(0xAE,OLED_CMD);//--turn off oled panel
 	OLED_WR_Byte(0x00,OLED_CMD);//---set low column address

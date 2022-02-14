@@ -27,8 +27,8 @@
 //All rights reserved
 //******************************************************************************/
 #include "REG51.h"
-#include "oled.h"
 #include "I2C.h"
+#include "oled.h"
 #include "bmp.h"
 
 int main(void)

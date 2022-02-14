@@ -1,4 +1,4 @@
-C51 COMPILER V9.54   I2C                                                                   02/13/2022 23:33:56 PAGE 1   
+C51 COMPILER V9.54   I2C                                                                   02/15/2022 00:09:03 PAGE 1   
 
 
 C51 COMPILER V9.54, COMPILATION OF MODULE I2C
@@ -18,129 +18,128 @@ line level    source
    8           * @copyright Copyright (c) 2022
    9           * 
   10           */
-  11          
-  12          #include "I2C.h"
+  11          #include "I2C.h"
+  12          
   13          
-  14          
-  15          //延时
-  16          void IIC_delay(void)
-  17          {
-  18   1        u8 t=1;
-  19   1        while(t--);
-  20   1      }
-  21          
-  22          // ------- 起始信号 --------
-  23          // 89C51 没有I2C， 所以使用模拟时序操作 I2C
-  24          // SCL 在高电平过程中， SDA 有下降沿，这时 开启了I2C
-  25          // void I2C_star() {
-  26          //     SDA = 1;
-  27          //     SCL = 1;
-  28          //     delay(5); // 延时5us, 时间要大于 4.7us， 
-  29          //     SDA = 0; // 将SDA处于低电平，开始 I2C
-  30          //     delay(5); // 时间要大于额 4us
-  31          //     SCL = 0;
-  32          // }
-  33          void I2C_Start(void)
-  34          {
-  35   1        OLED_SDA_Set();
-  36   1        OLED_SCL_Set();
-  37   1        IIC_delay();
-  38   1        OLED_SDA_Clr();
-  39   1        IIC_delay();
-  40   1        OLED_SCL_Clr();
-  41   1      }
+  14          //延时
+  15          void IIC_delay(void)
+  16          {
+  17   1        unsigned char  t=1;
+  18   1        while(t--);
+  19   1      }
+  20          
+  21          // ------- 起始信号 --------
+  22          // 89C51 没有I2C， 所以使用模拟时序操作 I2C
+  23          // SCL 在高电平过程中， SDA 有下降沿，这时 开启了I2C
+  24          // void I2C_star() {
+  25          //     SDA = 1;
+  26          //     SCL = 1;
+  27          //     delay(5); // 延时5us, 时间要大于 4.7us， 
+  28          //     SDA = 0; // 将SDA处于低电平，开始 I2C
+  29          //     delay(5); // 时间要大于额 4us
+  30          //     SCL = 0;
+  31          // }
+  32          void I2C_Start(void)
+  33          {
+  34   1        OLED_SDA_Set();
+  35   1        OLED_SCL_Set();
+  36   1        IIC_delay();
+  37   1        OLED_SDA_Clr();
+  38   1        IIC_delay();
+  39   1        OLED_SCL_Clr();
+  40   1      }
+  41          
   42          
-  43          
-  44          // -------  结束信号 ---------
-  45          // void I2C_stop() {
-  46          //     SCL = 0;
-  47          //     SDA = 0;
-  48          //     delay(5);
-  49          //     SCL = 1;
-  50          //     delay(5);
-  51          //     SDA = 1; // 当 SCL 为高电平的情况下， SDA为高电平；
-  52          //     delay(5);
-  53          //     SDA = 0;
-  54          // }
-C51 COMPILER V9.54   I2C                                                                   02/13/2022 23:33:56 PAGE 2   
+  43          // -------  结束信号 ---------
+  44          // void I2C_stop() {
+  45          //     SCL = 0;
+  46          //     SDA = 0;
+  47          //     delay(5);
+  48          //     SCL = 1;
+  49          //     delay(5);
+  50          //     SDA = 1; // 当 SCL 为高电平的情况下， SDA为高电平；
+  51          //     delay(5);
+  52          //     SDA = 0;
+  53          // }
+  54          void I2C_Stop(void)
+C51 COMPILER V9.54   I2C                                                                   02/15/2022 00:09:03 PAGE 2   
 
-  55          void I2C_Stop(void)
-  56          {
-  57   1        OLED_SDA_Clr();
-  58   1        OLED_SCL_Set();
-  59   1        IIC_delay();
-  60   1        OLED_SDA_Set();
-  61   1      }
+  55          {
+  56   1        OLED_SDA_Clr();
+  57   1        OLED_SCL_Set();
+  58   1        IIC_delay();
+  59   1        OLED_SDA_Set();
+  60   1      }
+  61          
   62          
-  63          
-  64          // ---- 等待信号响应 -----
-  65          // // 发送非应答位
-  66          // void unAsk() {
-  67          //     SDA = 1; // 当SCL为高电平的时候，SDA为1，所以 非应答为 1
-  68          //     delay(5); // 持续时间 大于 4us
-  69          //     SCL = 1;
-  70          //     delay(5); // 持续时间 大于 4us
-  71          //     SCL = 0;
-  72          //     delay(5); // 持续时间 大于 4us
-  73          //     SDA = 0;
-  74          // }
-  75          void I2C_WaitAck(void) //测数据信号的电平
-  76          {
-  77   1        OLED_SDA_Set();
-  78   1        IIC_delay();
-  79   1        OLED_SCL_Set();
-  80   1        IIC_delay();
-  81   1        OLED_SCL_Clr();
-  82   1        IIC_delay();
-  83   1      }
+  63          // ---- 等待信号响应 -----
+  64          // // 发送非应答位
+  65          // void unAsk() {
+  66          //     SDA = 1; // 当SCL为高电平的时候，SDA为1，所以 非应答为 1
+  67          //     delay(5); // 持续时间 大于 4us
+  68          //     SCL = 1;
+  69          //     delay(5); // 持续时间 大于 4us
+  70          //     SCL = 0;
+  71          //     delay(5); // 持续时间 大于 4us
+  72          //     SDA = 0;
+  73          // }
+  74          void I2C_WaitAck(void) //测数据信号的电平
+  75          {
+  76   1        OLED_SDA_Set();
+  77   1        IIC_delay();
+  78   1        OLED_SCL_Set();
+  79   1        IIC_delay();
+  80   1        OLED_SCL_Clr();
+  81   1        IIC_delay();
+  82   1      }
+  83          
   84          
   85          
   86          
-  87          
-  88          //写入一个字节
-  89          // void sendByte(unsigned char dat){
-  90          //     unsigned char i;
-  91          //     SCL = 0;
-  92          //     for (i = 0; i < 8; i++)
-  93          //     {
-  94                  
-  95          //         SDA = dat & 0x80;
-  96          //         SCL = 1;
-  97          //         delay(5);
-  98          //         SCL = 0;
-  99          //         dat <<= 1;
- 100          //     }
- 101              
- 102          // }
- 103          
- 104          void Send_Byte(u8 dat)
- 105          {
- 106   1        u8 i;
- 107   1        for(i=0;i<8;i++)
- 108   1        {
- 109   2          OLED_SCL_Clr();//将时钟信号设置为低电平
- 110   2          if(dat&0x80){//将dat的8位从最高位依次写入
- 111   3            OLED_SDA_Set();
- 112   3              }
- 113   2          else {
- 114   3            OLED_SDA_Clr();
- 115   3              }
- 116   2          IIC_delay();
-C51 COMPILER V9.54   I2C                                                                   02/13/2022 23:33:56 PAGE 3   
+  87          //写入一个字节
+  88          // void sendByte(unsigned char dat){
+  89          //     unsigned char i;
+  90          //     SCL = 0;
+  91          //     for (i = 0; i < 8; i++)
+  92          //     {
+  93                  
+  94          //         SDA = dat & 0x80;
+  95          //         SCL = 1;
+  96          //         delay(5);
+  97          //         SCL = 0;
+  98          //         dat <<= 1;
+  99          //     }
+ 100              
+ 101          // }
+ 102          
+ 103          void Send_Byte(unsigned char dat)
+ 104          {
+ 105   1        unsigned char i;
+ 106   1        for(i=0;i<8;i++)
+ 107   1        {
+ 108   2          OLED_SCL_Clr();//将时钟信号设置为低电平
+ 109   2          if(dat&0x80){//将dat的8位从最高位依次写入
+ 110   3            OLED_SDA_Set();
+ 111   3              }
+ 112   2          else {
+ 113   3            OLED_SDA_Clr();
+ 114   3              }
+ 115   2          IIC_delay();
+ 116   2          OLED_SCL_Set();
+C51 COMPILER V9.54   I2C                                                                   02/15/2022 00:09:03 PAGE 3   
 
- 117   2          OLED_SCL_Set();
- 118   2          IIC_delay();
- 119   2          OLED_SCL_Clr();
- 120   2          dat<<=1;
- 121   2        }
- 122   1      }
+ 117   2          IIC_delay();
+ 118   2          OLED_SCL_Clr();
+ 119   2          dat<<=1;
+ 120   2        }
+ 121   1      }
+ 122          
  123          
  124          
  125          
  126          
  127          
  128          
- 129          
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE

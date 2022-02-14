@@ -4,9 +4,9 @@
 
 #include "reg51.h"
 
-#define u8 unsigned char
-#define u16 unsigned char
-#define u32 unsigned char
+#define  u8 unsigned char 
+#define  u16 unsigned int
+#define  u32 unsigned int
 
 
 
@@ -28,6 +28,6 @@ void IIC_delay(void);
 void I2C_Start(void);
 void I2C_Stop(void);
 void I2C_WaitAck(void);
-void Send_Byte(u8 dat);
+void Send_Byte(unsigned char dat);
 
 #endif
