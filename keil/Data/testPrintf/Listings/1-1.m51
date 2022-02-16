@@ -1,4 +1,4 @@
-BL51 BANKED LINKER/LOCATER V6.22                                                        02/09/2022  16:50:11  PAGE 1
+BL51 BANKED LINKER/LOCATER V6.22                                                        02/17/2022  00:34:44  PAGE 1
 
 
 BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
@@ -11,7 +11,14 @@ MEMORY MODEL: SMALL
 INPUT MODULES INCLUDED:
   .\Objects\testPrintf.obj (TESTPRINTF)
   C:\PROGRAM FILES\KEIL_V5\C51\LIB\C51S.LIB (?C_STARTUP)
+  C:\PROGRAM FILES\KEIL_V5\C51\LIB\C51S.LIB (PRINTF)
   C:\PROGRAM FILES\KEIL_V5\C51\LIB\C51S.LIB (?C_INIT)
+  C:\PROGRAM FILES\KEIL_V5\C51\LIB\C51S.LIB (?C?CLDPTR)
+  C:\PROGRAM FILES\KEIL_V5\C51\LIB\C51S.LIB (?C?CLDOPTR)
+  C:\PROGRAM FILES\KEIL_V5\C51\LIB\C51S.LIB (?C?CSTPTR)
+  C:\PROGRAM FILES\KEIL_V5\C51\LIB\C51S.LIB (?C?PLDIIDATA)
+  C:\PROGRAM FILES\KEIL_V5\C51\LIB\C51S.LIB (?C?CCASE)
+  C:\PROGRAM FILES\KEIL_V5\C51\LIB\C51S.LIB (PUTCHAR)
 
 
 LINK MAP OF MODULE:  .\Objects\1-1 (TESTPRINTF)
@@ -22,29 +29,48 @@ LINK MAP OF MODULE:  .\Objects\1-1 (TESTPRINTF)
 
             * * * * * * *   D A T A   M E M O R Y   * * * * * * *
             REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
-                    0008H     004DH                  *** GAP ***
-            DATA    0055H     0004H     ABSOLUTE     
-            IDATA   0059H     0001H     UNIT         ?STACK
+            DATA    0008H     0014H     UNIT         _DATA_GROUP_
+            DATA    001CH     0003H     UNIT         ?DT?TESTPRINTF
+                    001FH     0001H                  *** GAP ***
+            BIT     0020H.0   0001H.1   UNIT         _BIT_GROUP_
+                    0021H.1   0000H.7                *** GAP ***
+            IDATA   0022H     0001H     UNIT         ?STACK
 
             * * * * * * *   C O D E   M E M O R Y   * * * * * * *
             CODE    0000H     0003H     ABSOLUTE     
-                    0003H     07FDH                  *** GAP ***
-            CODE    0800H     008CH     UNIT         ?C_C51STARTUP
-            CODE    088CH     0007H     UNIT         ?C_INITSEG
-            CODE    0893H     0004H     UNIT         ?PR?MAIN?TESTPRINTF
-            CODE    0897H     0001H     UNIT         ?PR?TESTGOTO?TESTPRINTF
+            CODE    0003H     035CH     UNIT         ?PR?PRINTF?PRINTF
+            CODE    035FH     008EH     UNIT         ?C?LIB_CODE
+            CODE    03EDH     008CH     UNIT         ?C_C51STARTUP
+            CODE    0479H     0044H     UNIT         ?PR?MAIN?TESTPRINTF
+            CODE    04BDH     0027H     UNIT         ?PR?PUTCHAR?PUTCHAR
+            CODE    04E4H     0019H     UNIT         ?PR?_DELAY?TESTPRINTF
+            CODE    04FDH     0016H     UNIT         ?PR?URTINIT?TESTPRINTF
+            CODE    0513H     0012H     UNIT         ?CO?TESTPRINTF
+            CODE    0525H     0008H     UNIT         ?C_INITSEG
 
 
 
 OVERLAY MAP OF MODULE:   .\Objects\1-1 (TESTPRINTF)
 
 
-SEGMENT
-  +--> CALLED SEGMENT
----------------------
-?C_C51STARTUP
+SEGMENT                           BIT_GROUP          DATA_GROUP 
+  +--> CALLED SEGMENT          START    LENGTH     START    LENGTH
+------------------------------------------------------------------
+?C_C51STARTUP                  -----    -----      -----    -----
   +--> ?PR?MAIN?TESTPRINTF
   +--> ?C_INITSEG
+BL51 BANKED LINKER/LOCATER V6.22                                                      02/17/2022  00:34:44  PAGE 2
+
+
+
+?PR?MAIN?TESTPRINTF            -----    -----      -----    -----
+  +--> ?PR?URTINIT?TESTPRINTF
+  +--> ?CO?TESTPRINTF
+  +--> ?PR?PRINTF?PRINTF
+  +--> ?PR?_DELAY?TESTPRINTF
+
+?PR?PRINTF?PRINTF              0020H.0  0001H.1    0008H    0014H
+  +--> ?PR?PUTCHAR?PUTCHAR
 
 
 
@@ -55,30 +81,100 @@ SYMBOL TABLE OF MODULE:  .\Objects\1-1 (TESTPRINTF)
 
   -------         MODULE        TESTPRINTF
   C:0000H         SYMBOL        _ICE_DUMMY_
-  C:0893H         PUBLIC        main
-  C:0897H         PUBLIC        testGoTo
-  D:0055H         PUBLIC        men
-  -------         PROC          TESTGOTO
-BL51 BANKED LINKER/LOCATER V6.22                                                      02/09/2022  16:50:11  PAGE 2
+  B:00A8H.7       PUBLIC        EA
+  C:04E4H         PUBLIC        _delay
+  B:00A8H.4       PUBLIC        ES
+  B:0098H.1       PUBLIC        TI
+  C:0479H         PUBLIC        main
+  D:0087H         PUBLIC        PCON
+  D:0098H         PUBLIC        SCON
+  D:0089H         PUBLIC        TMOD
+  D:001CH         PUBLIC        C
+  D:008DH         PUBLIC        TH1
+  D:008BH         PUBLIC        TL1
+  B:0088H.6       PUBLIC        TR1
+  D:001EH         PUBLIC        i
+  C:04FDH         PUBLIC        urtInit
+  -------         PROC          _DELAY
+  D:0006H         SYMBOL        num
+  -------         DO            
+  D:0004H         SYMBOL        i
+  -------         ENDDO         
+  C:04E4H         LINE#         89
+  C:04E4H         LINE#         90
+  C:04E7H         LINE#         91
+  C:04F4H         LINE#         92
+  C:04F4H         LINE#         93
+  C:04F5H         LINE#         94
+  C:04FCH         LINE#         95
+  -------         ENDPROC       _DELAY
+  -------         PROC          URTINIT
+  C:04FDH         LINE#         98
+  C:04FDH         LINE#         99
+  C:0500H         LINE#         100
+  C:0503H         LINE#         101
+  C:0506H         LINE#         102
+  C:0509H         LINE#         103
+  C:050CH         LINE#         105
+  C:050EH         LINE#         106
+  C:0510H         LINE#         107
+  C:0512H         LINE#         110
+BL51 BANKED LINKER/LOCATER V6.22                                                      02/17/2022  00:34:44  PAGE 3
 
 
-  C:0897H         LINE#         33
-  C:0897H         LINE#         35
-  -------         ENDPROC       TESTGOTO
+  -------         ENDPROC       URTINIT
   -------         PROC          MAIN
-  C:0893H         LINE#         87
-  C:0893H         LINE#         88
-  C:0893H         LINE#         90
-  C:0896H         LINE#         91
+  C:0479H         LINE#         114
+  C:0479H         LINE#         115
+  C:0479H         LINE#         116
+  C:047CH         LINE#         117
+  C:047EH         LINE#         121
+  C:0484H         LINE#         122
+  C:0484H         LINE#         123
+  C:048DH         LINE#         124
+  C:049CH         LINE#         125
+  C:04A8H         LINE#         127
+  C:04AFH         LINE#         128
+  C:04B7H         LINE#         129
+  C:04B9H         LINE#         130
+  C:04BCH         LINE#         131
   -------         ENDPROC       MAIN
   -------         ENDMOD        TESTPRINTF
 
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?TESTGOTO?TESTPRINTF
+  -------         MODULE        PRINTF
+  D:0008H         PUBLIC        ?_PRINTF517?BYTE
+  D:0008H         PUBLIC        ?_PRINTF?BYTE
+  D:0008H         PUBLIC        ?_SPRINTF517?BYTE
+  D:0008H         PUBLIC        ?_SPRINTF?BYTE
+  C:0065H         PUBLIC        _PRINTF
+  C:0065H         PUBLIC        _PRINTF517
+  C:005FH         PUBLIC        _SPRINTF
+  C:005FH         PUBLIC        _SPRINTF517
+  -------         ENDMOD        PRINTF
 
-******************************************************************************
-* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 000BH BYTE ( 0%) *
-******************************************************************************
+  -------         MODULE        ?C?CLDPTR
+  C:035FH         PUBLIC        ?C?CLDPTR
+  -------         ENDMOD        ?C?CLDPTR
 
-Program Size: data=13.0 xdata=0 code=155
-LINK/LOCATE RUN COMPLETE.  1 WARNING(S),  0 ERROR(S)
+  -------         MODULE        ?C?CLDOPTR
+  C:0378H         PUBLIC        ?C?CLDOPTR
+  -------         ENDMOD        ?C?CLDOPTR
+
+  -------         MODULE        ?C?CSTPTR
+  C:03A5H         PUBLIC        ?C?CSTPTR
+  -------         ENDMOD        ?C?CSTPTR
+
+  -------         MODULE        ?C?PLDIIDATA
+  C:03B7H         PUBLIC        ?C?PLDIIDATA
+  -------         ENDMOD        ?C?PLDIIDATA
+
+  -------         MODULE        ?C?CCASE
+  C:03C7H         PUBLIC        ?C?CCASE
+  -------         ENDMOD        ?C?CCASE
+
+  -------         MODULE        PUTCHAR
+  C:04BDH         PUBLIC        _PUTCHAR
+  -------         ENDMOD        PUTCHAR
+
+Program Size: data=33.1 xdata=0 code=1325
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

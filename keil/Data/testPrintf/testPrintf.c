@@ -11,10 +11,13 @@
 
 #include"reg51.h"
 #include"intrins.h"
-// #include "stdio.h"
-#include<stdio.h> 
-#include <stdlib.h> //随机数 
+#include "stdio.h"
+//#include<stdio.h> 
+//#include <stdlib.h> //随机数
 
+unsigned char i = 20;
+
+unsigned int C = 20;
 // --- star -- 此处学习一下 _at_0x55  的写法 ；暂时不清楚具体代表的意思 ----
 
 
@@ -24,8 +27,8 @@
 // unsigned char men[4] = {0x41, 0x42, 0x43,0x44}; // 向0x55的地址 存入 四个数据（问题是如果存不下怎么办？？？）
 
 // 现在这样写就可以了，保证代码不报错，但是是否存入了
-unsigned char men[4] _at_ 0x55;
-unsigned char men[4] = {0x41, 0x42, 0x43,0x44};
+//unsigned char men[4] _at_ 0x55;
+//unsigned char men[4] = {0x41, 0x42, 0x43,0x44};
 
 
 //  -----------  end --------
@@ -82,14 +85,48 @@ unsigned char men[4] = {0x41, 0x42, 0x43,0x44};
 // 原文链接：https://blog.csdn.net/zbl12345678910/article/details/106029054
 
 
+// 延时函数
+void delay(num) {
+    int i = 0;
+    for (i = 0; i < num; i++)
+    {
+        _nop_(); // _nop_(); 代表运行一个机器周期. 如果这个单片机的晶振是12M的，那么这调代码会运行1US
+    }
+}
+
+// 串口初始化
+void urtInit(){
+    TMOD |= 0x20;  // 0010 0000 使用定时器1 
+    TH1 = 0xFD; // 设置 波特率 9600 // 时钟频率11.0592M
+    TL1 = 0xFD;
+    SCON = 0x50; // 0101 0000  设置方式1  8位异步通信方式  串口寄存器 波特率可变 
+    PCON = 0; //SMOD=1 波特率加倍 这里不加倍
+
+    ES = 1; // 串口中断
+    EA = 1; // 开启总中断
+    TR1 = 1; //开启定时器1
 
 
+}
 
+
+// 单片机 的主函数不能传递参数
 int main()
 {
-    // printf("%s", );
-
-    // 测试 上传
-    return 0;
+    urtInit();
+    TI = 1; // 如果想使用 printF 函数 必须TI = 1
+	// while(!TI); //  循环检测是否发送完成 如果发送完成 TI 会被置为1， 需要再次发送 需要手动置为 0；
+	// 发送完成之后 设置 TI = 0 这样第二次就可以发送
+    
+    while (C)
+    {
+        printf ("Hello World\n");
+        printf ("%d \n", C); //C是 int 所以打印出来的会是数字
+        printf ("%d \n", i); // 两种数据 char 类型的打印出的会是 二进制
+        
+        delay(50000000000);
+        C--;
+    }
+	return 0;
 }
 
