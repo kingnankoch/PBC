@@ -1,0 +1,82 @@
+C51 COMPILER V9.54   STC_IPS                                                               03/09/2022 00:04:50 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE STC_IPS
+OBJECT MODULE PLACED IN .\Objects\STC_IPS.obj
+COMPILER INVOKED BY: C:\Program Files\Keil_v5\C51\BIN\C51.EXE STC_IPS.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRIN
+                    -T(.\Listings\STC_IPS.lst) TABS(2) OBJECT(.\Objects\STC_IPS.obj)
+
+line level    source
+
+   1          /**
+   2           * @file STC_IPS.c
+   3           * @author kingnan (github.com/kingnan-Guo/PBC)
+   4           * @brief STC-IPS 串口调试
+   5           * @version 0.1
+   6           * @date 2022-02-18
+   7           * 
+   8           * @copyright Copyright (c) 2022
+   9           * 
+  10           */
+  11          #include "reg51.h"
+  12          #include "delay.h"
+  13          
+  14          
+  15          void UartInit(void);
+  16          
+  17          
+  18          unsigned char dat = 5;
+  19          
+  20          
+  21          int main()
+  22          {
+  23   1          /* code */
+  24   1          UartInit();
+  25   1          
+  26   1          while (1)
+  27   1          {
+  28   2              /* code */
+  29   2              //SBUF=0x88;// 10 位异步串口 通信  0 88H 1
+  30   2              // SBUF = '1';
+  31   2              SBUF = dat + '0';
+  32   2              while (!TI);
+  33   2              TI = 0;
+  34   2              DelayXms(1000); // 延时 1s
+  35   2      
+  36   2          }
+  37   1          
+  38   1          // return 0;
+  39   1      }
+  40          
+  41          void UartInit(void)   //4800bps@11.0592MHz
+  42          {
+  43   1        //PCON &= 0x7F;   //波特率不倍速
+  44   1        SCON = 0x50;    //8位数据,可变波特率  SM0 SM1 SM2 REN TB8 RB8 TI RI  =  0101 0000
+  45   1        TMOD &= 0x0F;   //设置定时器1模式位
+  46   1        TMOD |= 0x20;   //设置定时器模式 8 位自动重载 方式
+  47   1        TL1 = 0xFA;   //设置定时初始值
+  48   1        TH1 = 0xFA;   //设置定时重载值
+  49   1        ET1 = 0;    //禁止定时器%d中断
+  50   1        TR1 = 1;    //定时器1开始计时
+  51   1      }
+  52          
+  53          
+  54          
+C51 COMPILER V9.54   STC_IPS                                                               03/09/2022 00:04:50 PAGE 2   
+
+  55          
+  56          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     43    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      1    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

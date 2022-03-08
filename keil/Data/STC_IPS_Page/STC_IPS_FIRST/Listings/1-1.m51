@@ -1,0 +1,125 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        03/09/2022  00:04:51  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+C:\PROGRAM FILES\KEIL_V5\C51\BIN\BL51.EXE .\Objects\STC_IPS.obj, .\Objects\delay.obj TO .\Objects\1-1 PRINT (.\Listings\
+>> 1-1.m51)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\Objects\STC_IPS.obj (STC_IPS)
+  .\Objects\delay.obj (DELAY)
+  C:\PROGRAM FILES\KEIL_V5\C51\LIB\C51S.LIB (?C_STARTUP)
+  C:\PROGRAM FILES\KEIL_V5\C51\LIB\C51S.LIB (?C_INIT)
+
+
+LINK MAP OF MODULE:  .\Objects\1-1 (STC_IPS)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0001H     UNIT         ?DT?STC_IPS
+            IDATA   0009H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     008CH     UNIT         ?C_C51STARTUP
+            CODE    008FH     001EH     UNIT         ?PR?_DELAYXMS?DELAY
+            CODE    00ADH     0017H     UNIT         ?PR?MAIN?STC_IPS
+            CODE    00C4H     0014H     UNIT         ?PR?UARTINIT?STC_IPS
+            CODE    00D8H     0004H     UNIT         ?C_INITSEG
+
+
+
+OVERLAY MAP OF MODULE:   .\Objects\1-1 (STC_IPS)
+
+
+SEGMENT
+  +--> CALLED SEGMENT
+---------------------
+?C_C51STARTUP
+  +--> ?PR?MAIN?STC_IPS
+  +--> ?C_INITSEG
+
+?PR?MAIN?STC_IPS
+  +--> ?PR?UARTINIT?STC_IPS
+  +--> ?PR?_DELAYXMS?DELAY
+
+
+
+SYMBOL TABLE OF MODULE:  .\Objects\1-1 (STC_IPS)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        STC_IPS
+BL51 BANKED LINKER/LOCATER V6.22                                                      03/09/2022  00:04:51  PAGE 2
+
+
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  B:0098H.1       PUBLIC        TI
+  C:00ADH         PUBLIC        main
+  D:0099H         PUBLIC        SBUF
+  D:0098H         PUBLIC        SCON
+  C:00C4H         PUBLIC        UartInit
+  D:0089H         PUBLIC        TMOD
+  D:0008H         PUBLIC        dat
+  B:00A8H.3       PUBLIC        ET1
+  D:008DH         PUBLIC        TH1
+  D:008BH         PUBLIC        TL1
+  B:0088H.6       PUBLIC        TR1
+  -------         PROC          MAIN
+  C:00ADH         LINE#         21
+  C:00ADH         LINE#         22
+  C:00ADH         LINE#         24
+  C:00B0H         LINE#         26
+  C:00B0H         LINE#         27
+  C:00B0H         LINE#         31
+  C:00B6H         LINE#         32
+  C:00B9H         LINE#         33
+  C:00BBH         LINE#         34
+  C:00C2H         LINE#         36
+  -------         ENDPROC       MAIN
+  -------         PROC          UARTINIT
+  C:00C4H         LINE#         41
+  C:00C4H         LINE#         42
+  C:00C4H         LINE#         44
+  C:00C7H         LINE#         45
+  C:00CAH         LINE#         46
+  C:00CDH         LINE#         47
+  C:00D0H         LINE#         48
+  C:00D3H         LINE#         49
+  C:00D5H         LINE#         50
+  C:00D7H         LINE#         51
+  -------         ENDPROC       UARTINIT
+  -------         ENDMOD        STC_IPS
+
+  -------         MODULE        DELAY
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  C:008FH         PUBLIC        _DelayXms
+  -------         PROC          _DELAYXMS
+  D:0006H         SYMBOL        xms
+  -------         DO            
+  D:0006H         SYMBOL        i
+  D:0004H         SYMBOL        j
+  -------         ENDDO         
+  C:008FH         LINE#         14
+  C:008FH         LINE#         16
+  C:0098H         LINE#         17
+  C:0098H         LINE#         18
+  C:00A5H         LINE#         19
+  C:00ACH         LINE#         21
+  -------         ENDPROC       _DELAYXMS
+  -------         ENDMOD        DELAY
+
+Program Size: data=10.0 xdata=0 code=220
+BL51 BANKED LINKER/LOCATER V6.22                                                      03/09/2022  00:04:51  PAGE 3
+
+
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

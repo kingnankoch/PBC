@@ -1,0 +1,4 @@
+".\Objects\STC_IPS.obj",
+".\Objects\delay.obj" 
+TO ".\Objects\1-1" 
+PRINT(".\Listings\1-1.m51")
