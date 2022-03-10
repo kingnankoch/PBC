@@ -11,3 +11,12 @@
 #include "reg51.h"
 
 
+
+int main()
+{
+
+    /* code */
+    return 0;
+}
+
+
