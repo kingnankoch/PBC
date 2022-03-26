@@ -1,7 +1,7 @@
 /**
  * @file STC_IPS.c
  * @author kingnan (github.com/kingnan-Guo/PBC)
- * @brief STC-IPS 串口调试
+ * @brief STC-IPS 串口调试，使用串口的通信 在串口调试器中接收 SBUF 的数据
  * @version 0.1
  * @date 2022-02-18
  * 
@@ -40,9 +40,9 @@ int main()
 
 void UartInit(void)		//4800bps@11.0592MHz
 {
-	//PCON &= 0x7F;		//波特率不倍速
+	//PCON &= 0x7F;		//波特率不倍速    注释： 把最高位清零
 	SCON = 0x50;		//8位数据,可变波特率  SM0 SM1 SM2 REN TB8 RB8 TI RI  =  0101 0000
-	TMOD &= 0x0F;		//设置定时器1模式位
+	TMOD &= 0x0F;		//设置定时器1模式位  == TMOD = TMOD&0x0F ==  TMOD=TMOD&00001111
 	TMOD |= 0x20;		//设置定时器模式 8 位自动重载 方式
 	TL1 = 0xFA;		//设置定时初始值
 	TH1 = 0xFA;		//设置定时重载值
