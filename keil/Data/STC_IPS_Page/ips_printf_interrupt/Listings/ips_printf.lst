@@ -1,0 +1,63 @@
+C51 COMPILER V9.54   IPS_PRINTF                                                            03/29/2022 00:41:35 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE IPS_PRINTF
+OBJECT MODULE PLACED IN .\Objects\ips_printf.obj
+COMPILER INVOKED BY: C:\Program Files\Keil_v5\C51\BIN\C51.EXE ips_printf.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND P
+                    -RINT(.\Listings\ips_printf.lst) TABS(2) OBJECT(.\Objects\ips_printf.obj)
+
+line level    source
+
+   1          /**
+   2           * @file ips_printf.c
+   3           * @author kingnan (github.com/kingnan-Guo/PBC)
+   4           * @brief 串口发送一串数据及printf重定向
+   5           * @version 0.1
+   6           * @date 2022-03-10
+   7           * 
+   8           * @copyright Copyright (c) 2022
+   9           * 
+  10           */
+  11          #include "reg51.h"
+  12          #include "delay.h"
+  13          #include "uart.h"
+  14          
+  15          
+  16          
+  17          
+  18          
+  19          unsigned char dat = 5;
+  20          int main()
+  21          {
+  22   1      
+  23   1          uartInit();
+  24   1          SBUF = dat + '0';
+  25   1          // while (1)
+  26   1          // {
+  27   1          //     /* code */
+  28   1          //     //SBUF=0x88;// 10 位异步串口 通信  0 88H 1
+  29   1          //     // SBUF = '1';
+  30   1          //     SBUF = dat + '0';
+  31   1          //     // SBUF = 0x88;
+  32   1          //     // while (!TI);
+  33   1          //     // TI = 0;
+  34   1          //     DelayXms(2000); // 延时 1s
+  35   1          // }
+  36   1          // return 0;
+  37   1      }
+  38          
+*** WARNING C290 IN LINE 37 OF ips_printf.c: missing return value
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     10    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      1    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  1 WARNING(S),  0 ERROR(S)
