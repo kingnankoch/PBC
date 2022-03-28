@@ -1,0 +1,93 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        03/29/2022  00:48:32  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+C:\PROGRAM FILES\KEIL_V5\C51\BIN\BL51.EXE .\Objects\uart.obj, .\Objects\delay.obj, .\Objects\ips_printf.obj TO .\Objects
+>> \1-1 PRINT (.\Listings\1-1.m51)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\Objects\uart.obj (UART)
+  .\Objects\delay.obj (DELAY)
+  .\Objects\ips_printf.obj (IPS_PRINTF)
+  C:\PROGRAM FILES\KEIL_V5\C51\LIB\C51S.LIB (?C_STARTUP)
+
+
+LINK MAP OF MODULE:  .\Objects\1-1 (UART)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            IDATA   0008H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     001EH     UNIT         ?PR?_DELAYXMS?DELAY
+            CODE    0021H     000CH     UNIT         ?C_C51STARTUP
+            CODE    002DH     0004H     UNIT         ?PR?MAIN?IPS_PRINTF
+
+
+
+OVERLAY MAP OF MODULE:   .\Objects\1-1 (UART)
+
+
+SEGMENT
+  +--> CALLED SEGMENT
+---------------------
+?C_C51STARTUP
+  +--> ?PR?MAIN?IPS_PRINTF
+
+
+
+SYMBOL TABLE OF MODULE:  .\Objects\1-1 (UART)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        UART
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  -------         ENDMOD        UART
+
+  -------         MODULE        DELAY
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  C:0003H         PUBLIC        _DelayXms
+  -------         PROC          _DELAYXMS
+  D:0006H         SYMBOL        xms
+BL51 BANKED LINKER/LOCATER V6.22                                                      03/29/2022  00:48:32  PAGE 2
+
+
+  -------         DO            
+  D:0006H         SYMBOL        i
+  D:0004H         SYMBOL        j
+  -------         ENDDO         
+  C:0003H         LINE#         14
+  C:0003H         LINE#         16
+  C:000CH         LINE#         17
+  C:000CH         LINE#         18
+  C:0019H         LINE#         19
+  C:0020H         LINE#         21
+  -------         ENDPROC       _DELAYXMS
+  -------         ENDMOD        DELAY
+
+  -------         MODULE        IPS_PRINTF
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  C:002DH         PUBLIC        main
+  -------         PROC          MAIN
+  C:002DH         LINE#         15
+  C:002DH         LINE#         16
+  C:002DH         LINE#         18
+  C:0030H         LINE#         19
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        IPS_PRINTF
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DELAYXMS?DELAY
+
+Program Size: data=9.0 xdata=0 code=49
+LINK/LOCATE RUN COMPLETE.  1 WARNING(S),  0 ERROR(S)

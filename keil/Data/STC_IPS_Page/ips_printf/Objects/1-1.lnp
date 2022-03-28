@@ -1,0 +1,5 @@
+".\Objects\uart.obj",
+".\Objects\delay.obj",
+".\Objects\ips_printf.obj" 
+TO ".\Objects\1-1" 
+PRINT(".\Listings\1-1.m51")

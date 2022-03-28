@@ -1,13 +1,15 @@
 /**
  * @file delay.c
- * @author your name (you@domain.com)
- * @brief 延时函数
+ * @author kingnan (github.com/kingnan-Guo/PBC)
+ * @brief 
  * @version 0.1
- * @date 2022-03-20
+ * @date 2022-03-08
  * 
  * @copyright Copyright (c) 2022
  * 
  */
+#include "delay.h"
+
 
 void DelayXms(unsigned int xms){
     unsigned int i, j;
