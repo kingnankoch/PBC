@@ -1,4 +1,4 @@
-C51 COMPILER V9.54   STC_IPS                                                               03/09/2022 00:04:50 PAGE 1   
+C51 COMPILER V9.54   STC_IPS                                                               03/28/2022 23:49:06 PAGE 1   
 
 
 C51 COMPILER V9.54, COMPILATION OF MODULE STC_IPS
@@ -11,7 +11,7 @@ line level    source
    1          /**
    2           * @file STC_IPS.c
    3           * @author kingnan (github.com/kingnan-Guo/PBC)
-   4           * @brief STC-IPS 串口调试
+   4           * @brief STC-IPS 串口调试，使用串口的通信 在串口调试器中接收 SBUF 的数据
    5           * @version 0.1
    6           * @date 2022-02-18
    7           * 
@@ -50,9 +50,9 @@ line level    source
   40          
   41          void UartInit(void)   //4800bps@11.0592MHz
   42          {
-  43   1        //PCON &= 0x7F;   //波特率不倍速
+  43   1        //PCON &= 0x7F;   //波特率不倍速    注释： 把最高位清零
   44   1        SCON = 0x50;    //8位数据,可变波特率  SM0 SM1 SM2 REN TB8 RB8 TI RI  =  0101 0000
-  45   1        TMOD &= 0x0F;   //设置定时器1模式位
+  45   1        TMOD &= 0x0F;   //设置定时器1模式位  == TMOD = TMOD&0x0F ==  TMOD=TMOD&00001111
   46   1        TMOD |= 0x20;   //设置定时器模式 8 位自动重载 方式
   47   1        TL1 = 0xFA;   //设置定时初始值
   48   1        TH1 = 0xFA;   //设置定时重载值
@@ -62,7 +62,7 @@ line level    source
   52          
   53          
   54          
-C51 COMPILER V9.54   STC_IPS                                                               03/09/2022 00:04:50 PAGE 2   
+C51 COMPILER V9.54   STC_IPS                                                               03/28/2022 23:49:06 PAGE 2   
 
   55          
   56          
