@@ -14,6 +14,8 @@
 
 int main()
 {
-    /* code */
+    uartInit();
+    DelayXms(1000);
+    sendSBUF(0x88);
     return 0;
 }
