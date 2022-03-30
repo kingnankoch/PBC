@@ -1,4 +1,4 @@
-C51 COMPILER V9.54   DELAY                                                                 03/29/2022 23:36:36 PAGE 1   
+C51 COMPILER V9.54   DELAY                                                                 03/30/2022 22:45:53 PAGE 1   
 
 
 C51 COMPILER V9.54, COMPILATION OF MODULE DELAY
@@ -18,15 +18,17 @@ line level    source
    8           * @copyright Copyright (c) 2022
    9           * 
   10           */
-  11          
-  12          void DelayXms(unsigned int xms){
-  13   1          unsigned int i, j;
-  14   1          for (i = xms; i > 0; i--)
-  15   1          {
-  16   2              for (j = 124; j > 0; j--);
-  17   2          }
-  18   1          
-  19   1      }
+  11           
+  12          #include "delay.h"
+  13          
+  14          void DelayXms(unsigned int xms){
+  15   1          unsigned int i, j;
+  16   1          for (i = xms; i > 0; i--)
+  17   1          {
+  18   2              for (j = 124; j > 0; j--);
+  19   2          }
+  20   1          
+  21   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE

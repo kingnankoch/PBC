@@ -34,14 +34,32 @@ void uartInit(void){
 // 方式 4 串口中断
 void uart_ISR() interrupt 4 {
     if(TI){
-        DelayXms(2000);
+        // DelayXms(2000);
+        DelayXms(50);
         TI = 0;
-        sendSBUF(0x87);
+        // sendByte(0x87);
+        
     }
 }
 
 
-void sendSBUF(unsigned char dat){
+void sendByte(unsigned char dat){
     SBUF = dat;
+    while (!TI); 
+    // DelayXms(200);
+    // TI = 0;
+    
 }
 
+void sendString(unsigned char * dat){
+    while (* dat != '\0' )
+    {
+        sendByte(* (dat++));
+    }
+}
+
+// 重定向 printf 函数
+char putchar(char c){
+    sendByte(c);
+    return c;
+}

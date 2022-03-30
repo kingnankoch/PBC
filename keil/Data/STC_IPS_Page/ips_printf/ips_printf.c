@@ -11,11 +11,28 @@
 #include "reg51.h"
 #include "delay.h"
 #include "uart.h"
+#include "stdio.h"
 
-int main()
+unsigned char num = 88;
+unsigned int longNum = 15888;
+float floatNum = 1.888;
+
+int main(void)
 {
     uartInit();
     DelayXms(1000);
-    sendSBUF(0x88);
+    // sendByte(0x88);
+    sendString("hellow world1\r\n");
+
+    printf("hellow world printf\r\n");
+    printf("num16 = %d\r\n", num);
+    printf("num = %bd\r\n", num);
+    
+    printf("longNum = %u\r\n", longNum);
+
+    printf("floatNum = %f\r\n", floatNum);
+    printf("floatNum = %g\r\n", floatNum);
     return 0;
 }
+
+
