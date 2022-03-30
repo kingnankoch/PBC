@@ -1,0 +1,75 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        03/31/2022  00:41:52  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+C:\PROGRAM FILES\KEIL_V5\C51\BIN\BL51.EXE .\Objects\ips_receice.obj, .\Objects\delay.obj TO .\Objects\1-1 PRINT (.\Listi
+>> ngs\1-1.m51)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\Objects\ips_receice.obj (IPS_RECEICE)
+  .\Objects\delay.obj (DELAY)
+
+
+LINK MAP OF MODULE:  .\Objects\1-1 (IPS_RECEICE)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     001EH     UNIT         ?PR?_DELAYXMS?DELAY
+
+
+
+OVERLAY MAP OF MODULE:   .\Objects\1-1 (IPS_RECEICE)
+
+
+SEGMENT
+  +--> CALLED SEGMENT
+---------------------
+
+
+SYMBOL TABLE OF MODULE:  .\Objects\1-1 (IPS_RECEICE)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        IPS_RECEICE
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  -------         ENDMOD        IPS_RECEICE
+
+  -------         MODULE        DELAY
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  C:0000H         PUBLIC        _DelayXms
+  -------         PROC          _DELAYXMS
+  D:0006H         SYMBOL        xms
+  -------         DO            
+  D:0006H         SYMBOL        i
+  D:0004H         SYMBOL        j
+  -------         ENDDO         
+  C:0000H         LINE#         14
+  C:0000H         LINE#         16
+  C:0009H         LINE#         17
+  C:0009H         LINE#         18
+  C:0016H         LINE#         19
+BL51 BANKED LINKER/LOCATER V6.22                                                      03/31/2022  00:41:52  PAGE 2
+
+
+  C:001DH         LINE#         21
+  -------         ENDPROC       _DELAYXMS
+  -------         ENDMOD        DELAY
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DELAYXMS?DELAY
+
+*** WARNING L10: CANNOT DETERMINE ROOT SEGMENT
+
+Program Size: data=8.0 xdata=0 code=30
+LINK/LOCATE RUN COMPLETE.  2 WARNING(S),  0 ERROR(S)
