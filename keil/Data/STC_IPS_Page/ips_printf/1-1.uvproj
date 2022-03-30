@@ -369,14 +369,14 @@
               <FilePath>.\uart.c</FilePath>
             </File>
             <File>
-              <FileName>delay.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\delay.c</FilePath>
-            </File>
-            <File>
               <FileName>ips_printf.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\ips_printf.c</FilePath>
+            </File>
+            <File>
+              <FileName>delay.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\ips_printf_experiment\delay.c</FilePath>
             </File>
           </Files>
         </Group>
