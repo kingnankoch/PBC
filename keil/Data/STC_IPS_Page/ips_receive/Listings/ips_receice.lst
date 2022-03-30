@@ -1,4 +1,4 @@
-C51 COMPILER V9.54   IPS_RECEICE                                                           03/31/2022 00:41:51 PAGE 1   
+C51 COMPILER V9.54   IPS_RECEICE                                                           03/31/2022 00:44:07 PAGE 1   
 
 
 C51 COMPILER V9.54, COMPILATION OF MODULE IPS_RECEICE
@@ -8,6 +8,17 @@ COMPILER INVOKED BY: C:\Program Files\Keil_v5\C51\BIN\C51.EXE ips_receice.c OPTI
 
 line level    source
 
+   1          /**
+   2           * @file ips_receice.c
+   3           * @author your name (you@domain.com)
+   4           * @brief 
+   5           * @version 0.1
+   6           * @date 2022-03-31
+   7           * 
+   8           * @copyright Copyright (c) 2022
+   9           * 
+  10           */
+  11          #include "stdio.h"
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
