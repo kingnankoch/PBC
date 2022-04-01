@@ -1,4 +1,4 @@
-".\Objects\ips_receice.obj",
-".\Objects\delay.obj" 
+".\Objects\uart.obj",
+".\Objects\ips_receive.obj" 
 TO ".\Objects\1-1" 
 PRINT(".\Listings\1-1.m51")
