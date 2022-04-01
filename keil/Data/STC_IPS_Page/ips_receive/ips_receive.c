@@ -19,7 +19,7 @@ int main()
     printf("hellow world printf\r\n");
     while (1)
     {
-        // 接收到的没数据
+        // 接收到的没数据 
         if(receive_data == 3){
             break;
         }
