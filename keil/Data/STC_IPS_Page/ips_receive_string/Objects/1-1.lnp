@@ -1,0 +1,4 @@
+".\Objects\ips_receive_string.obj",
+".\Objects\uart.obj" 
+TO ".\Objects\1-1" 
+PRINT(".\Listings\1-1.m51")

@@ -1,0 +1,135 @@
+C51 COMPILER V9.54   UART                                                                  04/06/2022 00:35:34 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE UART
+OBJECT MODULE PLACED IN .\Objects\uart.obj
+COMPILER INVOKED BY: C:\Program Files\Keil_v5\C51\BIN\C51.EXE uart.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.
+                    -\Listings\uart.lst) TABS(2) OBJECT(.\Objects\uart.obj)
+
+line level    source
+
+   1          /**
+   2           * @file uart.c
+   3           * @author your name (you@domain.com)
+   4           * @brief 
+   5           * @version 0.1
+   6           * @date 2022-04-03
+   7           * 
+   8           * @copyright Copyright (c) 2022
+   9           * 
+  10           */
+  11          
+  12          
+  13          #include "reg51.h"
+  14          #include "uart.h"
+  15          #include "stdio.h"
+  16          
+  17          
+  18          
+  19          unsigned char receive_data;
+  20          unsigned char recv_buf[MAX_REV_NUM];
+  21          unsigned char recv_flag = 0;
+  22          unsigned char recv_buf_length;
+  23          
+  24          void uartInit(void) {
+  25   1          PCON &= 0x7F; // & 0111 1111
+  26   1          // 串口 中断  8位 无教验位  波特率 
+  27   1          SCON = 0x50;//  M0 M1 M2  GEN  TB8 RB8 TI RI  = 0101 0000
+  28   1          ES = 1;// 串行口中断
+  29   1          // 定时器 T1  工作在方式 3 8位可重载
+  30   1          TMOD = 0x20;// GATE C/T M1 M0  GATE C/T M1 M0  = 0010 0000
+  31   1          // 波特率 4800
+  32   1          TH1 = 0xFA;
+  33   1          TH1 = 0xFA;
+  34   1          ET1 = 0;// 禁止定时器 中断 
+  35   1          EA = 1;//开启总中断
+  36   1          TR1 = 1;// 启动定时器 
+  37   1      }
+  38          
+  39          
+  40          // 方式 4 串口中断
+  41          void uart_ISR() interrupt 4 {
+  42   1          // if(TI){
+  43   1          //     // DelayXms(2000);
+  44   1          //     DelayXms(50);
+  45   1          //     TI = 0;
+  46   1          //     // sendByte(0x87);
+  47   1              
+  48   1          // }
+  49   1          static unsigned char recv_cnt = 0;
+  50   1          unsigned char temp;
+  51   1          if (RI)
+  52   1          {
+  53   2              RI = 0;
+  54   2              // 接收数据 
+C51 COMPILER V9.54   UART                                                                  04/06/2022 00:35:34 PAGE 2   
+
+  55   2              // receive_data = SBUF;
+  56   2              // receive_data = receive_data +1;
+  57   2              // SBUF = receive_data;
+  58   2              // printf("%bd", receive_data);
+  59   2      
+  60   2              // recv_buf[recv_cnt] = SBUF;
+  61   2              temp = SBUF;
+  62   2              
+  63   2              // if(recv_cnt == 8){
+  64   2              //     recv_flag = 1;
+  65   2              //     recv_cnt = 0;
+  66   2              // }
+  67   2              // 
+  68   2              if(temp != 0x0D){
+  69   3                  
+  70   3                  recv_buf[recv_cnt] = temp;
+  71   3                  recv_cnt++;
+  72   3      
+  73   3              } else {
+  74   3                  recv_flag = 1;
+  75   3                  recv_buf_length = recv_cnt;
+  76   3                  recv_cnt = 0;
+  77   3              }
+  78   2          }
+  79   1          if(TI){
+  80   2              TI = 0;
+  81   2          }
+  82   1          
+  83   1      }
+  84          
+  85          
+  86          void sendByte(unsigned char dat){
+  87   1          SBUF = dat;
+  88   1          while (!TI); 
+  89   1          // DelayXms(200);
+  90   1          // TI = 0;
+  91   1          
+  92   1      }
+  93          
+  94          void sendString(unsigned char * dat){
+  95   1          while (* dat != '\0' )
+  96   1          {
+  97   2              sendByte(* (dat++));
+  98   2          }
+  99   1      }
+ 100          
+ 101          // 重定向 printf 函数
+ 102          char putchar(char c){
+ 103   1          sendByte(c);
+ 104   1          return c;
+ 105   1      }
+ 106          
+ 107          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    130    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     14       3
+   IDATA SIZE       =   ----    ----
+C51 COMPILER V9.54   UART                                                                  04/06/2022 00:35:34 PAGE 3   
+
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
