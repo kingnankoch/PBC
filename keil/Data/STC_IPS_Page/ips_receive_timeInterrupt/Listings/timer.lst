@@ -1,4 +1,4 @@
-C51 COMPILER V9.54   TIMER                                                                 04/06/2022 17:15:54 PAGE 1   
+C51 COMPILER V9.54   TIMER                                                                 04/06/2022 17:22:27 PAGE 1   
 
 
 C51 COMPILER V9.54, COMPILATION OF MODULE TIMER
@@ -62,7 +62,7 @@ line level    source
   52   1          TH0 = 0xFC;//(65536 - 1000)/256
   53   1          TL0 = 0x66;//(65536 - 1000)%256
   54   1          TR0 = 1;//开启定时器 T0 中断
-C51 COMPILER V9.54   TIMER                                                                 04/06/2022 17:15:54 PAGE 2   
+C51 COMPILER V9.54   TIMER                                                                 04/06/2022 17:22:27 PAGE 2   
 
   55   1      }
 
