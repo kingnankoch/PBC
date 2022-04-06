@@ -1,4 +1,5 @@
 ".\Objects\uart.obj",
-".\Objects\ips_receive_string_header_communication_protocol.obj" 
+".\Objects\ips_receive_string_header_communication_protocol.obj",
+".\Objects\timer.obj" 
 TO ".\Objects\1-1" 
 PRINT(".\Listings\1-1.m51")

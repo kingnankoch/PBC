@@ -1,4 +1,4 @@
-C51 COMPILER V9.54   IPS_RECEIVE_STRING_HEADER_COMMUNICATION_P                             04/06/2022 17:34:43 PAGE 1   
+C51 COMPILER V9.54   IPS_RECEIVE_STRING_HEADER_COMMUNICATION_P                             04/06/2022 22:43:15 PAGE 1   
 
 
 C51 COMPILER V9.54, COMPILATION OF MODULE IPS_RECEIVE_STRING_HEADER_COMMUNICATION_P
@@ -19,23 +19,72 @@ line level    source
    8           * @copyright Copyright (c) 2022
    9           * 
   10           */
-  11          int main()
-  12          {
-  13   1          /* code */
-  14   1          return 0;
-  15   1      }
+  11          
+  12          #include "reg51.h"
+  13          #include "uart.h"
+  14          #include "timer.h"
+  15          #include "stdio.h"
   16          
+  17          
+  18          
+  19          
+  20          void uart_service(unsigned char * buf){
+  21   1          unsigned char recv_move_index;
+  22   1          if(recv_flag == 1){
+  23   2              recv_flag = 0;
+  24   2      
+  25   2              // 关闭 自定义的 软件定时计数器
+  26   2              start_time = 0;
+  27   2              sendString(recv_buf);
+  28   2      
+  29   2              while ( (recv_cnt >= 5 ) && (recv_move_index <= recv_cnt) )
+  30   2              {
+  31   3                  if( (buf[recv_move_index + 0] == 0x55) && (buf[recv_move_index + 1] == 0xAA) && (buf[recv_move
+             -_index + 2] == 0x55) ){
+  32   4                      if((buf[recv_move_index + 3] == 0x01)  && (buf[recv_move_index + 4] == 0x02) ){
+  33   5                          printf("type of one\r\n");
+  34   5                      } else {
+  35   5                          printf("type two\r\n");
+  36   5                      }
+  37   4                      break;
+  38   4                  }
+  39   3                  recv_move_index++;
+  40   3              }
+  41   2              
+  42   2              recv_cnt = 0;
+  43   2              // 发送完成后  recv_buf 清除
+  44   2              clear_recv_buffer(recv_buf);
+  45   2              
+  46   2      
+  47   2      
+  48   2          }
+  49   1      }
+  50          
+  51          int main()
+  52          {
+C51 COMPILER V9.54   IPS_RECEIVE_STRING_HEADER_COMMUNICATION_P                             04/06/2022 22:43:15 PAGE 2   
+
+  53   1          // 初始化 定时计数器 T1
+  54   1          timer0_init();
+  55   1          uartInit();
+  56   1          while (1)
+  57   1          {
+  58   2              uart_service(recv_buf);
+  59   2          }
+  60   1          return 0;
+  61   1      }
+*** WARNING C294 IN LINE 60 OF ips_receive_string_header_communication_protocol.c: unreachable code
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =      4    ----
-   CONSTANT SIZE    =   ----    ----
+   CODE SIZE        =    168    ----
+   CONSTANT SIZE    =     25    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
-   DATA SIZE        =   ----    ----
+   DATA SIZE        =   ----       4
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----
 END OF MODULE INFORMATION.
 
 
-C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
+C51 COMPILATION COMPLETE.  1 WARNING(S),  0 ERROR(S)
