@@ -1,4 +1,4 @@
-C51 COMPILER V9.54   UART                                                                  04/06/2022 00:45:33 PAGE 1   
+C51 COMPILER V9.54   UART                                                                  04/06/2022 17:15:53 PAGE 1   
 
 
 C51 COMPILER V9.54, COMPILATION OF MODULE UART
@@ -19,17 +19,115 @@ line level    source
    9           * 
   10           */
   11          
+  12          
+  13          #include "reg51.h"
+  14          #include "uart.h"
+  15          #include "stdio.h"
+  16          
+  17          #include "delay.h"
+  18          
+  19          unsigned char start_time = 0;
+  20          unsigned char recv_buf[MAX_REV_NUM];
+  21          unsigned char recv_cnt = 0;
+  22          unsigned char recv_timer_cnt;
+  23          
+  24          unsigned char recv_flag;
+  25          
+  26          
+  27          void uartInit(void) {
+  28   1          PCON &= 0x7F; // & 0111 1111
+  29   1          // 串口 中断  8位 无教验位  波特率 
+  30   1          SCON = 0x50;//  M0 M1 M2  GEN  TB8 RB8 TI RI  = 0101 0000
+  31   1          ES = 1;// 串行口中断
+  32   1          // 定时器 T1  工作在方式 3 8位可重载
+  33   1          TMOD = 0x20;// GATE C/T M1 M0  GATE C/T M1 M0  = 0010 0000
+  34   1          // 波特率 4800
+  35   1          TH1 = 0xFA;
+  36   1          TH1 = 0xFA;
+  37   1          ET1 = 0;// 禁止定时器 中断 
+  38   1          EA = 1;//开启总中断
+  39   1          TR1 = 1;// 启动定时器 
+  40   1      }
+  41          
+  42          
+  43          // 方式 4 串口中断
+  44          void uart_ISR() interrupt 4 {
+  45   1      
+  46   1          
+  47   1          if (RI)
+  48   1          {
+  49   2              RI = 0;
+  50   2              // 接收一帧数据的时候  , 打开 软件 定时计数器(自定义的计数器)
+  51   2              start_time = 1;
+  52   2              if (recv_cnt < MAX_REV_NUM)
+  53   2              {
+  54   3                  recv_buf[recv_cnt] = SBUF;//接收数据缓冲区
+C51 COMPILER V9.54   UART                                                                  04/06/2022 17:15:53 PAGE 2   
+
+  55   3                  recv_cnt++;
+  56   3              } else {
+  57   3                 recv_cnt = MAX_REV_NUM;
+  58   3              }
+  59   2              // 每接收一帧数据 后 都清零, 把定时计数 清零
+  60   2              // 但当 不再进入到串口中断的时候，没有新的数据发送 过来, 在定时器中 
+             -会不断累加， 超过 一定值的时候，判断接收的此数据包 结束
+  61   2              recv_timer_cnt = 0;
+  62   2      
+  63   2          }
+  64   1          if(TI){
+  65   2              // DelayXms(200);
+  66   2              TI = 0;
+  67   2          }
+  68   1          
+  69   1      }
+  70          
+  71          
+  72          void sendByte(unsigned char dat){
+  73   1          SBUF = dat;
+  74   1          while (!TI); 
+  75   1          // DelayXms(200);
+  76   1          // TI = 0;
+  77   1          
+  78   1      }
+  79          
+  80          void sendString(unsigned char * dat){
+  81   1          while (* dat != '\0' )
+  82   1          {
+  83   2              sendByte(* (dat++));
+  84   2          }
+  85   1      }
+  86          
+  87          // 重定向 printf 函数
+  88          char putchar(char c){
+  89   1          sendByte(c);
+  90   1          return c;
+  91   1      }
+  92          
+  93          // 清除 recv_buffer 
+  94          void clear_recv_buffer(unsigned char * buf ){
+  95   1          unsigned char i;
+  96   1          for (i = 0; i < MAX_REV_NUM; i++)
+  97   1          {
+  98   2              buf[i]  = 0;
+  99   2          }
+ 100   1          
+ 101   1      
+ 102   1      }
+ 103          
+ 104          
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =   ----    ----
+   CODE SIZE        =    154    ----
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
-   DATA SIZE        =   ----    ----
+   DATA SIZE        =     24       6
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----
 END OF MODULE INFORMATION.
+
+C51 COMPILER V9.54   UART                                                                  04/06/2022 17:15:53 PAGE 3   
 
 
 C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
