@@ -1,0 +1,70 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        04/06/2022  17:34:43  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+C:\PROGRAM FILES\KEIL_V5\C51\BIN\BL51.EXE .\Objects\uart.obj, .\Objects\ips_receive_string_header_communication_protocol
+>> .obj TO .\Objects\1-1 PRINT (.\Listings\1-1.m51)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\Objects\uart.obj (UART)
+  .\Objects\ips_receive_string_header_communication_protocol.obj (IPS_RECEIVE_STRING_HEADER_COMMUNICATION_P)
+  C:\PROGRAM FILES\KEIL_V5\C51\LIB\C51S.LIB (?C_STARTUP)
+
+
+LINK MAP OF MODULE:  .\Objects\1-1 (UART)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            IDATA   0008H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     000CH     UNIT         ?C_C51STARTUP
+            CODE    000FH     0004H     UNIT         ?PR?MAIN?IPS_RECEIVE_STRING_HEADER_COMMUNICATION_P
+
+
+
+OVERLAY MAP OF MODULE:   .\Objects\1-1 (UART)
+
+
+SEGMENT
+  +--> CALLED SEGMENT
+---------------------
+?C_C51STARTUP
+  +--> ?PR?MAIN?IPS_RECEIVE_STRING_HEADER_CO...
+
+
+
+SYMBOL TABLE OF MODULE:  .\Objects\1-1 (UART)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        UART
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  -------         ENDMOD        UART
+
+  -------         MODULE        IPS_RECEIVE_STRING_HEADER_COMMUNICATION_P
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  C:000FH         PUBLIC        main
+  -------         PROC          MAIN
+  C:000FH         LINE#         11
+  C:000FH         LINE#         12
+  C:000FH         LINE#         14
+BL51 BANKED LINKER/LOCATER V6.22                                                      04/06/2022  17:34:43  PAGE 2
+
+
+  C:0012H         LINE#         15
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        IPS_RECEIVE_STRING_HEADER_COMMUNICATION_P
+
+Program Size: data=9.0 xdata=0 code=19
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)
