@@ -1,0 +1,81 @@
+C51 COMPILER V9.54   TIMER                                                                 04/06/2022 22:43:15 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE TIMER
+OBJECT MODULE PLACED IN .\Objects\timer.obj
+COMPILER INVOKED BY: C:\Program Files\Keil_v5\C51\BIN\C51.EXE timer.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(
+                    -.\Listings\timer.lst) TABS(2) OBJECT(.\Objects\timer.obj)
+
+line level    source
+
+   1          /**
+   2           * @file timer.h
+   3           * @author your name (you@domain.com)
+   4           * @brief 定时计数器 中断
+   5           * @version 0.1
+   6           * @date 2022-04-06
+   7           * 
+   8           * @copyright Copyright (c) 2022
+   9           * 
+  10           */
+  11          #include "reg51.h"
+  12          #include "timer.h"
+  13          #include "uart.h"
+  14          #include "stdio.h"
+  15          
+  16          
+  17          
+  18          // 开启定时器 T0 中断, 因为定时器 T1 已经用做波特率发生器了
+  19          void timer0_init(void){
+  20   1          // 8 位 重载 ;工作在方式 3;  时间 2ms  256 - 2
+  21   1          //TMOD = 0x02;// 0000 0020  GATE  C/T M1_1 M0_1 GATE C/T M0_1 M01_0
+  22   1          
+  23   1          // 16 位定时计数器 工作在方式 1
+  24   1          // 时间 2ms 
+  25   1          TMOD = 0x012;
+  26   1          TH0 = 0xFC;//(65536 - 1000)/256
+  27   1          TL0 = 0x66;//(65536 - 1000)%256
+  28   1          ET0 = 1;//允许定时器 T0 中断
+  29   1          // EA = 1;//总中断 因为  串口中断中也有开启总中断 所以 合并为一个
+  30   1          TR0 = 1;//开启定时器 T0 中断
+  31   1      
+  32   1      }
+  33          
+  34          // 定时器中断0   所以 interrupt 1
+  35          void timer0_ISR() interrupt 1{
+  36   1          TR0 = 0;
+  37   1          if(start_time == 1){
+  38   2              recv_timer_cnt++; //累计 定时器计数  1ms 计数器 +1
+  39   2              // 判断 定时时间 是否超过 约定的最大时间
+  40   2              if (recv_timer_cnt > MAX_REV_TIME)
+  41   2              {
+  42   3                  
+  43   3                  // 数据接收完成
+  44   3                  recv_timer_cnt = 0;//清除定时计数器 处理数据 ，清除 rev_buf
+  45   3                  // recv_cnt = 0;
+  46   3                  recv_flag = 1;
+  47   3              }
+  48   2              
+  49   2          }
+  50   1          // printf("recv_timer_cnt = %d", recv_timer_cnt);
+  51   1          // printf("recv_timer_cnt == %d", recv_timer_cnt );
+  52   1          TH0 = 0xFC;//(65536 - 1000)/256
+  53   1          TL0 = 0x66;//(65536 - 1000)%256
+  54   1          TR0 = 1;//开启定时器 T0 中断
+C51 COMPILER V9.54   TIMER                                                                 04/06/2022 22:43:15 PAGE 2   
+
+  55   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     53    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

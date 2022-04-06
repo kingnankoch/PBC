@@ -1,0 +1,135 @@
+C51 COMPILER V9.54   UART                                                                  04/06/2022 22:43:15 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE UART
+OBJECT MODULE PLACED IN .\Objects\uart.obj
+COMPILER INVOKED BY: C:\Program Files\Keil_v5\C51\BIN\C51.EXE uart.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.
+                    -\Listings\uart.lst) TABS(2) OBJECT(.\Objects\uart.obj)
+
+line level    source
+
+   1          /**
+   2           * @file uart.c
+   3           * @author your name (you@domain.com)
+   4           * @brief 
+   5           * @version 0.1
+   6           * @date 2022-04-06
+   7           * 
+   8           * @copyright Copyright (c) 2022
+   9           * 
+  10           */
+  11          
+  12          
+  13          
+  14          
+  15          #include "reg51.h"
+  16          #include "uart.h"
+  17          #include "stdio.h"
+  18          
+  19          
+  20          
+  21          unsigned char start_time = 0;
+  22          unsigned char recv_buf[MAX_REV_NUM];
+  23          unsigned char recv_cnt = 0;
+  24          unsigned char recv_timer_cnt;
+  25          
+  26          unsigned char recv_flag;
+  27          
+  28          
+  29          void uartInit(void) {
+  30   1          PCON &= 0x7F; // & 0111 1111
+  31   1          // 串口 中断  8位 无教验位  波特率 
+  32   1          SCON = 0x50;//  M0 M1 M2  GEN  TB8 RB8 TI RI  = 0101 0000
+  33   1          ES = 1;// 串行口中断
+  34   1          // 定时器 T1  工作在方式 3 8位可重载
+  35   1          TMOD = 0x20;// GATE C/T M1 M0  GATE C/T M1 M0  = 0010 0000
+  36   1          // 波特率 4800
+  37   1          TH1 = 0xFA;
+  38   1          TH1 = 0xFA;
+  39   1          ET1 = 0;// 禁止定时器 中断 
+  40   1          EA = 1;//开启总中断
+  41   1          TR1 = 1;// 启动定时器 
+  42   1      }
+  43          
+  44          
+  45          // 方式 4 串口中断
+  46          void uart_ISR() interrupt 4 {
+  47   1      
+  48   1          
+  49   1          if (RI)
+  50   1          {
+  51   2              RI = 0;
+  52   2              // 接收一帧数据的时候  , 打开 软件 定时计数器(自定义的计数器)
+  53   2              start_time = 1;
+  54   2              if (recv_cnt < MAX_REV_NUM)
+C51 COMPILER V9.54   UART                                                                  04/06/2022 22:43:15 PAGE 2   
+
+  55   2              {
+  56   3                  recv_buf[recv_cnt] = SBUF;//接收数据缓冲区
+  57   3                  recv_cnt++;
+  58   3              } else {
+  59   3                 recv_cnt = MAX_REV_NUM;
+  60   3              }
+  61   2              // 每接收一帧数据 后 都清零, 把定时计数 清零
+  62   2              // 但当 不再进入到串口中断的时候，没有新的数据发送 过来, 在定时器中 
+             -会不断累加， 超过 一定值的时候，判断接收的此数据包 结束
+  63   2              recv_timer_cnt = 0;
+  64   2      
+  65   2          }
+  66   1          if(TI){
+  67   2              // DelayXms(200);
+  68   2              TI = 0;
+  69   2          }
+  70   1          
+  71   1      }
+  72          
+  73          
+  74          void sendByte(unsigned char dat){
+  75   1          SBUF = dat;
+  76   1          while (!TI); 
+  77   1          // DelayXms(200);
+  78   1          // TI = 0;
+  79   1          
+  80   1      }
+  81          
+  82          void sendString(unsigned char * dat){
+  83   1          while (* dat != '\0' )
+  84   1          {
+  85   2              sendByte(* (dat++));
+  86   2          }
+  87   1      }
+  88          
+  89          // 重定向 printf 函数
+  90          char putchar(char c){
+  91   1          sendByte(c);
+  92   1          return c;
+  93   1      }
+  94          
+  95          // 清除 recv_buffer 
+  96          void clear_recv_buffer(unsigned char * buf ){
+  97   1          unsigned char i;
+  98   1          for (i = 0; i < MAX_REV_NUM; i++)
+  99   1          {
+ 100   2              buf[i]  = 0;
+ 101   2          }
+ 102   1          
+ 103   1      
+ 104   1      }
+ 105          
+ 106          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    154    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     24       6
+   IDATA SIZE       =   ----    ----
+C51 COMPILER V9.54   UART                                                                  04/06/2022 22:43:15 PAGE 3   
+
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
