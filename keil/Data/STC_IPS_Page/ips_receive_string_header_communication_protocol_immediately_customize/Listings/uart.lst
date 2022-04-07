@@ -1,0 +1,207 @@
+C51 COMPILER V9.54   UART                                                                  04/08/2022 00:36:24 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE UART
+OBJECT MODULE PLACED IN .\Objects\uart.obj
+COMPILER INVOKED BY: C:\Program Files\Keil_v5\C51\BIN\C51.EXE uart.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.
+                    -\Listings\uart.lst) TABS(2) OBJECT(.\Objects\uart.obj)
+
+line level    source
+
+   1          /**
+   2           * @file uart.c
+   3           * @author your name (you@domain.com)
+   4           * @brief 
+   5           * @version 0.1
+   6           * @date 2022-04-07
+   7           * 
+   8           * @copyright Copyright (c) 2022
+   9           * 
+  10           */
+  11          
+  12          
+  13          
+  14          
+  15          
+  16          #include "reg51.h"
+  17          #include "uart.h"
+  18          #include "stdio.h"
+  19          
+  20          
+  21          
+  22          unsigned char start_time = 0;
+  23          unsigned char recv_buf[MAX_REV_NUM];
+  24          unsigned char recv_cnt = 0;
+  25          unsigned char recv_timer_cnt;
+  26          
+  27          unsigned char recv_flag;
+  28          unsigned char machine_step = 0;
+  29          
+  30          unsigned char led_data;
+  31          
+  32          
+  33          void uartInit(void) {
+  34   1          PCON &= 0x7F; // & 0111 1111
+  35   1          // 串口 中断  8位 无教验位  波特率 
+  36   1          SCON = 0x50;//  M0 M1 M2  GEN  TB8 RB8 TI RI  = 0101 0000
+  37   1          ES = 1;// 串行口中断
+  38   1          // 定时器 T1  工作在方式 3 8位可重载
+  39   1          TMOD = 0x20;// GATE C/T M1 M0  GATE C/T M1 M0  = 0010 0000
+  40   1          // 波特率 4800
+  41   1          TH1 = 0xFA;
+  42   1          TH1 = 0xFA;
+  43   1          ET1 = 0;// 禁止定时器 中断 
+  44   1          EA = 1;//开启总中断
+  45   1          TR1 = 1;// 启动定时器 
+  46   1      }
+  47          
+  48          
+  49          // 方式 4 串口中断
+  50          void uart_ISR() interrupt 4 {
+  51   1      
+  52   1          
+  53   1          if (RI)
+  54   1          {
+C51 COMPILER V9.54   UART                                                                  04/08/2022 00:36:24 PAGE 2   
+
+  55   2              RI = 0;
+  56   2              // 接收一帧数据的时候  , 打开 软件 定时计数器(自定义的计数器)
+  57   2              // start_time = 1;
+  58   2              // if (recv_cnt < MAX_REV_NUM)
+  59   2              // {
+  60   2              //     recv_buf[recv_cnt] = SBUF;//接收数据缓冲区
+  61   2              //     recv_cnt++;
+  62   2              // } else {
+  63   2              //    recv_cnt = MAX_REV_NUM;
+  64   2              // }
+  65   2              // // 每接收一帧数据 后 都清零, 把定时计数 清零
+  66   2              // // 但当 不再进入到串口中断的时候，没有新的数据发送 过来, 在定时器�
+             -�� 会不断累加， 超过 一定值的时候，判断接收的此数据包 结束
+  67   2              // recv_timer_cnt = 0;
+  68   2              // recv_data = SBUF;
+  69   2      
+  70   2              // 状态机的 思想编程
+  71   2              switch (machine_step) {
+  72   3      
+  73   3                  case 0:
+  74   3                      recv_buf[0] = SBUF;
+  75   3                      if(recv_buf[0] == 0xAA){
+  76   4                          machine_step = 1;
+  77   4                          // recv_cnt = 2;
+  78   4                      } else{
+  79   4                          machine_step = 0;
+  80   4                      }
+  81   3                      break;
+  82   3      
+  83   3                  case 1:
+  84   3                      recv_buf[1] = SBUF;
+  85   3                      if(recv_buf[1] == 0x55){
+  86   4                          machine_step = 2;
+  87   4                          recv_cnt = 2;
+  88   4                      } else{
+  89   4                          machine_step = 0;
+  90   4                      }
+  91   3                      break;
+  92   3      
+  93   3                  case 2:
+  94   3                      recv_buf[recv_cnt] = SBUF;
+  95   3                      // printf("recv_buf[recv_cnt] = %d", recv_buf[recv_cnt]);
+  96   3                      recv_cnt++;
+  97   3                      if(recv_cnt > 4){
+  98   4                          machine_step = 3;
+  99   4                      } else {
+ 100   4                          machine_step = 2;
+ 101   4                      }
+ 102   3                      break;
+ 103   3      
+ 104   3                  case 3:
+ 105   3                      recv_buf[recv_cnt] = SBUF;
+ 106   3                      // printf("recv_buf[recv_cnt] = %d", recv_buf[recv_cnt]);
+ 107   3                      if(recv_buf[recv_cnt] == 0x0D) {
+ 108   4                          switch (recv_buf[2]) {
+ 109   5                              case 1:
+ 110   5                                  led_data = recv_buf[3];
+ 111   5                                  led_data = led_data << 8;
+ 112   5                                  led_data = led_data + recv_buf[4];
+ 113   5                                  // printf("led_data = %d", led_data);
+ 114   5                                  // 对数据进行即时解析 并且 在第六位 进行反馈
+ 115   5                                  recv_buf[6] = 0x01;
+C51 COMPILER V9.54   UART                                                                  04/08/2022 00:36:24 PAGE 3   
+
+ 116   5                                  break;
+ 117   5                              case 2:
+ 118   5                                  // 对数据进行即时解析 并且 在第六位 进行反馈
+ 119   5                                  // printf("0x02");
+ 120   5                                  recv_buf[6] = 0x02;
+ 121   5                                  break;
+ 122   5                              default:
+ 123   5                                  break;
+ 124   5                          }
+ 125   4                          
+ 126   4                          machine_step = 0;
+ 127   4                          recv_cnt = 0;
+ 128   4                          recv_flag = 1;
+ 129   4                      }
+ 130   3      
+ 131   3                      break;
+ 132   3      
+ 133   3                  default:
+ 134   3                      break;
+ 135   3              }
+ 136   2      
+ 137   2          }
+ 138   1          if(TI){
+ 139   2              // DelayXms(200);
+ 140   2              TI = 0;
+ 141   2          }
+ 142   1          
+ 143   1      }
+ 144          
+ 145          
+ 146          void sendByte(unsigned char dat){
+ 147   1          SBUF = dat;
+ 148   1          while (!TI); 
+ 149   1          // DelayXms(200);
+ 150   1          // TI = 0;
+ 151   1          
+ 152   1      }
+ 153          
+ 154          void sendString(unsigned char * dat){
+ 155   1          while (* dat != '\0' )
+ 156   1          {
+ 157   2              sendByte(* (dat++));
+ 158   2          }
+ 159   1      }
+ 160          
+ 161          // 重定向 printf 函数
+ 162          char putchar(char c){
+ 163   1          sendByte(c);
+ 164   1          return c;
+ 165   1      }
+ 166          
+ 167          // 清除 recv_buffer 
+ 168          void clear_recv_buffer(unsigned char * buf ){
+ 169   1          unsigned char i;
+ 170   1          for (i = 0; i < MAX_REV_NUM; i++)
+ 171   1          {
+ 172   2              buf[i]  = 0;
+ 173   2          }
+ 174   1          
+ 175   1      
+ 176   1      }
+
+C51 COMPILER V9.54   UART                                                                  04/08/2022 00:36:24 PAGE 4   
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    261    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     26       6
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
