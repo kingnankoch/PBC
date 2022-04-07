@@ -30,6 +30,11 @@ unsigned char machine_step = 0;
 unsigned char led_data;
 
 
+unsigned char sum_check = 0;
+unsigned char xor_check = 0;
+unsigned char recv_data;
+
+
 void uartInit(void) {
     PCON &= 0x7F; // & 0111 1111
     // 串口 中断  8位 无教验位  波特率 
@@ -67,34 +72,39 @@ void uart_ISR() interrupt 4 {
         // recv_timer_cnt = 0;
         // recv_data = SBUF;
 
+
+
+        recv_data = SBUF;
+        // printf('1');
+        
         // 状态机的 思想编程
         switch (machine_step) {
 
             case 0:
-                recv_buf[0] = SBUF;
-                if(recv_buf[0] == 0xAA){
+                if(recv_data == 0xAA){
                     machine_step = 1;
-                    // recv_cnt = 2;
                 } else{
                     machine_step = 0;
                 }
                 break;
 
             case 1:
-                recv_buf[1] = SBUF;
-                if(recv_buf[1] == 0x55){
+                if(recv_data == 0x55){
                     machine_step = 2;
-                    recv_cnt = 2;
                 } else{
                     machine_step = 0;
                 }
                 break;
 
             case 2:
-                recv_buf[recv_cnt] = SBUF;
+                // recv_buf[recv_cnt] = SBUF;
                 // printf("recv_buf[recv_cnt] = %d", recv_buf[recv_cnt]);
+                sum_check += recv_data;
+                xor_check ^= recv_data; //异或 校验
+                recv_buf[recv_cnt] = recv_data;
                 recv_cnt++;
-                if(recv_cnt > 4){
+                // 当前数据固定 所以 是大于 2
+                if(recv_cnt > 2){
                     machine_step = 3;
                 } else {
                     machine_step = 2;
@@ -102,37 +112,37 @@ void uart_ISR() interrupt 4 {
                 break;
 
             case 3:
-                recv_buf[recv_cnt] = SBUF;
+                // recv_buf[recv_cnt] = SBUF;
                 // printf("recv_buf[recv_cnt] = %d", recv_buf[recv_cnt]);
-                if(recv_buf[recv_cnt] == 0x0D) {
-                    switch (recv_buf[2]) {
-                        case 1:
-                            led_data = recv_buf[3];
-                            led_data = led_data << 8;
-                            led_data = led_data + recv_buf[4];
-                            // printf("led_data = %d", led_data);
-                            // 对数据进行即时解析 并且 在第六位 进行反馈
-                            recv_buf[6] = 0x01;
-                            break;
-                        case 2:
-                            // 对数据进行即时解析 并且 在第六位 进行反馈
-                            // printf("0x02");
-                            recv_buf[6] = 0x02;
-                            break;
-                        default:
-                            break;
-                    }
-                    
+                if(sum_check == recv_data) {
+                    machine_step = 4;                    
+                } else {
                     machine_step = 0;
-                    recv_cnt = 0;
+                }
+                // printf("3");
+                break;
+
+
+            case 4:
+                // recv_buf[recv_cnt] = SBUF;
+                // printf("recv_buf[recv_cnt] = %d", recv_buf[recv_cnt]);
+                // printf("4");
+                if(xor_check == recv_data) {
                     recv_flag = 1;
                 }
-
+                // recv_flag = 1;
+                machine_step = 0;
+                recv_cnt = 0;
+                sum_check = 0;
+                xor_check = 0;
+                // recv_data = 0;
                 break;
 
             default:
                 break;
         }
+
+
 
     }
     if(TI){

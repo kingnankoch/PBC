@@ -24,22 +24,25 @@ void uart_service(void){
 
         // 关闭 自定义的 软件定时计数器
         // start_time = 0;
+        
         sendString(recv_buf);
 
-        // while ( (recv_cnt >= 5 ) && (recv_move_index <= recv_cnt) )
-        // {
-        //     if( (buf[recv_move_index + 0] == 0x55) && (buf[recv_move_index + 1] == 0xAA) && (buf[recv_move_index + 2] == 0x55) ){
-        //         if((buf[recv_move_index + 3] == 0x01)  && (buf[recv_move_index + 4] == 0x02) ){
-        //             printf("type of one\r\n");
-        //         } else {
-        //             printf("type two\r\n");
-        //         }
-        //         break;
-        //     }
-        //     recv_move_index++;
-        // }
+        switch (recv_buf[0]) {
+            case 1:
+                // 对数据进行即时解析 并且 在 进行反馈
+                printf("led_data = 0x01");
+                // sendByte(0x01);
+                break;
+            case 2:
+                // 对数据进行即时解析 并且  进行反馈
+                printf("led_data = 0x02");
+                // sendByte(0x02);
+                break;
+            default:
+                break;
+        }
         
-        // recv_cnt = 0;
+
         // 发送完成后  recv_buf 清除
         clear_recv_buffer(recv_buf);
         

@@ -1,4 +1,4 @@
-BL51 BANKED LINKER/LOCATER V6.22                                                        04/08/2022  00:36:24  PAGE 1
+BL51 BANKED LINKER/LOCATER V6.22                                                        04/08/2022  01:26:37  PAGE 1
 
 
 BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
@@ -28,28 +28,28 @@ LINK MAP OF MODULE:  .\Objects\1-1 (IPS_RECEIVE_STRING_HEADER_COMMUNICATION_P)
 
             * * * * * * *   D A T A   M E M O R Y   * * * * * * *
             REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
-            DATA    0008H     001AH     UNIT         ?DT?UART
-            DATA    0022H     0003H     UNIT         _DATA_GROUP_
-            IDATA   0025H     0001H     UNIT         ?STACK
+            DATA    0008H     001DH     UNIT         ?DT?UART
+            DATA    0025H     0003H     UNIT         _DATA_GROUP_
+            IDATA   0028H     0001H     UNIT         ?STACK
 
             * * * * * * *   C O D E   M E M O R Y   * * * * * * *
             CODE    0000H     0003H     ABSOLUTE     
             CODE    0003H     0008H     UNIT         ?PR?MAIN?IPS_RECEIVE_STRING_HEADER_COMMUNICATION_P
             CODE    000BH     0003H     ABSOLUTE     
-            CODE    000EH     000EH     UNIT         ?PR?TIMER0_INIT?TIMER
-            CODE    001CH     0006H     UNIT         ?PR?_SENDBYTE?UART
-                    0022H     0001H                  *** GAP ***
+            CODE    000EH     0010H     UNIT         ?C_INITSEG
+                    001EH     0005H                  *** GAP ***
             CODE    0023H     0003H     ABSOLUTE     
-            CODE    0026H     00A0H     UNIT         ?PR?UART_ISR?UART
-            CODE    00C6H     008CH     UNIT         ?C_C51STARTUP
-            CODE    0152H     003BH     UNIT         ?C?LIB_CODE
-            CODE    018DH     0027H     UNIT         ?PR?TIMER0_ISR?TIMER
-            CODE    01B4H     0025H     UNIT         ?PR?_SENDSTRING?UART
-            CODE    01D9H     001CH     UNIT         ?PR?_CLEAR_RECV_BUFFER?UART
-            CODE    01F5H     001AH     UNIT         ?PR?UART_SERVICE?IPS_RECEIVE_STRING_HEADER_COMMUNICATION_P
-            CODE    020FH     0018H     UNIT         ?PR?UARTINIT?UART
-            CODE    0227H     000AH     UNIT         ?C_INITSEG
-            CODE    0231H     0006H     UNIT         ?PR?_PUTCHAR?UART
+            CODE    0026H     008CH     UNIT         ?C_C51STARTUP
+            CODE    00B2H     008BH     UNIT         ?PR?UART_ISR?UART
+            CODE    013DH     003BH     UNIT         ?C?LIB_CODE
+            CODE    0178H     002CH     UNIT         ?PR?UART_SERVICE?IPS_RECEIVE_STRING_HEADER_COMMUNICATION_P
+            CODE    01A4H     0027H     UNIT         ?PR?TIMER0_ISR?TIMER
+            CODE    01CBH     0025H     UNIT         ?PR?_SENDSTRING?UART
+            CODE    01F0H     001CH     UNIT         ?PR?_CLEAR_RECV_BUFFER?UART
+            CODE    020CH     0018H     UNIT         ?PR?UARTINIT?UART
+            CODE    0224H     000EH     UNIT         ?PR?TIMER0_INIT?TIMER
+            CODE    0232H     0006H     UNIT         ?PR?_SENDBYTE?UART
+            CODE    0238H     0006H     UNIT         ?PR?_PUTCHAR?UART
 
 
 
@@ -59,7 +59,7 @@ OVERLAY MAP OF MODULE:   .\Objects\1-1 (IPS_RECEIVE_STRING_HEADER_COMMUNICATION_
 SEGMENT                                            DATA_GROUP 
   +--> CALLED SEGMENT                            START    LENGTH
 ----------------------------------------------------------------
-BL51 BANKED LINKER/LOCATER V6.22                                                      04/08/2022  00:36:24  PAGE 2
+BL51 BANKED LINKER/LOCATER V6.22                                                      04/08/2022  01:26:37  PAGE 2
 
 
 ?C_C51STARTUP                                    -----    -----
@@ -72,12 +72,13 @@ SEGMENT                                            DATA_GROUP
 
 ?PR?UART_SERVICE?IPS_RECEIVE_STRING_H...         -----    -----
   +--> ?PR?_SENDSTRING?UART
+  +--> ?PR?_SENDBYTE?UART
   +--> ?PR?_CLEAR_RECV_BUFFER?UART
 
-?PR?_SENDSTRING?UART                             0022H    0003H
+?PR?_SENDSTRING?UART                             0025H    0003H
   +--> ?PR?_SENDBYTE?UART
 
-?PR?_CLEAR_RECV_BUFFER?UART                      0022H    0003H
+?PR?_CLEAR_RECV_BUFFER?UART                      0025H    0003H
 
 
 
@@ -88,220 +89,228 @@ SYMBOL TABLE OF MODULE:  .\Objects\1-1 (IPS_RECEIVE_STRING_HEADER_COMMUNICATION_
 
   -------         MODULE        IPS_RECEIVE_STRING_HEADER_COMMUNICATION_P
   C:0000H         SYMBOL        _ICE_DUMMY_
-  C:01F5H         PUBLIC        uart_service
+  C:0178H         PUBLIC        uart_service
   C:0003H         PUBLIC        main
   -------         PROC          UART_SERVICE
-  C:01F5H         LINE#         20
-  C:01F5H         LINE#         22
-  C:01FAH         LINE#         23
-  C:01FDH         LINE#         27
-  C:0205H         LINE#         44
-  C:020EH         LINE#         48
-  C:020EH         LINE#         49
+  C:0178H         LINE#         20
+  C:0178H         LINE#         22
+  C:017EH         LINE#         23
+  C:0180H         LINE#         28
+  C:0188H         LINE#         30
+  C:0191H         LINE#         31
+  C:0191H         LINE#         37
+  C:0193H         LINE#         38
+  C:0195H         LINE#         39
+  C:0195H         LINE#         44
+  C:019AH         LINE#         45
+  C:019AH         LINE#         46
+  C:019AH         LINE#         47
+  C:019AH         LINE#         48
+  C:019AH         LINE#         52
+  C:01A3H         LINE#         56
+  C:01A3H         LINE#         57
   -------         ENDPROC       UART_SERVICE
   -------         PROC          MAIN
-  C:0003H         LINE#         51
-  C:0003H         LINE#         52
-  C:0003H         LINE#         55
-  C:0006H         LINE#         56
-  C:0006H         LINE#         57
-  C:0006H         LINE#         58
-  C:0009H         LINE#         59
+  C:0003H         LINE#         59
+  C:0003H         LINE#         60
+  C:0003H         LINE#         63
+  C:0006H         LINE#         64
+  C:0006H         LINE#         65
+  C:0006H         LINE#         66
+  C:0009H         LINE#         67
   -------         ENDPROC       MAIN
+BL51 BANKED LINKER/LOCATER V6.22                                                      04/08/2022  01:26:37  PAGE 3
+
+
   -------         ENDMOD        IPS_RECEIVE_STRING_HEADER_COMMUNICATION_P
 
   -------         MODULE        UART
   C:0000H         SYMBOL        _ICE_DUMMY_
   B:00A8H.7       PUBLIC        EA
-  C:0026H         PUBLIC        uart_ISR
+  C:00B2H         PUBLIC        uart_ISR
   B:00A8H.4       PUBLIC        ES
   B:0098H.0       PUBLIC        RI
   B:0098H.1       PUBLIC        TI
-  C:01B4H         PUBLIC        _sendString
-  D:0008H         PUBLIC        recv_flag
-BL51 BANKED LINKER/LOCATER V6.22                                                      04/08/2022  00:36:24  PAGE 3
-
-
+  C:01CBH         PUBLIC        _sendString
+  D:0008H         PUBLIC        recv_data
+  D:0009H         PUBLIC        recv_flag
   D:0099H         PUBLIC        SBUF
   D:0087H         PUBLIC        PCON
-  D:0009H         PUBLIC        led_data
+  D:000AH         PUBLIC        led_data
   D:0098H         PUBLIC        SCON
   D:0089H         PUBLIC        TMOD
-  C:001CH         PUBLIC        _sendByte
-  D:000AH         PUBLIC        start_time
+  D:000BH         PUBLIC        sum_check
+  D:000CH         PUBLIC        xor_check
+  C:0232H         PUBLIC        _sendByte
+  D:000DH         PUBLIC        start_time
   B:00A8H.3       PUBLIC        ET1
   D:008DH         PUBLIC        TH1
-  D:000BH         PUBLIC        recv_buf
-  C:020FH         PUBLIC        uartInit
+  D:000EH         PUBLIC        recv_buf
+  C:020CH         PUBLIC        uartInit
   B:0088H.6       PUBLIC        TR1
-  D:001FH         PUBLIC        recv_cnt
-  D:0020H         PUBLIC        recv_timer_cnt
-  D:0021H         PUBLIC        machine_step
-  C:0231H         PUBLIC        _putchar
-  C:01D9H         PUBLIC        _clear_recv_buffer
+  D:0022H         PUBLIC        recv_cnt
+  D:0023H         PUBLIC        recv_timer_cnt
+  D:0024H         PUBLIC        machine_step
+  C:0238H         PUBLIC        _putchar
+  C:01F0H         PUBLIC        _clear_recv_buffer
   -------         PROC          UARTINIT
-  C:020FH         LINE#         33
-  C:020FH         LINE#         34
-  C:0212H         LINE#         36
-  C:0215H         LINE#         37
-  C:0217H         LINE#         39
-  C:021AH         LINE#         41
-  C:021DH         LINE#         42
-  C:0220H         LINE#         43
-  C:0222H         LINE#         44
-  C:0224H         LINE#         45
-  C:0226H         LINE#         46
+  C:020CH         LINE#         38
+  C:020CH         LINE#         39
+  C:020FH         LINE#         41
+  C:0212H         LINE#         42
+  C:0214H         LINE#         44
+  C:0217H         LINE#         46
+  C:021AH         LINE#         47
+  C:021DH         LINE#         48
+  C:021FH         LINE#         49
+  C:0221H         LINE#         50
+  C:0223H         LINE#         51
   -------         ENDPROC       UARTINIT
   -------         PROC          UART_ISR
-  C:0026H         LINE#         50
-  C:002FH         LINE#         53
-  C:0035H         LINE#         54
-  C:0035H         LINE#         55
-  C:0037H         LINE#         71
-  C:0046H         LINE#         73
-  C:0046H         LINE#         74
-  C:0049H         LINE#         75
-  C:004EH         LINE#         76
-  C:0051H         LINE#         78
-  C:0053H         LINE#         79
-  C:0053H         LINE#         80
-  C:0053H         LINE#         81
-  C:0055H         LINE#         83
-  C:0055H         LINE#         84
-  C:0058H         LINE#         85
-  C:005DH         LINE#         86
-  C:0060H         LINE#         87
-  C:0063H         LINE#         88
-  C:0065H         LINE#         89
-  C:0068H         LINE#         90
-  C:0068H         LINE#         91
-  C:006AH         LINE#         93
-  C:006AH         LINE#         94
-  C:0071H         LINE#         96
-  C:0073H         LINE#         97
-BL51 BANKED LINKER/LOCATER V6.22                                                      04/08/2022  00:36:24  PAGE 4
+  C:00B2H         LINE#         55
+  C:00BBH         LINE#         58
+  C:00BEH         LINE#         59
+  C:00BEH         LINE#         60
+  C:00C0H         LINE#         77
+  C:00C3H         LINE#         81
+  C:00D5H         LINE#         83
+  C:00D5H         LINE#         84
+  C:00DAH         LINE#         85
+  C:00DDH         LINE#         86
+  C:00DFH         LINE#         87
+  C:00DFH         LINE#         88
+BL51 BANKED LINKER/LOCATER V6.22                                                      04/08/2022  01:26:37  PAGE 4
 
 
-  C:007AH         LINE#         98
-  C:007DH         LINE#         99
-  C:007FH         LINE#         100
-  C:0082H         LINE#         101
-  C:0082H         LINE#         102
-  C:0084H         LINE#         104
-  C:0084H         LINE#         105
-  C:008BH         LINE#         107
-  C:0094H         LINE#         108
-  C:009DH         LINE#         109
-  C:009DH         LINE#         110
-  C:00A0H         LINE#         111
-  C:00A3H         LINE#         112
-  C:00A9H         LINE#         115
-  C:00ACH         LINE#         116
-  C:00AEH         LINE#         117
-  C:00AEH         LINE#         120
-  C:00B1H         LINE#         121
-  C:00B1H         LINE#         122
-  C:00B1H         LINE#         123
-  C:00B1H         LINE#         124
-  C:00B1H         LINE#         126
-  C:00B4H         LINE#         127
-  C:00B7H         LINE#         128
-  C:00BAH         LINE#         129
-  C:00BAH         LINE#         131
-  C:00BAH         LINE#         133
-  C:00BAH         LINE#         134
-  C:00BAH         LINE#         135
-  C:00BAH         LINE#         137
-  C:00BAH         LINE#         138
-  C:00BDH         LINE#         140
-  C:00BFH         LINE#         141
-  C:00BFH         LINE#         143
+  C:00DFH         LINE#         89
+  C:00E1H         LINE#         91
+  C:00E1H         LINE#         92
+  C:00E6H         LINE#         93
+  C:00E6H         LINE#         94
+  C:00E8H         LINE#         95
+  C:00E8H         LINE#         96
+  C:00E8H         LINE#         97
+  C:00EAH         LINE#         99
+  C:00EAH         LINE#         102
+  C:00F0H         LINE#         103
+  C:00F4H         LINE#         104
+  C:00FBH         LINE#         105
+  C:00FDH         LINE#         107
+  C:0104H         LINE#         108
+  C:0107H         LINE#         109
+  C:0109H         LINE#         110
+  C:010CH         LINE#         111
+  C:010CH         LINE#         112
+  C:010EH         LINE#         114
+  C:010EH         LINE#         117
+  C:0113H         LINE#         118
+  C:0116H         LINE#         119
+  C:0118H         LINE#         120
+  C:011BH         LINE#         121
+  C:011BH         LINE#         123
+  C:011DH         LINE#         126
+  C:011DH         LINE#         130
+  C:0122H         LINE#         131
+  C:0125H         LINE#         132
+  C:0125H         LINE#         134
+  C:0128H         LINE#         135
+  C:012BH         LINE#         136
+  C:012EH         LINE#         137
+  C:0131H         LINE#         139
+  C:0131H         LINE#         141
+  C:0131H         LINE#         142
+  C:0131H         LINE#         143
+  C:0131H         LINE#         147
+  C:0131H         LINE#         148
+  C:0134H         LINE#         150
+  C:0136H         LINE#         151
+  C:0136H         LINE#         153
   -------         ENDPROC       UART_ISR
   -------         PROC          _SENDBYTE
   D:0007H         SYMBOL        dat
-  C:001CH         LINE#         146
-  C:001CH         LINE#         147
-  C:001EH         LINE#         148
-  C:0021H         LINE#         152
+  C:0232H         LINE#         156
+  C:0232H         LINE#         157
+  C:0234H         LINE#         158
+  C:0237H         LINE#         162
   -------         ENDPROC       _SENDBYTE
   -------         PROC          _SENDSTRING
-  D:0022H         SYMBOL        dat
-  C:01B4H         LINE#         154
-  C:01BAH         LINE#         155
-  C:01C5H         LINE#         156
-  C:01C5H         LINE#         157
-  C:01D6H         LINE#         158
-  C:01D8H         LINE#         159
+  D:0025H         SYMBOL        dat
+  C:01CBH         LINE#         164
+  C:01D1H         LINE#         165
+  C:01DCH         LINE#         166
+  C:01DCH         LINE#         167
+BL51 BANKED LINKER/LOCATER V6.22                                                      04/08/2022  01:26:37  PAGE 5
+
+
+  C:01EDH         LINE#         168
+  C:01EFH         LINE#         169
   -------         ENDPROC       _SENDSTRING
   -------         PROC          _PUTCHAR
   D:0006H         SYMBOL        c
-  C:0231H         LINE#         162
-  C:0233H         LINE#         163
-  C:0236H         LINE#         164
-  C:0236H         LINE#         165
-BL51 BANKED LINKER/LOCATER V6.22                                                      04/08/2022  00:36:24  PAGE 5
-
-
+  C:0238H         LINE#         172
+  C:023AH         LINE#         173
+  C:023DH         LINE#         174
+  C:023DH         LINE#         175
   -------         ENDPROC       _PUTCHAR
   -------         PROC          _CLEAR_RECV_BUFFER
-  D:0022H         SYMBOL        buf
+  D:0025H         SYMBOL        buf
   -------         DO            
   D:0007H         SYMBOL        i
   -------         ENDDO         
-  C:01D9H         LINE#         168
-  C:01DFH         LINE#         170
-  C:01E1H         LINE#         171
-  C:01E1H         LINE#         172
-  C:01F0H         LINE#         173
-  C:01F4H         LINE#         176
+  C:01F0H         LINE#         178
+  C:01F6H         LINE#         180
+  C:01F8H         LINE#         181
+  C:01F8H         LINE#         182
+  C:0207H         LINE#         183
+  C:020BH         LINE#         186
   -------         ENDPROC       _CLEAR_RECV_BUFFER
   -------         ENDMOD        UART
 
   -------         MODULE        TIMER
   C:0000H         SYMBOL        _ICE_DUMMY_
-  C:018DH         PUBLIC        timer0_ISR
+  C:01A4H         PUBLIC        timer0_ISR
   D:0089H         PUBLIC        TMOD
   B:00A8H.1       PUBLIC        ET0
   D:008CH         PUBLIC        TH0
   D:008AH         PUBLIC        TL0
   B:0088H.4       PUBLIC        TR0
-  C:000EH         PUBLIC        timer0_init
+  C:0224H         PUBLIC        timer0_init
   -------         PROC          TIMER0_INIT
-  C:000EH         LINE#         19
-  C:000EH         LINE#         25
-  C:0011H         LINE#         26
-  C:0014H         LINE#         27
-  C:0017H         LINE#         28
-  C:0019H         LINE#         30
-  C:001BH         LINE#         32
+  C:0224H         LINE#         19
+  C:0224H         LINE#         25
+  C:0227H         LINE#         26
+  C:022AH         LINE#         27
+  C:022DH         LINE#         28
+  C:022FH         LINE#         30
+  C:0231H         LINE#         32
   -------         ENDPROC       TIMER0_INIT
   -------         PROC          TIMER0_ISR
-  C:018DH         LINE#         35
-  C:0191H         LINE#         36
-  C:0193H         LINE#         37
-  C:0198H         LINE#         38
-  C:019AH         LINE#         40
-  C:01A1H         LINE#         41
-  C:01A1H         LINE#         44
-  C:01A4H         LINE#         46
-  C:01A7H         LINE#         47
-  C:01A7H         LINE#         49
-  C:01A7H         LINE#         52
-  C:01AAH         LINE#         53
-  C:01ADH         LINE#         54
-  C:01AFH         LINE#         55
+  C:01A4H         LINE#         35
+  C:01A8H         LINE#         36
+  C:01AAH         LINE#         37
+  C:01AFH         LINE#         38
+  C:01B1H         LINE#         40
+  C:01B8H         LINE#         41
+  C:01B8H         LINE#         44
+  C:01BBH         LINE#         46
+  C:01BEH         LINE#         47
+  C:01BEH         LINE#         49
+  C:01BEH         LINE#         52
+  C:01C1H         LINE#         53
+  C:01C4H         LINE#         54
+  C:01C6H         LINE#         55
+BL51 BANKED LINKER/LOCATER V6.22                                                      04/08/2022  01:26:37  PAGE 6
+
+
   -------         ENDPROC       TIMER0_ISR
   -------         ENDMOD        TIMER
 
   -------         MODULE        ?C?CLDPTR
-  C:0152H         PUBLIC        ?C?CLDPTR
+  C:013DH         PUBLIC        ?C?CLDPTR
   -------         ENDMOD        ?C?CLDPTR
 
   -------         MODULE        ?C?CSTOPTR
-  C:016BH         PUBLIC        ?C?CSTOPTR
-BL51 BANKED LINKER/LOCATER V6.22                                                      04/08/2022  00:36:24  PAGE 6
-
-
+  C:0156H         PUBLIC        ?C?CSTOPTR
   -------         ENDMOD        ?C?CSTOPTR
 
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
@@ -310,5 +319,5 @@ SYMBOL TABLE OF MODULE:  .\Objects\1-1 (IPS_RECEIVE_STRING_HEADER_COMMUNICATION_
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?TIMER0_INIT?TIMER
 
-Program Size: data=38.0 xdata=0 code=566
+Program Size: data=41.0 xdata=0 code=569
 LINK/LOCATE RUN COMPLETE.  2 WARNING(S),  0 ERROR(S)

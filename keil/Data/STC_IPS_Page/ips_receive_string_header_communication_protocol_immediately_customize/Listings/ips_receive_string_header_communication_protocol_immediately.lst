@@ -1,4 +1,4 @@
-C51 COMPILER V9.54   IPS_RECEIVE_STRING_HEADER_COMMUNICATION_P                             04/08/2022 00:36:23 PAGE 1   
+C51 COMPILER V9.54   IPS_RECEIVE_STRING_HEADER_COMMUNICATION_P                             04/08/2022 01:26:36 PAGE 1   
 
 
 C51 COMPILER V9.54, COMPILATION OF MODULE IPS_RECEIVE_STRING_HEADER_COMMUNICATION_P
@@ -35,49 +35,56 @@ line level    source
   24   2      
   25   2              // 关闭 自定义的 软件定时计数器
   26   2              // start_time = 0;
-  27   2              sendString(recv_buf);
-  28   2      
-  29   2              // while ( (recv_cnt >= 5 ) && (recv_move_index <= recv_cnt) )
-  30   2              // {
-  31   2              //     if( (buf[recv_move_index + 0] == 0x55) && (buf[recv_move_index + 1] == 0xAA) && (buf[recv_m
-             -ove_index + 2] == 0x55) ){
-  32   2              //         if((buf[recv_move_index + 3] == 0x01)  && (buf[recv_move_index + 4] == 0x02) ){
-  33   2              //             printf("type of one\r\n");
-  34   2              //         } else {
-  35   2              //             printf("type two\r\n");
-  36   2              //         }
-  37   2              //         break;
-  38   2              //     }
-  39   2              //     recv_move_index++;
-  40   2              // }
-  41   2              
-  42   2              // recv_cnt = 0;
-  43   2              // 发送完成后  recv_buf 清除
-  44   2              clear_recv_buffer(recv_buf);
-  45   2              
-  46   2      
-  47   2      
-  48   2          }
-  49   1      }
-  50          
-  51          int main()
-  52          {
-C51 COMPILER V9.54   IPS_RECEIVE_STRING_HEADER_COMMUNICATION_P                             04/08/2022 00:36:23 PAGE 2   
+  27   2              
+  28   2              sendString(recv_buf);
+  29   2      
+  30   2              switch (recv_buf[0]) {
+  31   3                  case 1:
+  32   3           
+  33   3                      // printf("led_data = %d", led_data);
+  34   3                      // 对数据进行即时解析 并且 在第六位 进行反馈
+  35   3                      // recv_buf[3] = 0x01;
+  36   3                      // printf("led_data = 0x01");
+  37   3                      sendByte(0x01);
+  38   3                      break;
+  39   3                  case 2:
+  40   3                      // 对数据进行即时解析 并且 在第六位 进行反馈
+  41   3                      // printf("0x02");
+  42   3                      // recv_buf[3] = 0x02;
+  43   3                      // printf("led_data = 0x02");
+  44   3                      sendByte(0x02);
+  45   3                      break;
+  46   3                  default:
+  47   3                      break;
+  48   3              }
+  49   2              
+  50   2      
+  51   2              // 发送完成后  recv_buf 清除
+  52   2              clear_recv_buffer(recv_buf);
+  53   2              
+C51 COMPILER V9.54   IPS_RECEIVE_STRING_HEADER_COMMUNICATION_P                             04/08/2022 01:26:36 PAGE 2   
 
-  53   1          // 初始化 定时计数器 T1
-  54   1          // timer0_init();
-  55   1          uartInit();
-  56   1          while (1)
-  57   1          {
-  58   2              uart_service();
-  59   2          }
-  60   1          //return 0;
-  61   1      }
-  62          
+  54   2      
+  55   2      
+  56   2          }
+  57   1      }
+  58          
+  59          int main()
+  60          {
+  61   1          // 初始化 定时计数器 T1
+  62   1          // timer0_init();
+  63   1          uartInit();
+  64   1          while (1)
+  65   1          {
+  66   2              uart_service();
+  67   2          }
+  68   1          //return 0;
+  69   1      }
+  70          
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =     34    ----
+   CODE SIZE        =     52    ----
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
