@@ -67,7 +67,7 @@ void uart_ISR() interrupt 4 {
         // recv_timer_cnt = 0;
         // recv_data = SBUF;
 
-
+        // 状态机的 思想编程
         switch (machine_step) {
 
             case 0:
