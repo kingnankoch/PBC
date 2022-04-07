@@ -1,0 +1,90 @@
+C51 COMPILER V9.54   IPS_RECEIVE_STRING_HEADER_COMMUNICATION_P                             04/08/2022 00:28:13 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE IPS_RECEIVE_STRING_HEADER_COMMUNICATION_P
+OBJECT MODULE PLACED IN .\Objects\ips_receive_string_header_communication_protocol_immediately.obj
+COMPILER INVOKED BY: C:\Program Files\Keil_v5\C51\BIN\C51.EXE ips_receive_string_header_communication_protocol_immediate
+                    -ly.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\ips_receive_string_header_communication_protocol_immed
+                    -iately.lst) TABS(2) OBJECT(.\Objects\ips_receive_string_header_communication_protocol_immediately.obj)
+
+line level    source
+
+   1          /**
+   2           * @file ips_receive_string_header_communication_protocol_immediately.c
+   3           * @author your name (you@domain.com)
+   4           * @brief 
+   5           * @version 0.1
+   6           * @date 2022-04-06
+   7           * 
+   8           * @copyright Copyright (c) 2022
+   9           * 
+  10           */
+  11          
+  12          #include "reg51.h"
+  13          #include "uart.h"
+  14          #include "timer.h"
+  15          #include "stdio.h"
+  16          
+  17          
+  18          
+  19          
+  20          void uart_service(void){
+  21   1          //unsigned char recv_move_index;
+  22   1          if(recv_flag == 1){
+  23   2              recv_flag = 0;
+  24   2      
+  25   2              // 关闭 自定义的 软件定时计数器
+  26   2              // start_time = 0;
+  27   2              sendString(recv_buf);
+  28   2      
+  29   2              // while ( (recv_cnt >= 5 ) && (recv_move_index <= recv_cnt) )
+  30   2              // {
+  31   2              //     if( (buf[recv_move_index + 0] == 0x55) && (buf[recv_move_index + 1] == 0xAA) && (buf[recv_m
+             -ove_index + 2] == 0x55) ){
+  32   2              //         if((buf[recv_move_index + 3] == 0x01)  && (buf[recv_move_index + 4] == 0x02) ){
+  33   2              //             printf("type of one\r\n");
+  34   2              //         } else {
+  35   2              //             printf("type two\r\n");
+  36   2              //         }
+  37   2              //         break;
+  38   2              //     }
+  39   2              //     recv_move_index++;
+  40   2              // }
+  41   2              
+  42   2              // recv_cnt = 0;
+  43   2              // 发送完成后  recv_buf 清除
+  44   2              clear_recv_buffer(recv_buf);
+  45   2              
+  46   2      
+  47   2      
+  48   2          }
+  49   1      }
+  50          
+  51          int main()
+  52          {
+C51 COMPILER V9.54   IPS_RECEIVE_STRING_HEADER_COMMUNICATION_P                             04/08/2022 00:28:13 PAGE 2   
+
+  53   1          // 初始化 定时计数器 T1
+  54   1          // timer0_init();
+  55   1          uartInit();
+  56   1          while (1)
+  57   1          {
+  58   2              uart_service();
+  59   2          }
+  60   1          //return 0;
+  61   1      }
+  62          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     34    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
