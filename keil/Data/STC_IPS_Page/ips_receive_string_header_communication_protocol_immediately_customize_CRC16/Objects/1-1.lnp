@@ -1,5 +1,6 @@
 ".\Objects\ips_receive_string_header_communication_protocol_immediately.obj",
 ".\Objects\uart.obj",
-".\Objects\timer.obj" 
+".\Objects\timer.obj",
+".\Objects\CRC16.obj" 
 TO ".\Objects\1-1" 
 PRINT(".\Listings\1-1.m51")

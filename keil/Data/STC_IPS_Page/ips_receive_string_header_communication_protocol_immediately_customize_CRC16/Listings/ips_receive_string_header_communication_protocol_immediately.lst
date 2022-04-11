@@ -1,4 +1,4 @@
-C51 COMPILER V9.54   IPS_RECEIVE_STRING_HEADER_COMMUNICATION_P                             04/08/2022 01:26:36 PAGE 1   
+C51 COMPILER V9.54   IPS_RECEIVE_STRING_HEADER_COMMUNICATION_P                             04/12/2022 01:25:13 PAGE 1   
 
 
 C51 COMPILER V9.54, COMPILATION OF MODULE IPS_RECEIVE_STRING_HEADER_COMMUNICATION_P
@@ -25,70 +25,127 @@ line level    source
   14          #include "timer.h"
   15          #include "stdio.h"
   16          
-  17          
+  17          #include "CRC16.h"
   18          
-  19          
-  20          void uart_service(void){
-  21   1          //unsigned char recv_move_index;
-  22   1          if(recv_flag == 1){
-  23   2              recv_flag = 0;
-  24   2      
-  25   2              // 关闭 自定义的 软件定时计数器
-  26   2              // start_time = 0;
-  27   2              
-  28   2              sendString(recv_buf);
-  29   2      
-  30   2              switch (recv_buf[0]) {
-  31   3                  case 1:
-  32   3           
-  33   3                      // printf("led_data = %d", led_data);
-  34   3                      // 对数据进行即时解析 并且 在第六位 进行反馈
-  35   3                      // recv_buf[3] = 0x01;
-  36   3                      // printf("led_data = 0x01");
-  37   3                      sendByte(0x01);
-  38   3                      break;
-  39   3                  case 2:
-  40   3                      // 对数据进行即时解析 并且 在第六位 进行反馈
-  41   3                      // printf("0x02");
-  42   3                      // recv_buf[3] = 0x02;
-  43   3                      // printf("led_data = 0x02");
-  44   3                      sendByte(0x02);
-  45   3                      break;
-  46   3                  default:
-  47   3                      break;
-  48   3              }
-  49   2              
-  50   2      
-  51   2              // 发送完成后  recv_buf 清除
-  52   2              clear_recv_buffer(recv_buf);
-  53   2              
-C51 COMPILER V9.54   IPS_RECEIVE_STRING_HEADER_COMMUNICATION_P                             04/08/2022 01:26:36 PAGE 2   
+  19          #define LOCAL_ADDRESS 0x01
+  20          
+  21          unsigned char crc;
+  22          unsigned char crch;
+  23          unsigned char crcl;
+  24          
+  25          unsigned char i;
+  26          
+  27          void uart_service(void){
+  28   1          //unsigned char recv_move_index;
+  29   1          if(recv_flag == 1){
+  30   2              recv_flag = 0;
+  31   2      
+  32   2              // 关闭 自定义的 软件定时计数器
+  33   2              start_time = 0;
+  34   2              
+  35   2              // sendString(recv_buf);
+  36   2      
+  37   2              // switch (recv_buf[0]) {
+  38   2              //     case 1:
+  39   2              //         // 对数据进行即时解析 并且 在 进行反馈
+  40   2              //         printf("led_data = 0x01");
+  41   2              //         // sendByte(0x01);
+  42   2              //         break;
+  43   2              //     case 2:
+  44   2              //         // 对数据进行即时解析 并且  进行反馈
+  45   2              //         printf("led_data = 0x02");
+  46   2              //         // sendByte(0x02);
+  47   2              //         break;
+  48   2              //     default:
+  49   2              //         break;
+  50   2              // }
+  51   2      
+  52   2              // for (i = 0; i < recv_cnt; i++)
+  53   2              // {
+C51 COMPILER V9.54   IPS_RECEIVE_STRING_HEADER_COMMUNICATION_P                             04/12/2022 01:25:13 PAGE 2   
 
-  54   2      
-  55   2      
-  56   2          }
-  57   1      }
-  58          
-  59          int main()
-  60          {
-  61   1          // 初始化 定时计数器 T1
-  62   1          // timer0_init();
-  63   1          uartInit();
-  64   1          while (1)
-  65   1          {
-  66   2              uart_service();
-  67   2          }
-  68   1          //return 0;
-  69   1      }
-  70          
+  54   2              //     sendByte(recv_buf[i]);
+  55   2              // }
+  56   2      
+  57   2              if(recv_buf[0] != LOCAL_ADDRESS){
+  58   3                  return;
+  59   3              }
+  60   2              // 开始CRC 校验
+  61   2              crc = GetCRC16(recv_buf, 4);
+  62   2              // 取出 高位 和 低位
+  63   2              crch = crc >> 8;
+  64   2              crcl = crc & 0xFF;
+  65   2              // printf("crc = %d \r\n", crc);
+  66   2              // printf("crch = %d \r\n", crch);
+  67   2              // printf("crcl = %d \r\n", crcl);
+  68   2              // sendByte(crc);
+  69   2              // sendByte(crch);
+  70   2              // sendByte(crcl);
+  71   2              // 如果 
+  72   2              if( (recv_buf[recv_cnt - 1] != crch) || (recv_buf[recv_cnt - 2] != crcl) ){
+  73   3                  // recv_buf[1] = recv_buf[1] | 0x80;
+  74   3                  crc = GetCRC16(recv_buf, 4);
+  75   3                  recv_buf[4] = crc & 0xFF;
+  76   3                  recv_buf[5] = crc >> 8;
+  77   3                  
+  78   3                  for (i = 0; i < recv_cnt; i++)
+  79   3                  {
+  80   4                      sendByte(recv_buf[i]);
+  81   4                  }
+  82   3                  // // sendByte(0x06);
+  83   3                  recv_cnt = 0;
+  84   3                  return;
+  85   3              }
+  86   2              
+  87   2              switch (recv_buf[1]) {
+  88   3                  case 1:
+  89   3                      // 对数据进行即时解析 并且 在 进行反馈
+  90   3                      printf("led_data = 0x01");
+  91   3                      // sendByte(0x01);
+  92   3                      break;
+  93   3                  case 2:
+  94   3                      // 对数据进行即时解析 并且  进行反馈
+  95   3                      printf("led_data = 0x02");
+  96   3                      // sendByte(0x02);
+  97   3                      break;
+  98   3                  default:
+  99   3                      break;
+ 100   3              }
+ 101   2              recv_cnt = 0;
+ 102   2              
+ 103   2      
+ 104   2      
+ 105   2              
+ 106   2              // 发送完成后  recv_buf 清除
+ 107   2              clear_recv_buffer(recv_buf);
+ 108   2              
+ 109   2      
+ 110   2      
+ 111   2          }
+ 112   1      }
+ 113          
+ 114          int main()
+ 115          {
+C51 COMPILER V9.54   IPS_RECEIVE_STRING_HEADER_COMMUNICATION_P                             04/12/2022 01:25:13 PAGE 3   
+
+ 116   1          // 初始化 定时计数器 T1
+ 117   1          timer0_init();
+ 118   1          uartInit();
+ 119   1          while (1)
+ 120   1          {
+ 121   2              uart_service();
+ 122   2          }
+ 123   1          //return 0;
+ 124   1      }
+ 125          
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =     52    ----
-   CONSTANT SIZE    =   ----    ----
+   CODE SIZE        =    155    ----
+   CONSTANT SIZE    =     32    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
-   DATA SIZE        =   ----    ----
+   DATA SIZE        =      4    ----
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----
 END OF MODULE INFORMATION.
