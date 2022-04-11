@@ -14,7 +14,7 @@
 #include "timer.h"
 #include "stdio.h"
 
-
+// 发送的数据  AA 55 02 20 20 42 02
 
 
 void uart_service(void){
