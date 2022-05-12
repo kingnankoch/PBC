@@ -1,0 +1,35 @@
+C51 COMPILER V9.54   HC595                                                                 05/13/2022 00:58:24 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE HC595
+OBJECT MODULE PLACED IN .\Objects\HC595.obj
+COMPILER INVOKED BY: C:\Program Files\Keil_v5\C51\BIN\C51.EXE HC595.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(
+                    -.\Listings\HC595.lst) TABS(2) OBJECT(.\Objects\HC595.obj)
+
+line level    source
+
+   1          /**
+   2           * @file HC595.c
+   3           * @author your name (you@domain.com)
+   4           * @brief 
+   5           * @version 0.1
+   6           * @date 2022-05-13
+   7           * 
+   8           * @copyright Copyright (c) 2022
+   9           * 
+  10           */
+  11          #include "HC595.h"
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   ----    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
