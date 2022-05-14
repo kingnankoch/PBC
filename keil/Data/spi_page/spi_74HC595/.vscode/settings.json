@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "hc595.h": "c",
+        "delay.h": "c"
+    }
+}
