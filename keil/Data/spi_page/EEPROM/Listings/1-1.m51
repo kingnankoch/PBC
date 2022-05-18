@@ -1,0 +1,54 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        05/19/2022  00:46:59  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+C:\PROGRAM FILES\KEIL_V5\C51\BIN\BL51.EXE .\Objects\SPI.obj, .\Objects\EEPROM.obj, .\Objects\main.obj TO .\Objects\1-1 P
+>> RINT (.\Listings\1-1.m51)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\Objects\SPI.obj (SPI)
+  .\Objects\EEPROM.obj (EEPROM)
+  .\Objects\main.obj (MAIN)
+
+
+LINK MAP OF MODULE:  .\Objects\1-1 (SPI)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+
+
+OVERLAY MAP OF MODULE:   .\Objects\1-1 (SPI)
+
+
+SEGMENT
+  +--> CALLED SEGMENT
+---------------------
+
+
+SYMBOL TABLE OF MODULE:  .\Objects\1-1 (SPI)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        SPI
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  -------         ENDMOD        SPI
+
+  -------         MODULE        EEPROM
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  -------         ENDMOD        EEPROM
+
+  -------         MODULE        MAIN
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  -------         ENDMOD        MAIN
+
+*** WARNING L10: CANNOT DETERMINE ROOT SEGMENT
+
+Program Size: data=0.0 xdata=0 code=0
+LINK/LOCATE RUN COMPLETE.  1 WARNING(S),  0 ERROR(S)
